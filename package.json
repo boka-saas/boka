@@ -1,38 +1,29 @@
 {
-	"name": "ricoui-saas-template",
+	"name": "boka-saas-v2",
 	"type": "module",
 	"version": "1.0.0",
 	"packageManager": "pnpm@9.14.2",
-	"description": "A design-led SaaS website template built with Astro, Tailwind CSS v4, MDX, and a reusable component system.",
+	"description": "Boka marketing site for appointment-led service businesses.",
 	"keywords": [
 		"astro",
-		"astro-template",
 		"saas",
-		"saas-template",
+		"booking",
+		"appointments",
+		"salon",
+		"barber",
 		"landing-page",
-		"startup",
 		"tailwindcss",
 		"tailwindcss-v4",
-		"mdx",
-		"blog",
-		"changelog",
 		"dark-mode",
 		"responsive",
 		"typescript"
 	],
 	"author": {
-		"name": "RicoUI",
-		"email": "hello@ricoui.com",
-		"url": "https://ricoui.com"
+		"name": "Boka",
+		"email": "hello@boka.io",
+		"url": "https://boka.io"
 	},
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/ricocc/ricoui-saas-template.git"
-	},
-	"bugs": {
-		"url": "https://github.com/ricocc/ricoui-saas-template/issues"
-	},
-	"homepage": "https://github.com/ricocc/ricoui-saas-template#readme",
+	"homepage": "https://boka.io",
 	"license": "MIT",
 	"engines": {
 		"node": ">=22.12.0",
@@ -57,8 +48,6 @@
 		"vite": "^7.3.3"
 	},
 	"dependencies": {
-		"@astrojs/mdx": "^6.0.1",
-		"@astrojs/rss": "^4.0.18",
 		"@astrojs/sitemap": "^3.7.3",
 		"@lucide/astro": "^1.17.0",
 		"@tailwindcss/vite": "^4.1.14",
