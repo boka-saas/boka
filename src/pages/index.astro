@@ -120,7 +120,33 @@ const testimonials = [
     name: "Sylwia Cieleszynska",
     role: "Owner, sc_aesthetics_uk",
   },
+  {
+    quote:
+      "We used to lose appointments when we were busy with clients. Now people can book from their phone and we see the appointment straight away.",
+    name: "Marcus",
+    role: "Founder, Northside Grooming",
+  },
+  {
+    quote:
+      "The website made us look more established, but the real win was how quickly people started booking without messaging first.",
+    name: "Amira",
+    role: "Owner, Glow Room Studio",
+  },
+  {
+    quote:
+      "Having availability, payments, and reminders connected has made the week feel much less chaotic for our team.",
+    name: "Daniel",
+    role: "Manager, Cut & Co.",
+  },
+  {
+    quote:
+      "Boka helped us turn Instagram interest into actual bookings. Clients tap through, choose a service, and pick a time without waiting on us.",
+    name: "Priya",
+    role: "Owner, Lash Lab",
+  },
 ];
+
+const testimonialLoop = [...testimonials, ...testimonials];
 
 const faqItems = [
   {
@@ -314,17 +340,20 @@ const faqItems = [
     </div>
   </section>
 
-  <section class="site-container py-16 md:py-24">
-    <SectionHeader
-      title="Success stories from clients"
-      description="Early Boka users are already using the platform to simplify bookings and reduce missed appointments."
-    />
-    <div class="mx-auto mt-8 grid max-w-5xl grid-cols-1 gap-6 md:grid-cols-2">
+  <section class="py-16 md:py-24">
+    <div class="site-container">
+      <SectionHeader
+        title="Success stories from clients"
+        description="Early Boka users are already using the platform to simplify bookings, reduce missed appointments, and turn online interest into real visits."
+      />
+    </div>
+
+    <div class="site-container mt-8 grid grid-cols-1 gap-6 md:hidden">
       {testimonials.map((item, i) => (
         <figure
           class="rounded-xl border border-primary/10 bg-bg-secondary p-6 dark:border-neutral-700 dark:bg-bg-secondary-dark"
           data-aos="fade-up-sm"
-          data-aos-delay={i * 120}
+          data-aos-delay={i * 80}
           data-aos-once="true"
         >
           <MessageCircle class="mb-4 h-6 w-6 text-primary" />
@@ -337,6 +366,23 @@ const faqItems = [
           </figcaption>
         </figure>
       ))}
+    </div>
+
+    <div class="testimonial-marquee mt-8 hidden overflow-hidden md:block" data-aos="fade-up-sm" data-aos-once="true">
+      <div class="testimonial-track flex w-max gap-6 px-4">
+        {testimonialLoop.map((item) => (
+          <figure class="testimonial-card w-[360px] shrink-0 rounded-xl border border-primary/10 bg-bg-secondary p-6 dark:border-neutral-700 dark:bg-bg-secondary-dark">
+            <MessageCircle class="mb-4 h-6 w-6 text-primary" />
+            <blockquote class="text-sm leading-7 text-neutral-600 dark:text-neutral-300">
+              "{item.quote}"
+            </blockquote>
+            <figcaption class="mt-5 border-t border-dashed border-neutral-200 pt-4 dark:border-neutral-700">
+              <p class="font-semibold text-neutral-800 dark:text-neutral-100">{item.name}</p>
+              <p class="text-sm text-neutral-500 dark:text-neutral-400">{item.role}</p>
+            </figcaption>
+          </figure>
+        ))}
+      </div>
     </div>
   </section>
 
@@ -366,3 +412,43 @@ const faqItems = [
     </div>
   </section>
 </Layout>
+
+<style>
+  .testimonial-marquee {
+    mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  }
+
+  .testimonial-track {
+    animation: testimonial-scroll 42s linear infinite;
+  }
+
+  .testimonial-marquee:hover .testimonial-track {
+    animation-play-state: paused;
+  }
+
+  .testimonial-card {
+    min-height: 250px;
+  }
+
+  @keyframes testimonial-scroll {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(calc(-50% - 0.75rem));
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .testimonial-track {
+      animation: none;
+      flex-wrap: wrap;
+      justify-content: center;
+      width: auto;
+    }
+
+    .testimonial-marquee {
+      mask-image: none;
+    }
+  }
+</style>
