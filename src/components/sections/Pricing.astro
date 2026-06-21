@@ -147,6 +147,11 @@ const plans = [
             >
               {plan.yearlySuffix}
             </span>
+            {plan.name === "Growth" && (
+              <div class="text-xs italic text-neutral-400 dark:text-neutral-500 mt-1">
+                *Stripe transaction fee applies
+              </div>
+            )}
           </div>
 
           <ul class="space-y-3 mb-8">

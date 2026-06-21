@@ -174,7 +174,7 @@ const faqItems = [
     answer:
       "The Starter plan includes a custom website and hosting. Growth adds the booking system, payments, notifications, analytics, and appointment management.",
   },
-    {
+  {
     question: "What is SEO?",
     answer:
       "Search Engine Optimisation (SEO) ranks your business on a Google search and maps, Boka specialises in this to ensure you rank highly, especially compared to website builders, ensuring you rank well above competitors.",
@@ -194,14 +194,25 @@ const faqItems = [
 >
   <HeroSection />
 
-  <section class="site-container py-12 md:py-16" data-aos="fade-up-xs" data-aos-once="true" data-aos-delay="650">
+  <section
+    class="site-container py-12 md:py-16"
+    data-aos="fade-up-xs"
+    data-aos-once="true"
+    data-aos-delay="650"
+  >
     <div class="grid grid-cols-2 gap-3 md:grid-cols-4">
-      {proofPoints.map((item) => (
-        <div class="rounded-xl border border-dashed border-primary/20 bg-bg-secondary px-4 py-5 text-center dark:border-neutral-700 dark:bg-bg-secondary-dark">
-          <p class="font-brand text-3xl text-neutral-800 dark:text-neutral-100">{item.value}</p>
-          <p class="mt-1 text-xs font-medium uppercase tracking-[0.14em] text-neutral-400 dark:text-neutral-500">{item.label}</p>
-        </div>
-      ))}
+      {
+        proofPoints.map((item) => (
+          <div class="rounded-xl border border-dashed border-primary/20 bg-bg-secondary px-4 py-5 text-center dark:border-neutral-700 dark:bg-bg-secondary-dark">
+            <p class="font-brand text-3xl text-neutral-800 dark:text-neutral-100">
+              {item.value}
+            </p>
+            <p class="mt-1 text-xs font-medium uppercase tracking-[0.14em] text-neutral-400 dark:text-neutral-500">
+              {item.label}
+            </p>
+          </div>
+        ))
+      }
     </div>
   </section>
 
@@ -211,59 +222,86 @@ const faqItems = [
       description="Boka is designed around the daily problems service businesses actually feel: missed bookings, no-shows, messy availability, and unclear revenue."
     />
     <div class="mt-8 grid grid-cols-1 gap-6 md:grid-cols-3">
-      {problems.map((problem, i) => (
-        <div
-          class="rounded-xl border border-primary/10 bg-bg-secondary p-6 dark:border-neutral-700 dark:bg-bg-secondary-dark"
-          data-aos="fade-up-sm"
-          data-aos-delay={i * 100}
-          data-aos-once="true"
-        >
-          <problem.icon class="mb-4 h-8 w-8 text-primary" />
-          <h3 class="mb-2 text-lg font-semibold text-neutral-800 dark:text-neutral-100">{problem.title}</h3>
-          <p class="text-sm leading-relaxed text-neutral-500 dark:text-neutral-400">{problem.desc}</p>
-        </div>
-      ))}
+      {
+        problems.map((problem, i) => (
+          <div
+            class="rounded-xl border border-primary/10 bg-bg-secondary p-6 dark:border-neutral-700 dark:bg-bg-secondary-dark"
+            data-aos="fade-up-sm"
+            data-aos-delay={i * 100}
+            data-aos-once="true"
+          >
+            <problem.icon class="mb-4 h-8 w-8 text-primary" />
+            <h3 class="mb-2 text-lg font-semibold text-neutral-800 dark:text-neutral-100">
+              {problem.title}
+            </h3>
+            <p class="text-sm leading-relaxed text-neutral-500 dark:text-neutral-400">
+              {problem.desc}
+            </p>
+          </div>
+        ))
+      }
     </div>
   </section>
 
   <section class="site-container py-16 md:py-24">
     <div class="grid items-start gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
       <div data-aos="fade-up-sm" data-aos-once="true">
-        <p class="mb-4 inline-flex items-center gap-2 rounded-full border border-primary/15 bg-primary/5 px-3 py-1 text-xs font-medium text-primary">
+        <p
+          class="mb-4 inline-flex items-center gap-2 rounded-full border border-primary/15 bg-primary/5 px-3 py-1 text-xs font-medium text-primary"
+        >
           <TrendingUp size={14} />
           Why you need Boka
         </p>
-        <h2 class="font-brand text-3xl leading-tight text-neutral-800 dark:text-neutral-100 md:text-5xl">
+        <h2
+          class="font-brand text-3xl leading-tight text-neutral-800 dark:text-neutral-100 md:text-5xl"
+        >
           Every missed click, call, and reminder costs more than it looks.
         </h2>
         <p class="mt-5 leading-8 text-neutral-600 dark:text-neutral-300">
-          Clients do not always book during opening hours. They search locally, compare quickly, and choose the business that makes the next step easiest. Without Boka, you can lose bookings before you even know someone was interested.
+          Clients do not always book during opening hours. They search locally,
+          compare quickly, and choose the business that makes the next step
+          easiest. Without Boka, you can lose bookings before you even know
+          someone was interested.
         </p>
-        <div class="mt-7 rounded-2xl border border-dashed border-primary/20 bg-bg-secondary p-5 dark:border-neutral-700 dark:bg-bg-secondary-dark">
-          <p class="text-sm font-semibold text-neutral-800 dark:text-neutral-100">
-            Boka helps you look more credible, capture more intent, reduce admin, and give clients fewer reasons to choose someone else.
+        <div
+          class="mt-7 rounded-2xl border border-dashed border-primary/20 bg-bg-secondary p-5 dark:border-neutral-700 dark:bg-bg-secondary-dark"
+        >
+          <p
+            class="text-sm font-semibold text-neutral-800 dark:text-neutral-100"
+          >
+            Boka helps you look more credible, capture more intent, reduce
+            admin, and give clients fewer reasons to choose someone else.
           </p>
         </div>
       </div>
 
       <div class="grid gap-4 sm:grid-cols-2">
-        {whyBokaMatters.map((item, i) => (
-          <div
-            class="rounded-xl border border-primary/10 bg-bg-secondary p-5 dark:border-neutral-700 dark:bg-bg-secondary-dark"
-            data-aos="fade-up-sm"
-            data-aos-delay={i * 100}
-            data-aos-once="true"
-          >
-            <item.icon class="mb-4 h-7 w-7 text-primary" />
-            <h3 class="mb-2 text-base font-semibold text-neutral-800 dark:text-neutral-100">{item.title}</h3>
-            <p class="text-sm leading-relaxed text-neutral-500 dark:text-neutral-400">{item.desc}</p>
-          </div>
-        ))}
+        {
+          whyBokaMatters.map((item, i) => (
+            <div
+              class="rounded-xl border border-primary/10 bg-bg-secondary p-5 dark:border-neutral-700 dark:bg-bg-secondary-dark"
+              data-aos="fade-up-sm"
+              data-aos-delay={i * 100}
+              data-aos-once="true"
+            >
+              <item.icon class="mb-4 h-7 w-7 text-primary" />
+              <h3 class="mb-2 text-base font-semibold text-neutral-800 dark:text-neutral-100">
+                {item.title}
+              </h3>
+              <p class="text-sm leading-relaxed text-neutral-500 dark:text-neutral-400">
+                {item.desc}
+              </p>
+            </div>
+          ))
+        }
       </div>
     </div>
   </section>
 
-  <div class="my-4 w-full border-b border-dashed border-neutral-200 site-container dark:border-neutral-700"></div>
+  <div
+    class="my-4 w-full border-b border-dashed border-neutral-200 site-container dark:border-neutral-700"
+  >
+  </div>
 
   <section class="site-container py-16 md:py-24">
     <SectionHeader
@@ -271,24 +309,34 @@ const faqItems = [
       description="Boka combines the public booking experience your clients need with the management tools your business depends on."
     />
     <div class="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-      {features.map((feature, i) => (
-        <div
-          class="h-full"
-          data-aos="fade-up-sm"
-          data-aos-delay={i * 100}
-          data-aos-once="true"
-        >
-          <div class="h-full rounded-xl border border-primary/10 bg-bg-secondary p-6 transition-all duration-300 ease-in-out hover:-translate-y-1 hover:shadow-md dark:border-neutral-700 dark:bg-bg-secondary-dark">
-            <feature.icon class="mb-4 h-8 w-8 text-primary" />
-            <h3 class="mb-2 text-lg font-semibold text-neutral-800 dark:text-neutral-100">{feature.title}</h3>
-            <p class="text-sm leading-relaxed text-neutral-500 dark:text-neutral-400">{feature.desc}</p>
+      {
+        features.map((feature, i) => (
+          <div
+            class="h-full"
+            data-aos="fade-up-sm"
+            data-aos-delay={i * 100}
+            data-aos-once="true"
+          >
+            <div class="h-full rounded-xl border border-primary/10 bg-bg-secondary p-6 transition-all duration-300 ease-in-out hover:-translate-y-1 hover:shadow-md dark:border-neutral-700 dark:bg-bg-secondary-dark">
+              <feature.icon class="mb-4 h-8 w-8 text-primary" />
+              <h3 class="mb-2 text-lg font-semibold text-neutral-800 dark:text-neutral-100">
+                {feature.title}
+              </h3>
+              <p class="text-sm leading-relaxed text-neutral-500 dark:text-neutral-400">
+                {feature.desc}
+              </p>
+            </div>
           </div>
-        </div>
-      ))}
+        ))
+      }
     </div>
   </section>
 
-  <section class="site-container py-16 md:py-24" data-aos="fade-up-sm" data-aos-once="true">
+  <section
+    class="site-container py-16 md:py-24"
+    data-aos="fade-up-sm"
+    data-aos-once="true"
+  >
     <SectionHeader
       title="A clear business dashboard"
       description="Monitor bookings, revenue, and operational activity from one place so the business is easier to run between appointments."
@@ -310,23 +358,37 @@ const faqItems = [
   <section class="site-container py-16 md:py-24">
     <div class="grid items-center gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
       <div data-aos="fade-up-sm" data-aos-once="true">
-        <p class="mb-4 inline-flex items-center gap-2 rounded-full border border-primary/15 bg-primary/5 px-3 py-1 text-xs font-medium text-primary">
+        <p
+          class="mb-4 inline-flex items-center gap-2 rounded-full border border-primary/15 bg-primary/5 px-3 py-1 text-xs font-medium text-primary"
+        >
           <Scissors size={14} />
           Client booking site
         </p>
-        <h2 class="font-brand text-3xl leading-tight text-neutral-800 dark:text-neutral-100 md:text-5xl">
+        <h2
+          class="font-brand text-3xl leading-tight text-neutral-800 dark:text-neutral-100 md:text-5xl"
+        >
           A website that turns visits into appointments.
         </h2>
         <p class="mt-5 leading-8 text-neutral-600 dark:text-neutral-300">
-          Your website should show your brand, services, and availability without making clients work for the next step. Boka keeps the booking action close to the content.
+          Your website should show your brand, services, and availability
+          without making clients work for the next step. Boka keeps the booking
+          action close to the content.
         </p>
         <ul class="mt-6 space-y-3">
-          {["Service-led pages", "Mobile-friendly appointment flow", "Connected to availability and payments"].map((point) => (
-            <li class="flex items-start gap-2">
-              <CircleCheck class="mt-0.5 h-4 w-4 flex-shrink-0 text-primary" />
-              <span class="text-sm text-neutral-600 dark:text-neutral-300">{point}</span>
-            </li>
-          ))}
+          {
+            [
+              "Service-led pages",
+              "Mobile-friendly appointment flow",
+              "Connected to availability and payments",
+            ].map((point) => (
+              <li class="flex items-start gap-2">
+                <CircleCheck class="mt-0.5 h-4 w-4 flex-shrink-0 text-primary" />
+                <span class="text-sm text-neutral-600 dark:text-neutral-300">
+                  {point}
+                </span>
+              </li>
+            ))
+          }
         </ul>
       </div>
 
@@ -354,63 +416,96 @@ const faqItems = [
     </div>
 
     <div class="site-container mt-8 grid grid-cols-1 gap-6 md:hidden">
-      {testimonials.map((item, i) => (
-        <figure
-          class="rounded-xl border border-primary/10 bg-bg-secondary p-6 dark:border-neutral-700 dark:bg-bg-secondary-dark"
-          data-aos="fade-up-sm"
-          data-aos-delay={i * 80}
-          data-aos-once="true"
-        >
-          <MessageCircle class="mb-4 h-6 w-6 text-primary" />
-          <blockquote class="text-sm leading-7 text-neutral-600 dark:text-neutral-300">
-            "{item.quote}"
-          </blockquote>
-          <figcaption class="mt-5 border-t border-dashed border-neutral-200 pt-4 dark:border-neutral-700">
-            <p class="font-semibold text-neutral-800 dark:text-neutral-100">{item.name}</p>
-            <p class="text-sm text-neutral-500 dark:text-neutral-400">{item.role}</p>
-          </figcaption>
-        </figure>
-      ))}
-    </div>
-
-    <div class="testimonial-marquee mt-8 hidden overflow-hidden md:block" data-aos="fade-up-sm" data-aos-once="true">
-      <div class="testimonial-track flex w-max gap-6 px-4">
-        {testimonialLoop.map((item) => (
-          <figure class="testimonial-card w-[360px] shrink-0 rounded-xl border border-primary/10 bg-bg-secondary p-6 dark:border-neutral-700 dark:bg-bg-secondary-dark">
+      {
+        testimonials.map((item, i) => (
+          <figure
+            class="rounded-xl border border-primary/10 bg-bg-secondary p-6 dark:border-neutral-700 dark:bg-bg-secondary-dark"
+            data-aos="fade-up-sm"
+            data-aos-delay={i * 80}
+            data-aos-once="true"
+          >
             <MessageCircle class="mb-4 h-6 w-6 text-primary" />
             <blockquote class="text-sm leading-7 text-neutral-600 dark:text-neutral-300">
               "{item.quote}"
             </blockquote>
             <figcaption class="mt-5 border-t border-dashed border-neutral-200 pt-4 dark:border-neutral-700">
-              <p class="font-semibold text-neutral-800 dark:text-neutral-100">{item.name}</p>
-              <p class="text-sm text-neutral-500 dark:text-neutral-400">{item.role}</p>
+              <p class="font-semibold text-neutral-800 dark:text-neutral-100">
+                {item.name}
+              </p>
+              <p class="text-sm text-neutral-500 dark:text-neutral-400">
+                {item.role}
+              </p>
             </figcaption>
           </figure>
-        ))}
+        ))
+      }
+    </div>
+
+    <div
+      class="testimonial-marquee mt-8 hidden overflow-hidden md:block"
+      data-aos="fade-up-sm"
+      data-aos-once="true"
+    >
+      <div class="testimonial-track flex w-max gap-6 px-4">
+        {
+          testimonialLoop.map((item) => (
+            <figure class="testimonial-card w-[360px] shrink-0 rounded-xl border border-primary/10 bg-bg-secondary p-6 dark:border-neutral-700 dark:bg-bg-secondary-dark">
+              <MessageCircle class="mb-4 h-6 w-6 text-primary" />
+              <blockquote class="text-sm leading-7 text-neutral-600 dark:text-neutral-300">
+                "{item.quote}"
+              </blockquote>
+              <figcaption class="mt-5 border-t border-dashed border-neutral-200 pt-4 dark:border-neutral-700">
+                <p class="font-semibold text-neutral-800 dark:text-neutral-100">
+                  {item.name}
+                </p>
+                <p class="text-sm text-neutral-500 dark:text-neutral-400">
+                  {item.role}
+                </p>
+              </figcaption>
+            </figure>
+          ))
+        }
       </div>
     </div>
   </section>
 
   <Pricing />
 
-  <div class="my-4 w-full border-b border-dashed border-neutral-200 site-container dark:border-neutral-700"></div>
+  <div
+    class="my-4 w-full border-b border-dashed border-neutral-200 site-container dark:border-neutral-700"
+  >
+  </div>
 
-  <FAQ
-    title="Frequently asked questions"
-    items={faqItems}
-  />
+  <FAQ title="Frequently asked questions" items={faqItems} />
 
-  <section class="mt-8 bg-bg-secondary py-16 dark:bg-bg-secondary-dark md:py-24" data-aos="fade-up-xs" data-aos-once="true">
+  <section
+    class="mt-8 bg-bg-secondary py-16 dark:bg-bg-secondary-dark md:py-24"
+    data-aos="fade-up-xs"
+    data-aos-once="true"
+  >
     <div class="mx-auto max-w-2xl px-4 text-center">
-      <h2 class="mb-4 font-brand text-3xl text-neutral-800 dark:text-neutral-100 md:text-4xl">Start your free 1 month trial</h2>
+      <h2
+        class="mb-4 font-brand text-3xl text-neutral-800 dark:text-neutral-100 md:text-4xl"
+      >
+        Start your free 1 month trial
+      </h2>
       <p class="mb-8 leading-relaxed text-neutral-600 dark:text-neutral-300">
-        See how Boka can fit your services, staff, payments, and client booking flow before you commit.
+        See how Boka can fit your services, staff, payments, and client booking
+        flow before you commit.
       </p>
       <div class="flex flex-wrap justify-center gap-3">
-        <Button url={siteConfig.links.trial} type="fill" className="px-8 py-3 text-lg">
+        <Button
+          url={siteConfig.links.trial}
+          type="fill"
+          className="px-8 py-3 text-lg"
+        >
           Start free trial <ArrowRight size={18} />
         </Button>
-        <Button url={siteConfig.links.dashboardDemo} className="px-8 py-3 text-lg" target="_blank">
+        <Button
+          url={siteConfig.links.dashboardDemo}
+          className="px-8 py-3 text-lg"
+          target="_blank"
+        >
           View dashboard
         </Button>
       </div>
@@ -420,7 +515,13 @@ const faqItems = [
 
 <style>
   .testimonial-marquee {
-    mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+    mask-image: linear-gradient(
+      to right,
+      transparent,
+      black 10%,
+      black 90%,
+      transparent
+    );
   }
 
   .testimonial-track {
