@@ -13,7 +13,8 @@ export const siteConfig = {
 		campaign: "navigation",
 	},
 	meta: {
-		title: "Boka - Booking software for barbers, salons, and beauty professionals",
+		title:
+			"Boka - Booking software for barbers, salons, and beauty professionals",
 		description:
 			"Get booked, get paid, and grow with Boka. Online booking, payments, reminders, staff management, custom websites, and business insights in one place.",
 		keywords:

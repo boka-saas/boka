@@ -1,18 +1,12 @@
 ---
 interface Props {
-  question: string;
-  answer: string;
-  index?: number;
-  [key: string]: unknown;
+	question: string;
+	answer: string;
+	index?: number;
+	[key: string]: unknown;
 }
 
-const {
-  question,
-  answer,
-  index = 0,
-  class: className,
-  ...attrs
-} = Astro.props;
+const { question, answer, index = 0, class: className, ...attrs } = Astro.props;
 ---
 
 <div

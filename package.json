@@ -21,9 +21,9 @@
 	"author": {
 		"name": "Boka",
 		"email": "bokabookings@gmail.com",
-		"url": "https://boka.io"
+		"url": "https://boka-inc.netlify.app"
 	},
-	"homepage": "https://boka.io",
+	"homepage": "https://boka-inc.netlify.app",
 	"license": "MIT",
 	"engines": {
 		"node": ">=22.12.0",

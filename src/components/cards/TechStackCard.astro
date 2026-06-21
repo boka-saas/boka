@@ -3,8 +3,8 @@ import stack from "@/collections/stack.json";
 
 const { displayIds } = Astro.props;
 const filtered = displayIds?.length
-  ? stack.filter(item => displayIds.includes(item.id))
-  : stack;
+	? stack.filter((item) => displayIds.includes(item.id))
+	: stack;
 
 // First item (Astro) is the featured center card; rest spread out
 const featured = filtered[0];

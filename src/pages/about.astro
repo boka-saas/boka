@@ -1,65 +1,71 @@
 ---
-import Layout from "@/layouts/Layout.astro";
 import PageHeader from "@/components/elements/PageHeader.astro";
-import Button from "@/components/ui/Button.astro";
 import Badge from "@/components/ui/Badge.astro";
+import Button from "@/components/ui/Button.astro";
 import { siteConfig } from "@/config/site";
-import { ArrowRight, CalendarCheck, ChartNoAxesColumnIncreasing, LifeBuoy, Users } from "@lucide/astro";
+import Layout from "@/layouts/Layout.astro";
+import {
+	ArrowRight,
+	CalendarCheck,
+	ChartNoAxesColumnIncreasing,
+	LifeBuoy,
+	Users,
+} from "@lucide/astro";
 
 const timeline = [
-  {
-    version: "01",
-    date: "Problem",
-    title: "Too many service businesses still run bookings manually",
-    desc: "Barbers, salons, and beauty professionals often rely on messages, calls, spreadsheets, and disconnected payment tools.",
-  },
-    {
-    version: "02",
-    date: "Problem",
-    title: "Clients have to wait",
-    desc: "With the old school method of turning up, we found that clients on average wait 30+ minutes just to be seated.",
-  },
-  {
-    version: "03",
-    date: "Build",
-    title: "Boka brings the workflow into one place",
-    desc: "The platform combines a custom website, online booking, payments, reminders, staff availability, and reporting.",
-  },
-  {
-    version: "04",
-    date: "Pilot",
-    title: "Early businesses use Boka to reduce admin",
-    desc: "Client feedback has focused on smoother booking, fewer no-shows, and clearer business visibility.",
-  },
-  {
-    version: "05",
-    date: "Next",
-    title: "A calmer operating system for local services",
-    desc: "The roadmap stays focused on the tools owners use every week: appointments, reminders, payments, staff, and growth insights.",
-  },
+	{
+		version: "01",
+		date: "Problem",
+		title: "Too many service businesses still run bookings manually",
+		desc: "Barbers, salons, and beauty professionals often rely on messages, calls, spreadsheets, and disconnected payment tools.",
+	},
+	{
+		version: "02",
+		date: "Problem",
+		title: "Clients have to wait",
+		desc: "With the old school method of turning up, we found that clients on average wait 30+ minutes just to be seated.",
+	},
+	{
+		version: "03",
+		date: "Build",
+		title: "Boka brings the workflow into one place",
+		desc: "The platform combines a custom website, online booking, payments, reminders, staff availability, and reporting.",
+	},
+	{
+		version: "04",
+		date: "Pilot",
+		title: "Early businesses use Boka to reduce admin",
+		desc: "Client feedback has focused on smoother booking, fewer no-shows, and clearer business visibility.",
+	},
+	{
+		version: "05",
+		date: "Next",
+		title: "A calmer operating system for local services",
+		desc: "The roadmap stays focused on the tools owners use every week: appointments, reminders, payments, staff, and growth insights.",
+	},
 ];
 
 const values = [
-  {
-    icon: CalendarCheck,
-    title: "Practical booking first",
-    desc: "The product starts with the appointment flow because that is where clients and revenue meet.",
-  },
-  {
-    icon: Users,
-    title: "Built around real teams",
-    desc: "Staff availability, services, and working patterns need to fit the business rather than force a generic setup.",
-  },
-  {
-    icon: ChartNoAxesColumnIncreasing,
-    title: "Clear owner visibility",
-    desc: "Owners should understand bookings and revenue without needing to build their own reporting stack.",
-  },
-  {
-    icon: LifeBuoy,
-    title: "Hands-on setup",
-    desc: "Boka is meant to be adopted by busy local businesses, so setup support matters as much as the software.",
-  },
+	{
+		icon: CalendarCheck,
+		title: "Practical booking first",
+		desc: "The product starts with the appointment flow because that is where clients and revenue meet.",
+	},
+	{
+		icon: Users,
+		title: "Built around real teams",
+		desc: "Staff availability, services, and working patterns need to fit the business rather than force a generic setup.",
+	},
+	{
+		icon: ChartNoAxesColumnIncreasing,
+		title: "Clear owner visibility",
+		desc: "Owners should understand bookings and revenue without needing to build their own reporting stack.",
+	},
+	{
+		icon: LifeBuoy,
+		title: "Hands-on setup",
+		desc: "Boka is meant to be adopted by busy local businesses, so setup support matters as much as the software.",
+	},
 ];
 ---
 

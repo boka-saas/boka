@@ -1,5 +1,5 @@
 // Add your javascript here
-import AOS from 'aos';
+import AOS from "aos";
 
 window.darkMode = false;
 
@@ -43,7 +43,7 @@ document.addEventListener("DOMContentLoaded", () => {
 	// 初始化 AOS
 	AOS.init({
 		duration: 400,
-		easing: 'ease-out-cubic',
+		easing: "ease-out-cubic",
 		once: true,
 		offset: 20,
 		delay: 0,

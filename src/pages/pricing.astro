@@ -8,49 +8,49 @@ import Layout from "@/layouts/Layout.astro";
 import { ArrowRight, Check, X } from "@lucide/astro";
 
 const comparisonFeatures = [
-	{ name: "Custom website", starter: true, growth: true, scale: true },
-	{ name: "Web hosting", starter: true, growth: true, scale: true },
-	{ name: "Online booking", starter: false, growth: true, scale: true },
-	{ name: "Online payments", starter: false, growth: true, scale: true },
-	{ name: "Email notifications", starter: false, growth: true, scale: true },
-	{ name: "Financial analytics", starter: false, growth: true, scale: true },
-	{ name: "Weekly availability", starter: false, growth: true, scale: true },
-	{ name: "Appointment management", starter: false, growth: true, scale: true },
-	{
-		name: "Setup support",
-		starter: "Basic",
-		growth: "Guided",
-		scale: "Priority",
-	},
-	{ name: "Custom reporting", starter: false, growth: false, scale: true },
+  { name: "Custom website", starter: true, growth: true, scale: true },
+  { name: "Web hosting", starter: true, growth: true, scale: true },
+  { name: "Online booking", starter: false, growth: true, scale: true },
+  { name: "Online payments", starter: false, growth: true, scale: true },
+  { name: "Email notifications", starter: false, growth: true, scale: true },
+  { name: "Financial analytics", starter: false, growth: true, scale: true },
+  { name: "Weekly availability", starter: false, growth: true, scale: true },
+  { name: "Appointment management", starter: false, growth: true, scale: true },
+  {
+    name: "Setup support",
+    starter: "Basic",
+    growth: "Guided",
+    scale: "Priority",
+  },
+  { name: "Custom reporting", starter: false, growth: false, scale: true },
 ];
 
 const faqItems = [
-	{
-		question: "Can I try Boka before paying?",
-		answer:
-			"Yes. Boka offers a free 1 month trial so you can review the website, booking flow, dashboard, and setup fit before committing.",
-	},
-	{
-		question: "Which plan should I start with?",
-		answer:
-			"Starter is best if you mainly need a professional website and hosting. Growth is best if you want the full booking, payments, reminders, analytics, and appointment management workflow.",
-	},
-	{
-		question: "Can I upgrade later?",
-		answer:
-			"Yes. You can start small and move into Growth or a custom Scale setup when your team, services, or booking volume grows.",
-	},
-	{
-		question: "What is included in setup?",
-		answer:
-			"Setup can include your services, availability, website content, booking flow, and payment preferences. Scale customers get more hands-on migration and onboarding support.",
-	},
-	{
-		question: "Are there any transaction fees for payments?",
-		answer:
-			"Yes, standard Stripe transaction fees apply to processed payments on the Growth plan (standard 1.5% + 20p for UK/EU cards). We're fully transparent about this: Boka does not add any markup on top, meaning you get the cheapest payment processing rates in the market direct from Stripe.",
-	},
+  {
+    question: "Can I try Boka before paying?",
+    answer:
+      "Yes. Boka offers a free 1 month trial so you can review the website, booking flow, dashboard, and setup fit before committing.",
+  },
+  {
+    question: "Which plan should I start with?",
+    answer:
+      "Starter is best if you mainly need a professional website and hosting. Growth is best if you want the full booking, payments, reminders, analytics, and appointment management workflow.",
+  },
+  {
+    question: "Can I upgrade later?",
+    answer:
+      "Yes. You can start small and move into Growth or a custom Scale setup when your team, services, or booking volume grows.",
+  },
+  {
+    question: "What is included in setup?",
+    answer:
+      "Setup can include your services, availability, website content, booking flow, and payment preferences. Scale customers get more hands-on migration and onboarding support.",
+  },
+  {
+    question: "Are there any transaction fees for payments?",
+    answer:
+      "Yes, standard Stripe transaction fees apply to processed payments on the Growth plan (standard 1.5% + 20p for UK/EU cards). We're fully transparent about this: Boka does not add any markup on top, meaning you get the cheapest payment processing rates in the market direct from Stripe.",
+  },
 ];
 ---
 
@@ -67,63 +67,118 @@ const faqItems = [
 
   <PricingSection showHeader={false} />
 
-  <div class="my-8 w-full border-b border-dashed border-neutral-200 site-container dark:border-neutral-700"></div>
+  <div
+    class="my-8 w-full border-b border-dashed border-neutral-200 site-container dark:border-neutral-700"
+  >
+  </div>
 
-  <section class="site-container py-16 md:py-24" data-aos="fade-up-xs" data-aos-once="true">
-    <h2 class="mb-8 text-center font-brand text-3xl text-neutral-800 dark:text-neutral-100">Compare plans</h2>
+  <section
+    class="site-container py-16 md:py-24"
+    data-aos="fade-up-xs"
+    data-aos-once="true"
+  >
+    <h2
+      class="mb-8 text-center font-brand text-3xl text-neutral-800 dark:text-neutral-100"
+    >
+      Compare plans
+    </h2>
     <div class="mx-auto max-w-4xl overflow-x-auto">
       <table class="w-full">
         <thead>
-          <tr class="border-b border-dashed border-neutral-200 dark:border-neutral-700">
-            <th class="py-4 pr-8 text-left text-sm font-medium text-neutral-500">Feature</th>
-            <th class="px-4 py-4 text-center text-sm font-medium text-neutral-500">Starter</th>
-            <th class="px-4 py-4 text-center text-sm font-medium text-primary">Growth</th>
-            <th class="px-4 py-4 text-center text-sm font-medium text-neutral-500">Scale</th>
+          <tr
+            class="border-b border-dashed border-neutral-200 dark:border-neutral-700"
+          >
+            <th class="py-4 pr-8 text-left text-sm font-medium text-neutral-500"
+              >Feature</th
+            >
+            <th
+              class="px-4 py-4 text-center text-sm font-medium text-neutral-500"
+              >Starter</th
+            >
+            <th class="px-4 py-4 text-center text-sm font-medium text-primary"
+              >Growth</th
+            >
+            <th
+              class="px-4 py-4 text-center text-sm font-medium text-neutral-500"
+              >Scale</th
+            >
           </tr>
         </thead>
         <tbody>
-          {comparisonFeatures.map((feature) => (
-            <tr class="border-b border-dashed border-neutral-100 dark:border-neutral-800">
-              <td class="py-4 pr-8 text-sm text-neutral-700 dark:text-neutral-300">{feature.name}</td>
-              {[feature.starter, feature.growth, feature.scale].map((val) => (
-                <td class="px-4 py-4 text-center">
-                  {typeof val === "boolean" ? (
-                    val ? (
-                      <Check class="mx-auto h-4 w-4 text-primary" />
-                    ) : (
-                      <X class="mx-auto h-4 w-4 text-neutral-300 dark:text-neutral-600" />
-                    )
-                  ) : (
-                    <span class="text-sm text-neutral-600 dark:text-neutral-300">{val}</span>
-                  )}
+          {
+            comparisonFeatures.map((feature) => (
+              <tr class="border-b border-dashed border-neutral-100 dark:border-neutral-800">
+                <td class="py-4 pr-8 text-sm text-neutral-700 dark:text-neutral-300">
+                  {feature.name}
                 </td>
-              ))}
-            </tr>
-          ))}
+                {[feature.starter, feature.growth, feature.scale].map((val) => (
+                  <td class="px-4 py-4 text-center">
+                    {typeof val === "boolean" ? (
+                      val ? (
+                        <Check class="mx-auto h-4 w-4 text-primary" />
+                      ) : (
+                        <X class="mx-auto h-4 w-4 text-neutral-300 dark:text-neutral-600" />
+                      )
+                    ) : (
+                      <span class="text-sm text-neutral-600 dark:text-neutral-300">
+                        {val}
+                      </span>
+                    )}
+                  </td>
+                ))}
+              </tr>
+            ))
+          }
         </tbody>
       </table>
     </div>
   </section>
 
-  <div class="my-8 w-full border-b border-dashed border-neutral-200 site-container dark:border-neutral-700"></div>
+  <div
+    class="my-8 w-full border-b border-dashed border-neutral-200 site-container dark:border-neutral-700"
+  >
+  </div>
 
   <section class="site-container py-16 md:py-24">
-    <h2 class="mb-8 text-center font-brand text-3xl text-neutral-800 dark:text-neutral-100">Pricing FAQ</h2>
+    <h2
+      class="mb-8 text-center font-brand text-3xl text-neutral-800 dark:text-neutral-100"
+    >
+      Pricing FAQ
+    </h2>
     <div class="mx-auto max-w-2xl" data-aos="fade-up-xs" data-aos-once="true">
-      {faqItems.map((item, index) => (
-        <AccordionItem question={item.question} answer={item.answer} index={index} />
-      ))}
+      {
+        faqItems.map((item, index) => (
+          <AccordionItem
+            question={item.question}
+            answer={item.answer}
+            index={index}
+          />
+        ))
+      }
     </div>
   </section>
 
-  <section class="site-container py-16 md:py-24" data-aos="fade-up-xs" data-aos-once="true">
+  <section
+    class="site-container py-16 md:py-24"
+    data-aos="fade-up-xs"
+    data-aos-once="true"
+  >
     <div class="mx-auto max-w-2xl text-center">
-      <h2 class="mb-4 font-brand text-3xl text-neutral-800 dark:text-neutral-100 md:text-4xl">Not sure which plan fits?</h2>
+      <h2
+        class="mb-4 font-brand text-3xl text-neutral-800 dark:text-neutral-100 md:text-4xl"
+      >
+        Not sure which plan fits?
+      </h2>
       <p class="mb-8 leading-relaxed text-neutral-600 dark:text-neutral-300">
-        Share your services, staff setup, and current booking process. We can recommend the simplest starting point.
+        Share your services, staff setup, and current booking process. We can
+        recommend the simplest starting point.
       </p>
       <div class="flex flex-wrap justify-center gap-3">
-        <Button url={siteConfig.links.trial} type="fill" className="px-8 py-3 text-lg">
+        <Button
+          url={siteConfig.links.trial}
+          type="fill"
+          className="px-8 py-3 text-lg"
+        >
           Start free trial <ArrowRight size={18} />
         </Button>
         <Button url="/contact" className="px-8 py-3 text-lg">

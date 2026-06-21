@@ -11,16 +11,19 @@ interface Props {
 }
 
 const {
-  title = siteConfig.meta.title,
-  description = siteConfig.meta.description,
-  keywords = siteConfig.meta.keywords,
-  url = siteConfig.url,
-  image = siteConfig.meta.image,
-  twitterHandle = siteConfig.social.twitterName,
+	title = siteConfig.meta.title,
+	description = siteConfig.meta.description,
+	keywords = siteConfig.meta.keywords,
+	url = siteConfig.url,
+	image = siteConfig.meta.image,
+	twitterHandle = siteConfig.social.twitterName,
 } = Astro.props;
 
 // 构建完整的页面标题
-const metaTitle = title === siteConfig.meta.title ? title : `${title} | ${siteConfig.meta.title}`;
+const metaTitle =
+	title === siteConfig.meta.title
+		? title
+		: `${title} | ${siteConfig.meta.title}`;
 const metaDescription = description || siteConfig.meta.description;
 const ogImage = image || siteConfig.meta.image;
 const canonicalUrl = url || siteConfig.url;
