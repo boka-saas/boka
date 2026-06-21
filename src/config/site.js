@@ -6,7 +6,7 @@ export const siteConfig = {
 	title: "Boka",
 	author: "Boka",
 	url: SITE_URL,
-	mail: "hello@boka.io",
+	mail: "bokabookings@gmail.com",
 	utm: {
 		source: `${SITE_URL}`,
 		medium: "referral",
