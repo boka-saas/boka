@@ -4,19 +4,19 @@ import Button from "@/components/ui/Button.astro";
 import Logo from "@/components/ui/Logo.astro";
 import { siteConfig } from "@/config/site";
 import {
-  CalendarCheck,
-  ChevronDown,
-  ChevronRight,
-  Menu,
-  Moon,
-  SunMedium,
-  X,
+	CalendarCheck,
+	ChevronDown,
+	ChevronRight,
+	Menu,
+	Moon,
+	SunMedium,
+	X,
 } from "@lucide/astro";
 
 type MenuItem = {
-  name: string;
-  url?: string;
-  children?: Array<{ name: string; url: string }>;
+	name: string;
+	url?: string;
+	children?: Array<{ name: string; url: string }>;
 };
 
 const menuItems = menus as MenuItem[];
