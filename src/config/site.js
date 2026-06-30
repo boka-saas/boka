@@ -22,8 +22,8 @@ export const siteConfig = {
 		twitterHandle: "",
 	},
 	links: {
-		barberDemo: "https://alisbarber-dev.netlify.app/",
-		dashboardDemo: "https://boka-business.netlify.app/",
+		barberDemo: "https://alisbarber.com/",
+		dashboardDemo: "https://boka-business-demo.netlify.app/dashboard/",
 		trial: "/contact",
 	},
 	social: {
