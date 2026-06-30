@@ -1,10 +1,10 @@
 ---
 import AnimatedText from "@/components/ui/AnimatedText.astro";
 import Badge from "@/components/ui/Badge.astro";
-import BrowserFrame from "@/components/ui/BrowserFrame.astro";
 import Button from "@/components/ui/Button.astro";
+import PhoneFrame from "@/components/ui/PhoneFrame.astro";
 import { siteConfig } from "@/config/site";
-import { ArrowRight, CalendarCheck, LayoutDashboard } from "@lucide/astro";
+import { ArrowRight, CalendarCheck } from "@lucide/astro";
 ---
 
 <div class="relative z-20 mx-auto mt-16 w-full px-4 site-container md:mt-18 lg:mt-32 xl:px-0">
@@ -58,37 +58,73 @@ import { ArrowRight, CalendarCheck, LayoutDashboard } from "@lucide/astro";
     </div>
 
     <div
-      class="relative mt-16 w-full justify-end md:flex md:w-1/2 md:translate-y-4 md:pl-10 md:mt-0 xl:translate-y-0"
+      class="relative mt-16 flex w-full flex-col items-center md:w-1/2 md:translate-y-4 md:pl-10 md:mt-0 xl:translate-y-0"
       data-aos="fade-up-sm"
       data-aos-delay="300"
       data-aos-duration="800"
       data-aos-once="true"
     >
-      <BrowserFrame url="boka.app/dashboard" className="w-full">
-        <div class="relative overflow-hidden bg-bg-secondary dark:bg-neutral-900">
-          <img
-            src="/assets/boka/boka-dashboard.png"
-            alt="Boka dashboard preview showing booking and revenue insights"
-            loading="eager"
-            width="1280"
-            height="1044"
-            class="h-[300px] w-full object-cover object-top md:h-[350px]"
-          />
-          <div class="absolute left-4 top-4 inline-flex items-center gap-2 rounded-full border border-white/60 bg-white/90 px-3 py-1 text-xs font-medium text-neutral-700 shadow-sm backdrop-blur dark:border-neutral-700/70 dark:bg-neutral-900/85 dark:text-neutral-200">
-            <span class="hero-live-dot relative h-2 w-2 rounded-full bg-emerald-500"></span>
-            Live business overview
+      <a
+        href={siteConfig.links.dashboardDemo}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="group hero-preview-link block w-full max-w-[360px]"
+        aria-label="Open live dashboard demo in a new tab"
+      >
+        <PhoneFrame className="hero-preview-frame w-full">
+          <div class="relative overflow-hidden bg-bg-secondary dark:bg-neutral-900">
+            <img
+              src="/assets/boka/boka-dashboard-mobile.png"
+              alt="Boka dashboard preview showing booking and revenue insights"
+              loading="eager"
+              width="1000"
+              height="1514"
+              class="h-auto w-full object-cover object-[top_center]"
+            />
+            <div
+              class="pointer-events-none absolute inset-0 flex items-center justify-center bg-neutral-900/0 transition-colors duration-300 group-hover:bg-neutral-900/20"
+            >
+              <span
+                class="inline-flex items-center gap-2 rounded-full border border-white/60 bg-white/90 px-4 py-2 text-sm font-medium text-neutral-800 opacity-0 shadow-sm backdrop-blur transition-opacity duration-300 group-hover:opacity-100 dark:border-neutral-700/70 dark:bg-neutral-900/85 dark:text-neutral-100"
+              >
+                Open live demo <ArrowRight size={16} />
+              </span>
+            </div>
           </div>
-          <div class="absolute bottom-4 right-4 hidden items-center gap-2 rounded-xl border border-primary/15 bg-white/92 px-3 py-2 text-sm font-medium text-neutral-700 shadow-sm backdrop-blur dark:border-neutral-700 dark:bg-neutral-900/90 dark:text-neutral-200 sm:inline-flex">
-            <LayoutDashboard size={16} class="text-primary" />
-            Bookings, revenue, staff
-          </div>
-        </div>
-      </BrowserFrame>
+        </PhoneFrame>
+      </a>
+      <div class="mt-3 inline-flex items-center gap-2 rounded-full border border-primary/15 bg-white/90 px-3 py-1 text-xs font-medium text-neutral-700 shadow-sm backdrop-blur dark:border-neutral-700/70 dark:bg-neutral-900/85 dark:text-neutral-200">
+        <span class="hero-live-dot relative h-2 w-2 rounded-full bg-emerald-500"></span>
+        Live business demo
+      </div>
     </div>
   </div>
 </div>
 
 <style>
+  .hero-preview-frame {
+    transition:
+      transform 300ms cubic-bezier(0.4, 0, 0.2, 1),
+      box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .hero-preview-link:hover .hero-preview-frame,
+  .hero-preview-link:focus-visible .hero-preview-frame {
+    transform: scale(1.02);
+    box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-preview-frame {
+      transition: none !important;
+    }
+
+    .hero-preview-link:hover .hero-preview-frame,
+    .hero-preview-link:focus-visible .hero-preview-frame {
+      transform: none;
+    }
+  }
+
   .hero-live-dot::before {
     content: "";
     position: absolute;
