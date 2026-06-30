@@ -1,36 +1,32 @@
 ---
 interface Props {
-  url?: string;
-  variant?: "light" | "dark" | "auto";
-  className?: string;
+	url?: string;
+	variant?: "light" | "dark" | "auto";
+	className?: string;
 }
 
-const {
-  url = "boka.app",
-  variant = "auto",
-  className = "",
-} = Astro.props;
+const { url = "boka.app", variant = "auto", className = "" } = Astro.props;
 
 const surfaceClass =
-  variant === "light"
-    ? "bg-bg-secondary border-primary/10"
-    : variant === "dark"
-    ? "bg-bg-secondary-dark border-neutral-700"
-    : "bg-bg-secondary dark:bg-bg-secondary-dark border-primary/10 dark:border-neutral-700";
+	variant === "light"
+		? "bg-bg-secondary border-primary/10"
+		: variant === "dark"
+			? "bg-bg-secondary-dark border-neutral-700"
+			: "bg-bg-secondary dark:bg-bg-secondary-dark border-primary/10 dark:border-neutral-700";
 
 const chromeClass =
-  variant === "light"
-    ? "border-neutral-200/50 bg-neutral-50"
-    : variant === "dark"
-    ? "border-neutral-700/50 bg-neutral-800/50"
-    : "border-neutral-200/50 dark:border-neutral-700/50 bg-neutral-50 dark:bg-neutral-800/50";
+	variant === "light"
+		? "border-neutral-200/50 bg-neutral-50"
+		: variant === "dark"
+			? "border-neutral-700/50 bg-neutral-800/50"
+			: "border-neutral-200/50 dark:border-neutral-700/50 bg-neutral-50 dark:bg-neutral-800/50";
 
 const addressClass =
-  variant === "light"
-    ? "bg-neutral-200/50 text-neutral-500"
-    : variant === "dark"
-    ? "bg-neutral-700/50 text-neutral-400"
-    : "bg-neutral-200/50 dark:bg-neutral-700/50 text-neutral-500 dark:text-neutral-400";
+	variant === "light"
+		? "bg-neutral-200/50 text-neutral-500"
+		: variant === "dark"
+			? "bg-neutral-700/50 text-neutral-400"
+			: "bg-neutral-200/50 dark:bg-neutral-700/50 text-neutral-500 dark:text-neutral-400";
 ---
 
 <div class={`relative rounded-2xl overflow-hidden border shadow-lg ${surfaceClass} ${className}`}>

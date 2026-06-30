@@ -1,21 +1,21 @@
 ---
-import { siteConfig } from '@/config/site.js';
+import { siteConfig } from "@/config/site.js";
 export interface Props {
-  title?: string;
-  description?: string;
-  keywords?: string;
-  url?: string;
-  ogImage?: string;
-  twitterHandle?: string;
+	title?: string;
+	description?: string;
+	keywords?: string;
+	url?: string;
+	ogImage?: string;
+	twitterHandle?: string;
 }
 
 const {
-  title,
-  description,
-  keywords = "",
-  url = siteConfig.url, //
-  ogImage = "/og.jpg",
-  twitterHandle = siteConfig.social.twitterName || '',
+	title,
+	description,
+	keywords = "",
+	url = siteConfig.url, //
+	ogImage = "/og.jpg",
+	twitterHandle = siteConfig.social.twitterName || "",
 } = Astro.props;
 ---
 

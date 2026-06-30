@@ -1,57 +1,86 @@
 ---
-import Layout from "@/layouts/Layout.astro";
 import PageHeader from "@/components/elements/PageHeader.astro";
-import Button from "@/components/ui/Button.astro";
 import BrowserFrame from "@/components/ui/BrowserFrame.astro";
+import Button from "@/components/ui/Button.astro";
 import { siteConfig } from "@/config/site";
+import Layout from "@/layouts/Layout.astro";
 import {
-  ArrowRight,
-  BadgePoundSterling,
-  Bell,
-  CalendarCheck,
-  Check,
-  CreditCard,
-  Globe,
-  Users,
+	ArrowRight,
+	BadgePoundSterling,
+	Bell,
+	CalendarCheck,
+	Check,
+	CreditCard,
+	Globe,
+	Users,
 } from "@lucide/astro";
 
 const featureModules = [
-  {
-    icon: CalendarCheck,
-    title: "Online booking that stays open after you close",
-    desc: "Clients can browse services, choose a time, and book from their phone without waiting for a reply. Boka keeps booking friction low for both regulars and first-time visitors.",
-    points: ["Mobile-friendly booking flow", "Service and staff selection", "Availability connected to your schedule", "Works for barbers, salons, beauty, and aesthetics"],
-  },
-  {
-    icon: CreditCard,
-    title: "Payments built into the appointment flow",
-    desc: "Take money upfront, collect deposits, or let clients pay in store. Stripe support keeps the checkout familiar while giving the business more control over cash flow.",
-    points: ["Stripe-powered online payments", "Deposit or full-payment options", "Pay-in-store support", "Cleaner handoff from booking to checkout"],
-  },
-  {
-    icon: BadgePoundSterling,
-    title: "A dashboard owners can actually read",
-    desc: "Boka gives owners a clear view of appointments, revenue, and business activity without turning simple questions into spreadsheet work.",
-    points: ["Revenue overview", "Appointment activity", "Service performance signals", "Daily management view"],
-  },
-  {
-    icon: Globe,
-    title: "A custom website connected to bookings",
-    desc: "Your site should look professional and move clients toward the right action. Boka websites present services, brand, and booking together instead of sending clients across disconnected tools.",
-    points: ["Custom website", "Hosted pages", "Service-led content", "Booking CTA close to the client decision"],
-  },
-  {
-    icon: Users,
-    title: "Staff availability and appointment control",
-    desc: "Set weekly availability, manage team schedules, and keep appointments organized as the business grows beyond one person.",
-    points: ["Weekly availability", "Staff schedule setup", "Appointment management", "Designed for multi-service teams"],
-  },
-  {
-    icon: Bell,
-    title: "Automated alerts that reduce admin",
-    desc: "SMS and email reminders help clients remember their appointments and give owners fewer manual follow-ups to chase.",
-    points: ["SMS reminders", "Email notifications", "Appointment updates", "Less manual client chasing"],
-  },
+	{
+		icon: CalendarCheck,
+		title: "Online booking that stays open after you close",
+		desc: "Clients can browse services, choose a time, and book from their phone without waiting for a reply. Boka keeps booking friction low for both regulars and first-time visitors.",
+		points: [
+			"Mobile-friendly booking flow",
+			"Service and staff selection",
+			"Availability connected to your schedule",
+			"Works for barbers, salons, beauty, and aesthetics",
+		],
+	},
+	{
+		icon: CreditCard,
+		title: "Payments built into the appointment flow",
+		desc: "Take money upfront, collect deposits, or let clients pay in store. Stripe support keeps the checkout familiar while giving the business more control over cash flow.",
+		points: [
+			"Stripe-powered online payments",
+			"Deposit or full-payment options",
+			"Cleaner handoff from booking to checkout",
+		],
+	},
+	{
+		icon: BadgePoundSterling,
+		title: "A dashboard owners can actually read",
+		desc: "Boka gives owners a clear view of appointments, revenue, and business activity without turning simple questions into spreadsheet work.",
+		points: [
+			"Revenue overview",
+			"Appointment activity",
+			"Service performance signals",
+			"Daily management view",
+		],
+	},
+	{
+		icon: Globe,
+		title: "A custom website connected to bookings",
+		desc: "Your site should look professional and move clients toward the right action. Boka websites present services, brand, and booking together instead of sending clients across disconnected tools.",
+		points: [
+			"Custom website",
+			"Hosted pages",
+			"Service-led content",
+			"Booking CTA close to the client decision",
+		],
+	},
+	{
+		icon: Users,
+		title: "Staff availability and appointment control",
+		desc: "Set weekly availability, manage team schedules, and keep appointments organized as the business grows beyond one person.",
+		points: [
+			"Weekly availability",
+			"Staff schedule setup",
+			"Appointment management",
+			"Designed for multi-service teams",
+		],
+	},
+	{
+		icon: Bell,
+		title: "Automated alerts that reduce admin",
+		desc: "SMS and email reminders help clients remember their appointments and give owners fewer manual follow-ups to chase.",
+		points: [
+			"SMS / Email reminders",
+			"Calender integration",
+			"Appointment updates",
+			"Less manual client chasing",
+		],
+	},
 ];
 ---
 
@@ -88,14 +117,6 @@ const featureModules = [
           </div>
           <h2 class="mb-4 font-brand text-2xl text-neutral-800 dark:text-neutral-100 md:text-3xl">{mod.title}</h2>
           <p class="mb-6 leading-relaxed text-neutral-600 dark:text-neutral-300">{mod.desc}</p>
-          <ul class="space-y-3">
-            {mod.points.map((point) => (
-              <li class="flex items-start gap-2">
-                <Check class="mt-0.5 h-4 w-4 flex-shrink-0 text-primary" />
-                <span class="text-sm text-neutral-600 dark:text-neutral-300">{point}</span>
-              </li>
-            ))}
-          </ul>
         </div>
 
         <div class={i % 2 === 1 ? "lg:order-1" : ""} data-aos="fade-up-sm" data-aos-delay="150" data-aos-once="true">

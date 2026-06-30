@@ -1,35 +1,51 @@
 ---
-import Layout from "@/layouts/Layout.astro";
 import Button from "@/components/ui/Button.astro";
 import { siteConfig } from "@/config/site";
-import { ArrowRight, CalendarCheck, Clock3, LifeBuoy, Mail, Send, Sparkles } from "@lucide/astro";
+import Layout from "@/layouts/Layout.astro";
+import {
+	ArrowRight,
+	CalendarCheck,
+	Clock3,
+	LifeBuoy,
+	Mail,
+	Send,
+	Sparkles,
+} from "@lucide/astro";
 
 const contactTopics = [
-  { value: "trial", label: "Start free trial" },
-  { value: "pricing", label: "Pricing question" },
-  { value: "setup", label: "Business setup" },
-  { value: "demo", label: "Book a demo" },
-  { value: "support", label: "Customer support" },
+	{ value: "trial", label: "Start free trial" },
+	{ value: "pricing", label: "Pricing question" },
+	{ value: "setup", label: "Business setup" },
+	{ value: "demo", label: "Book a demo" },
+	{ value: "support", label: "Customer support" },
 ];
 
 const channels = [
-  {
-    icon: Mail,
-    label: "Email",
-    text: siteConfig.mail,
-    href: `mailto:${siteConfig.mail}`,
-  },
-  {
-    icon: CalendarCheck,
-    label: "Booking demo",
-    text: "View barber demo",
-    href: siteConfig.links.barberDemo,
-  },
+	{
+		icon: Mail,
+		label: "Email",
+		text: siteConfig.mail,
+		href: `mailto:${siteConfig.mail}`,
+	},
+	{
+		icon: CalendarCheck,
+		label: "Booking demo",
+		text: "View barber demo",
+		href: siteConfig.links.barberDemo,
+	},
 ];
 
 const expectations = [
-  { icon: Clock3, title: "Reply window", desc: "Most messages get a response within 1 business day." },
-  { icon: LifeBuoy, title: "Setup context", desc: "Share your services, staff count, current booking process, and what you want to improve first." },
+	{
+		icon: Clock3,
+		title: "Reply window",
+		desc: "Most messages get a response within 1 business day.",
+	},
+	{
+		icon: LifeBuoy,
+		title: "Setup context",
+		desc: "Share your services, staff count, current booking process, and what you want to improve first.",
+	},
 ];
 ---
 

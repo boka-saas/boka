@@ -6,14 +6,15 @@ export const siteConfig = {
 	title: "Boka",
 	author: "Boka",
 	url: SITE_URL,
-	mail: "hello@boka.io",
+	mail: "bokabookings@gmail.com",
 	utm: {
 		source: `${SITE_URL}`,
 		medium: "referral",
 		campaign: "navigation",
 	},
 	meta: {
-		title: "Boka - Booking software for barbers, salons, and beauty professionals",
+		title:
+			"Boka - Booking software for barbers, salons, and beauty professionals",
 		description:
 			"Get booked, get paid, and grow with Boka. Online booking, payments, reminders, staff management, custom websites, and business insights in one place.",
 		keywords:

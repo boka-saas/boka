@@ -1,32 +1,32 @@
 ---
 interface Heading {
-  depth: number;
-  slug: string;
-  text: string;
+	depth: number;
+	slug: string;
+	text: string;
 }
 
 interface HeadingNode extends Heading {
-  children: HeadingNode[];
+	children: HeadingNode[];
 }
 
 const { headings = [] } = Astro.props as { headings: Heading[] };
 
 function buildTree(list: Heading[]): HeadingNode[] {
-  const root: HeadingNode[] = [];
-  const stack: HeadingNode[] = [];
-  list.forEach(h => {
-    const node: HeadingNode = { ...h, children: [] };
-    while (stack.length && stack[stack.length - 1].depth >= h.depth) {
-      stack.pop();
-    }
-    if (stack.length === 0) {
-      root.push(node);
-    } else {
-      stack[stack.length - 1].children.push(node);
-    }
-    stack.push(node);
-  });
-  return root;
+	const root: HeadingNode[] = [];
+	const stack: HeadingNode[] = [];
+	list.forEach((h) => {
+		const node: HeadingNode = { ...h, children: [] };
+		while (stack.length && stack[stack.length - 1].depth >= h.depth) {
+			stack.pop();
+		}
+		if (stack.length === 0) {
+			root.push(node);
+		} else {
+			stack[stack.length - 1].children.push(node);
+		}
+		stack.push(node);
+	});
+	return root;
 }
 const tree = buildTree(headings);
 ---

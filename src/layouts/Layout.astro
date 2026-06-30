@@ -1,27 +1,22 @@
 ---
-import Meta from './Meta.astro';
-import TopBg from "@/components/ui/TopBg.astro";
 import Footer from "@/components/sections/Footer.astro";
 import Header from "@/components/sections/Header.astro";
+import TopBg from "@/components/ui/TopBg.astro";
 import TrackGa from "@/components/widgets/TrackGa.astro";
+import Meta from "./Meta.astro";
 interface Props {
 	title?: string | undefined;
 	description?: string | undefined;
 	keywords?: string | undefined;
 }
 
-const {
-	title,
-	description,
-	keywords
-} = Astro.props;
-
+const { title, description, keywords } = Astro.props;
 
 import "../styles/global.css";
 import "aos/dist/aos.css";
 import "../styles/aos-custom.css";
-import '../styles/article.css';
-import '../styles/article-enhancements.css';
+import "../styles/article.css";
+import "../styles/article-enhancements.css";
 ---
 
 <html lang="">

@@ -1,9 +1,9 @@
 ---
-import PricingToggle from "@/components/ui/PricingToggle.astro";
-import Button from "@/components/ui/Button.astro";
 import SectionHeader from "@/components/elements/SectionHeader.astro";
+import Button from "@/components/ui/Button.astro";
+import PricingToggle from "@/components/ui/PricingToggle.astro";
 import { siteConfig } from "@/config/site";
-import { Check, X, ArrowRight, Sparkles } from "@lucide/astro";
+import { ArrowRight, Check, Sparkles, X } from "@lucide/astro";
 
 interface Props {
   title?: string;
@@ -22,8 +22,10 @@ const plans = [
     name: "Starter",
     monthlyPrice: "£12",
     yearlyPrice: "£10",
-    monthlyDescription: "For businesses that want a professional online presence.",
-    yearlyDescription: "Save with annual billing while keeping your website hosted.",
+    monthlyDescription:
+      "For businesses that want a professional online presence.",
+    yearlyDescription:
+      "Save with annual billing while keeping your website hosted.",
     monthlySuffix: "/ month",
     yearlySuffix: "/ month, billed yearly",
     features: [
@@ -42,13 +44,15 @@ const plans = [
     name: "Growth",
     monthlyPrice: "£20",
     yearlyPrice: "£17",
-    monthlyDescription: "For businesses ready to run bookings and payments online.",
-    yearlyDescription: "Save with annual billing and keep the full booking toolkit.",
+    monthlyDescription:
+      "For businesses ready to run bookings and payments online.",
+    yearlyDescription:
+      "Save with annual billing and keep the full booking toolkit.",
     monthlySuffix: "/ month",
     yearlySuffix: "/ month, billed yearly",
     features: [
       { text: "Advanced booking system", included: true },
-      { text: "Online payments via Stripe", included: true },
+      { text: "Online payments", included: true },
       { text: "Email notifications", included: true },
       { text: "Financial analytics", included: true },
       { text: "Weekly availability controls", included: true },
@@ -63,8 +67,10 @@ const plans = [
     name: "Scale",
     monthlyPrice: "Custom",
     yearlyPrice: "Custom",
-    monthlyDescription: "For growing teams, multi-service businesses, and larger setups.",
-    yearlyDescription: "For growing teams, multi-service businesses, and larger setups.",
+    monthlyDescription:
+      "For growing teams, multi-service businesses, and larger setups.",
+    yearlyDescription:
+      "For growing teams, multi-service businesses, and larger setups.",
     monthlySuffix: "",
     yearlySuffix: "",
     features: [
@@ -83,119 +89,157 @@ const plans = [
 ---
 
 <section class="pricing-section">
-  {showHeader && (
-    <div class="site-container pt-16 md:pt-20" data-aos="fade-up-xs" data-aos-once="true">
-      <SectionHeader title={title} description={description} />
-    </div>
-  )}
+  {
+    showHeader && (
+      <div
+        class="site-container pt-16 md:pt-20"
+        data-aos="fade-up-xs"
+        data-aos-once="true"
+      >
+        <SectionHeader title={title} description={description} />
+      </div>
+    )
+  }
 
   <!-- Billing Toggle -->
-  <div class="site-container mb-12" data-aos="fade-up-xs" data-aos-once="true" data-aos-delay="300" >
+  <div
+    class="site-container mb-12"
+    data-aos="fade-up-xs"
+    data-aos-once="true"
+    data-aos-delay="300"
+  >
     <PricingToggle />
   </div>
 
   <!-- Pricing Cards -->
   <div class="site-container pb-16">
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-      {plans.map((plan, i) => (
-        <div
-          class={`relative p-6 md:p-8 rounded-2xl border transition-all duration-300 ${
-            plan.popular
-              ? 'border-primary shadow-lg scale-[1.02] bg-bg-secondary dark:bg-bg-secondary-dark'
-              : 'border-primary/10 dark:border-neutral-700 bg-bg-secondary dark:bg-bg-secondary-dark'
-          }`}
-          data-aos="fade-up-sm"
-          data-aos-delay={i * 100}
-          data-aos-once="true"
-        >
-          {plan.popular && (
-            <div class="popular-badge absolute -top-3.5 left-1/2 -translate-x-1/2 z-10">
-              <span class="popular-badge__pill">
-                <Sparkles class="w-3.5 h-3.5" stroke-width={2.25} />
-                <span class="popular-badge__label font-brand">Most Popular</span>
+      {
+        plans.map((plan, i) => (
+          <div
+            class={`relative p-6 md:p-8 rounded-2xl border transition-all duration-300 ${
+              plan.popular
+                ? "border-primary shadow-lg scale-[1.02] bg-bg-secondary dark:bg-bg-secondary-dark"
+                : "border-primary/10 dark:border-neutral-700 bg-bg-secondary dark:bg-bg-secondary-dark"
+            }`}
+            data-aos="fade-up-sm"
+            data-aos-delay={i * 100}
+            data-aos-once="true"
+          >
+            {plan.popular && (
+              <div class="popular-badge absolute -top-3.5 left-1/2 -translate-x-1/2 z-10">
+                <span class="popular-badge__pill">
+                  <Sparkles class="w-3.5 h-3.5" stroke-width={2.25} />
+                  <span class="popular-badge__label font-brand">
+                    Most Popular
+                  </span>
+                </span>
+              </div>
+            )}
+
+            <h3 class="text-xl font-semibold text-neutral-800 dark:text-neutral-100 mb-1">
+              {plan.name}
+            </h3>
+            <p
+              class="plan-description text-sm text-neutral-500 dark:text-neutral-400 mb-4"
+              data-monthly={plan.monthlyDescription}
+              data-yearly={plan.yearlyDescription}
+            >
+              {plan.yearlyDescription}
+            </p>
+
+            <div class="mb-6">
+              <span
+                class="plan-price-display text-4xl font-brand text-neutral-800 dark:text-neutral-100"
+                data-period-display
+                data-state="yearly"
+              >
+                <span class="plan-price-placeholder" aria-hidden="true">
+                  {plan.yearlyPrice}
+                </span>
+                <span class="plan-price-mask">
+                  <span class="plan-price-track">
+                    <span
+                      class="plan-price-item"
+                      data-period="monthly"
+                      aria-hidden="true"
+                    >
+                      {plan.monthlyPrice}
+                    </span>
+                    <span class="plan-price-item" data-period="yearly">
+                      {plan.yearlyPrice}
+                    </span>
+                  </span>
+                </span>
+              </span>
+              <span
+                class="plan-suffix text-sm text-neutral-400 ml-1"
+                data-monthly={plan.monthlySuffix}
+                data-yearly={plan.yearlySuffix}
+              >
+                {plan.yearlySuffix}
               </span>
             </div>
-          )}
 
-          <h3 class="text-xl font-semibold text-neutral-800 dark:text-neutral-100 mb-1">{plan.name}</h3>
-          <p
-            class="plan-description text-sm text-neutral-500 dark:text-neutral-400 mb-4"
-            data-monthly={plan.monthlyDescription}
-            data-yearly={plan.yearlyDescription}
-          >
-            {plan.yearlyDescription}
-          </p>
+            <ul class="space-y-3 mb-8">
+              {plan.features.map((feature) => (
+                <li class="flex items-start gap-2">
+                  {feature.included ? (
+                    <Check class="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+                  ) : (
+                    <X class="w-4 h-4 text-neutral-300 dark:text-neutral-600 mt-0.5 flex-shrink-0" />
+                  )}
+                  <span
+                    class={`text-sm ${feature.included ? "text-neutral-600 dark:text-neutral-300" : "text-neutral-400 dark:text-neutral-500"}`}
+                  >
+                    {feature.text}
+                  </span>
+                </li>
+              ))}
+              {plan.name === "Growth" && (
+                <div class="text-xs italic text-neutral-400 dark:text-neutral-500 mt-1">
+                  *Stripe transaction fee applies
+                </div>
+              )}
+            </ul>
 
-          <div class="mb-6">
-            <span
-              class="plan-price-display text-4xl font-brand text-neutral-800 dark:text-neutral-100"
-              data-period-display
-              data-state="yearly"
+            <Button
+              url={plan.ctaUrl}
+              type={plan.popular ? "fill" : "outline"}
+              className="w-full justify-center"
             >
-              <span class="plan-price-placeholder" aria-hidden="true">{plan.yearlyPrice}</span>
-              <span class="plan-price-mask">
-                <span class="plan-price-track">
-                  <span class="plan-price-item" data-period="monthly" aria-hidden="true">{plan.monthlyPrice}</span>
-                  <span class="plan-price-item" data-period="yearly">{plan.yearlyPrice}</span>
-                </span>
-              </span>
-            </span>
-            <span
-              class="plan-suffix text-sm text-neutral-400 ml-1"
-              data-monthly={plan.monthlySuffix}
-              data-yearly={plan.yearlySuffix}
-            >
-              {plan.yearlySuffix}
-            </span>
+              {plan.cta} {plan.popular && <ArrowRight size={16} />}
+            </Button>
           </div>
-
-          <ul class="space-y-3 mb-8">
-            {plan.features.map((feature) => (
-              <li class="flex items-start gap-2">
-                {feature.included ? (
-                  <Check class="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
-                ) : (
-                  <X class="w-4 h-4 text-neutral-300 dark:text-neutral-600 mt-0.5 flex-shrink-0" />
-                )}
-                <span class={`text-sm ${feature.included ? 'text-neutral-600 dark:text-neutral-300' : 'text-neutral-400 dark:text-neutral-500'}`}>
-                  {feature.text}
-                </span>
-              </li>
-            ))}
-          </ul>
-
-          <Button
-            url={plan.ctaUrl}
-            type={plan.popular ? "fill" : "outline"}
-            className="w-full justify-center"
-          >
-            {plan.cta} {plan.popular && <ArrowRight size={16} />}
-          </Button>
-        </div>
-      ))}
+        ))
+      }
     </div>
   </div>
 </section>
 
 <script>
   function applyPeriod(isYearly: boolean) {
-    const key = isYearly ? 'yearly' : 'monthly';
-    const state = isYearly ? 'yearly' : 'monthly';
+    const key = isYearly ? "yearly" : "monthly";
+    const state = isYearly ? "yearly" : "monthly";
 
     // Roll-animate price displays by flipping data-state (CSS handles the transform).
     document
-      .querySelectorAll<HTMLElement>('.pricing-section [data-period-display]')
+      .querySelectorAll<HTMLElement>(".pricing-section [data-period-display]")
       .forEach((displayEl) => {
         displayEl.dataset.state = state;
-        displayEl.querySelectorAll<HTMLElement>('.plan-price-item').forEach((item) => {
-          const isActive = item.dataset.period === state;
-          item.setAttribute('aria-hidden', String(!isActive));
-        });
+        displayEl
+          .querySelectorAll<HTMLElement>(".plan-price-item")
+          .forEach((item) => {
+            const isActive = item.dataset.period === state;
+            item.setAttribute("aria-hidden", String(!isActive));
+          });
       });
 
     // Text-content swap for description and suffix.
     document
-      .querySelectorAll<HTMLElement>('.pricing-section [data-monthly][data-yearly]')
+      .querySelectorAll<HTMLElement>(
+        ".pricing-section [data-monthly][data-yearly]",
+      )
       .forEach((el) => {
         const next = el.dataset[key];
         if (next !== undefined && el.textContent !== next) {
@@ -204,7 +248,7 @@ const plans = [
       });
   }
 
-  window.addEventListener('pricing-toggle', ((e: CustomEvent) => {
+  window.addEventListener("pricing-toggle", ((e: CustomEvent) => {
     applyPeriod(Boolean(e.detail?.isYearly));
   }) as EventListener);
 
@@ -225,6 +269,7 @@ const plans = [
 
   .plan-price-placeholder {
     visibility: hidden;
+    margin-right: 6px;
   }
 
   .plan-price-mask {
@@ -301,7 +346,7 @@ const plans = [
       linear-gradient(#000 0 0) content-box,
       linear-gradient(#000 0 0);
     -webkit-mask-composite: xor;
-            mask-composite: exclude;
+    mask-composite: exclude;
     pointer-events: none;
   }
 
@@ -335,8 +380,13 @@ const plans = [
   }
 
   @keyframes popular-shine {
-    0%        { transform: translateX(-120%); }
-    55%, 100% { transform: translateX(220%); }
+    0% {
+      transform: translateX(-120%);
+    }
+    55%,
+    100% {
+      transform: translateX(220%);
+    }
   }
 
   /* Dark mode — deeper glow, same gradient */
