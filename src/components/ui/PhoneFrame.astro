@@ -7,16 +7,16 @@ const { className = "" } = Astro.props;
 ---
 
 <div
-	class={`relative mx-auto max-w-[360px] rounded-[48px] border-[6px] border-neutral-800 bg-neutral-900 shadow-2xl dark:border-neutral-700 dark:bg-neutral-900 ${className}`}
+	class={`relative rounded-[48px] border-[6px] border-neutral-800 bg-neutral-900 shadow-2xl dark:border-neutral-700 ${className}`}
 >
-	{/* Dynamic Island */}
+	<!-- Dynamic Island -->
 	<div
 		class="absolute left-1/2 top-3 z-20 h-[22px] w-[80px] -translate-x-1/2 rounded-full bg-black"
 		aria-hidden="true"
 	>
 	</div>
 
-	{/* Screen */}
+	<!-- Screen -->
 	<div class="m-2 mt-8 overflow-hidden rounded-[36px] border border-neutral-800/50 bg-black">
 		<slot />
 	</div>
