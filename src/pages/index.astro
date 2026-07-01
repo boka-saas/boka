@@ -17,7 +17,6 @@ import {
   Clock3,
   CreditCard,
   Globe,
-  MapPin,
   MessageCircle,
   Scissors,
   Search,
@@ -342,18 +341,118 @@ const faqItems = [
       description="Monitor bookings, revenue, and operational activity from one place so the business is easier to run between appointments."
     />
     <div class="mx-auto mt-8 max-w-5xl">
-      <BrowserFrame url="boka.app/dashboard">
-        <img
-          src="/assets/boka/boka-dashboard.png"
-          alt="Boka dashboard showing appointments, revenue, and business analytics"
-          loading="lazy"
-          width="1280"
-          height="1044"
-          class="h-[360px] w-full object-cover object-top md:h-[520px]"
-        />
-      </BrowserFrame>
+      <div class="mb-4 flex items-center justify-between">
+        <span
+          class="inline-flex items-center gap-2 text-sm font-medium text-neutral-600 dark:text-neutral-400"
+        >
+          <span class="relative inline-flex h-2 w-2">
+            <span
+              class="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75"
+            ></span>
+            <span
+              class="relative inline-flex h-2 w-2 rounded-full bg-emerald-500"
+            ></span>
+          </span>
+          Live interactive preview — click to try it
+        </span>
+      </div>
+      <div
+        class="group dashboard-preview-link block w-full cursor-pointer"
+        role="link"
+        tabindex="0"
+        aria-label="Open live dashboard demo in a new tab"
+        data-demo-url={siteConfig.links.dashboardDemo}
+      >
+        <BrowserFrame
+          url="boka.app/dashboard"
+          className="dashboard-preview-frame"
+        >
+          <div
+            class="relative overflow-hidden bg-bg-secondary dark:bg-neutral-900"
+          >
+            <img
+              src="/assets/boka/boka-dashboard.png"
+              alt="Boka dashboard preview showing booking and revenue insights"
+              loading="lazy"
+              width="1280"
+              height="1044"
+              class="dashboard-preview-fallback h-[360px] w-full object-cover object-top md:h-[520px]"
+            />
+            <iframe
+              data-src={siteConfig.links.dashboardDemo}
+              title="Boka business dashboard demo preview"
+              loading="lazy"
+              class="dashboard-preview-iframe absolute inset-0 h-full w-full border-0 opacity-0 transition-opacity duration-500"
+            ></iframe>
+            <div
+              class="pointer-events-none absolute inset-0 flex cursor-pointer items-center justify-center bg-neutral-900/0 transition-colors duration-300 group-hover:bg-neutral-900/20"
+            >
+              <span
+                class="inline-flex items-center gap-2 rounded-full border border-white/60 bg-white/90 px-4 py-2 text-sm font-medium text-neutral-800 opacity-0 shadow-sm backdrop-blur transition-opacity duration-300 group-hover:opacity-100 dark:border-neutral-700/70 dark:bg-neutral-900/85 dark:text-neutral-100"
+              >
+                Open live demo <ArrowRight size={16} />
+              </span>
+            </div>
+          </div>
+        </BrowserFrame>
+      </div>
     </div>
   </section>
+
+  <script>
+    (function () {
+      const preview = document.querySelector(".dashboard-preview-link");
+      if (!preview) return;
+
+      const url = preview.getAttribute("data-demo-url");
+      if (!url) return;
+
+      const openDemo = () => window.open(url, "_blank", "noopener,noreferrer");
+
+      preview.addEventListener("click", openDemo);
+      preview.addEventListener("keydown", (event) => {
+        if (
+          event instanceof KeyboardEvent &&
+          (event.key === "Enter" || event.key === " ")
+        ) {
+          event.preventDefault();
+          openDemo();
+        }
+      });
+
+      const iframe = preview.querySelector(".dashboard-preview-iframe");
+      const fallback = preview.querySelector(".dashboard-preview-fallback");
+      if (!iframe || !fallback) return;
+
+      const loadIframe = () => {
+        if (iframe.getAttribute("src")) return;
+        const dataSrc = iframe.getAttribute("data-src");
+        if (!dataSrc) return;
+        iframe.setAttribute("src", dataSrc);
+      };
+
+      const onIframeLoad = () => {
+        iframe.classList.remove("opacity-0");
+        fallback.classList.add("opacity-0");
+      };
+
+      iframe.addEventListener("load", onIframeLoad);
+
+      const scheduleLoad = () => {
+        if ("requestIdleCallback" in window) {
+          window.requestIdleCallback(loadIframe, { timeout: 2000 });
+        } else {
+          setTimeout(loadIframe, 200);
+        }
+      };
+
+      if (document.readyState === "complete") {
+        scheduleLoad();
+      } else {
+        window.addEventListener("load", scheduleLoad, { once: true });
+      }
+    })();
+  </script>
 
   <section class="site-container py-16 md:py-24">
     <div class="grid items-center gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
@@ -556,5 +655,32 @@ const faqItems = [
     .testimonial-marquee {
       mask-image: none;
     }
+  }
+
+  .dashboard-preview-frame {
+    transition:
+      transform 300ms cubic-bezier(0.4, 0, 0.2, 1),
+      box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .dashboard-preview-link:hover .dashboard-preview-frame,
+  .dashboard-preview-link:focus-visible .dashboard-preview-frame {
+    transform: scale(1.02);
+    box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .dashboard-preview-frame {
+      transition: none !important;
+    }
+
+    .dashboard-preview-link:hover .dashboard-preview-frame,
+    .dashboard-preview-link:focus-visible .dashboard-preview-frame {
+      transform: none;
+    }
+  }
+
+  .dashboard-preview-fallback {
+    transition: opacity 500ms ease;
   }
 </style>
