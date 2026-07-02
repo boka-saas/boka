@@ -1,0 +1,37 @@
+---
+// Shared business-page components.
+import BusinessBooking from "@/components/businesses/BusinessBooking.astro";
+import BusinessContact from "@/components/businesses/BusinessContact.astro";
+import BusinessHero from "@/components/businesses/BusinessHero.astro";
+import BusinessLayout from "@/components/businesses/BusinessLayout.astro";
+import BusinessPrices from "@/components/businesses/BusinessPrices.astro";
+import { getAllBusinesses, getBusinessBySlug } from "@/lib/businesses.js";
+
+// Generate one static page per business at build time.
+// The full business object is passed as a prop so the page does not need
+// to look it up again, but getBusinessBySlug is kept as a runtime fallback.
+export async function getStaticPaths() {
+	const businesses = getAllBusinesses();
+	return businesses.map((business) => ({
+		params: { business: business.slug },
+		props: { business },
+	}));
+}
+
+const { business: businessFromProps } = Astro.props;
+const { business: slugFromParams } = Astro.params;
+const business = businessFromProps ?? getBusinessBySlug(slugFromParams);
+
+// Unknown slugs render the existing 404 page.
+if (!business) {
+	return new Response(null, { status: 404 });
+}
+---
+
+{/* BusinessLayout is a standalone layout and does not wrap the global marketing Layout. */}
+<BusinessLayout business={business}>
+  <BusinessHero business={business} />
+  <BusinessPrices business={business} />
+  <BusinessBooking business={business} />
+  <BusinessContact business={business} />
+</BusinessLayout>
