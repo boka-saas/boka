@@ -23,9 +23,9 @@ const { business } = Astro.props;
           src={business.logo}
           alt={`${business.name} logo`}
           class="h-10 w-10 rounded-xl object-cover"
-          onerror={`this.style.display='none'; this.nextElementSibling.style.display='flex'`}
+          onerror={`this.style.display='none'`}
         />
-        <span class="hidden items-center text-lg font-semibold business-header-name">
+        <span class="flex items-center text-lg font-semibold business-header-name">
           {business.name}
         </span>
       </a>
