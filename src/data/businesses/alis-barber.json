@@ -1,17 +1,13 @@
 {
 	"slug": "alis-barber",
 	"name": "Ali's Barber",
+	"category": "Barbershop",
 	"tagline": "Precision cuts in East London",
-	"description": "Traditional barbering with modern style. Walk-ins welcome.",
+	"description": "Traditional barbering with modern style. Walk-ins welcome, but booking guarantees your chair.",
 	"logo": "/assets/businesses/alis-barber/logo.svg",
 	"theme": {
 		"primary": "#8B5A2B",
-		"primaryStrong": "#A66E3A",
-		"accent": "#F4C430",
-		"bg": "#FDF8F3",
-		"bgDark": "#1A120B",
-		"text": "#3E2723",
-		"textDark": "#F5F0EB"
+		"accent": "#F4C430"
 	},
 	"contact": {
 		"address": "123 High Street, London E1 1AA",

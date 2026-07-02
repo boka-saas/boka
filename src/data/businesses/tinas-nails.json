@@ -1,17 +1,13 @@
 {
 	"slug": "tinas-nails",
 	"name": "Tina's Nails",
+	"category": "Nail bar",
 	"tagline": "Gel, acrylics, and calm in Shoreditch",
 	"description": "A boutique nail bar specialising in long-lasting gel and acrylic designs in a relaxed, hygienic space.",
 	"logo": "/assets/businesses/tinas-nails/logo.svg",
 	"theme": {
 		"primary": "#C2185B",
-		"primaryStrong": "#D81B60",
-		"accent": "#F8BBD0",
-		"bg": "#FFF5F7",
-		"bgDark": "#2A0A15",
-		"text": "#4A0D24",
-		"textDark": "#FCE4EC"
+		"accent": "#F8BBD0"
 	},
 	"contact": {
 		"address": "45 Rivington Street, London EC2A 3QB",

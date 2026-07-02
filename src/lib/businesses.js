@@ -12,6 +12,7 @@ const modules = import.meta.glob("/src/data/businesses/*.json", {
 const REQUIRED_FIELDS = [
 	"slug",
 	"name",
+	"category",
 	"tagline",
 	"description",
 	"logo",
@@ -23,15 +24,9 @@ const REQUIRED_FIELDS = [
 
 // Theme tokens that every business theme object must provide.
 // These are converted to CSS custom properties in BusinessLayout.astro.
-const THEME_FIELDS = [
-	"primary",
-	"primaryStrong",
-	"accent",
-	"bg",
-	"bgDark",
-	"text",
-	"textDark",
-];
+// The rest of the page uses RicoFast's global tokens so dark mode matches
+// the marketing site automatically.
+const THEME_FIELDS = ["primary", "accent"];
 
 // Validate a single business config. Fail fast with a clear message so
 // build-time errors point directly to the offending file and field.
