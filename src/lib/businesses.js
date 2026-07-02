@@ -2,6 +2,8 @@
 // import.meta.glob is used instead of node:fs because Astro's static generation
 // runs this code from dist/.prerender/, where filesystem paths relative to
 // __dirname do not exist. The glob embeds the JSON content into the bundle.
+// https://vite.dev/guide/features.html#glob-import
+// https://docs.astro.build/en/guides/imports/#vite-features
 const modules = import.meta.glob("/src/data/businesses/*.json", {
 	eager: true,
 });
