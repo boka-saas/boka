@@ -1,10 +1,11 @@
 ---
 import { formatPrice } from "@/lib/businesses.js";
-import { MapPin } from "@lucide/astro";
+import { ArrowRight, MapPin } from "@lucide/astro";
 
 interface Props {
 	business: {
 		name: string;
+		category: string;
 		tagline: string;
 		description: string;
 		bookingUrl: string;
@@ -19,21 +20,39 @@ const { business } = Astro.props;
 const lowestPrice = Math.min(...business.services.map((s) => s.price));
 ---
 
-<section class="business-hero">
+<section class="business-hero py-16 md:py-24">
   <div class="site-container">
     <div class="mx-auto max-w-2xl text-center">
-      <p class="business-hero-eyebrow">
-        <MapPin class="inline h-4 w-4" /> {business.contact.address}
+      <p
+        class="mb-4 inline-flex items-center gap-2 rounded-full border border-[var(--business-primary)]/15 bg-[var(--business-primary)]/5 px-3 py-1 text-xs font-medium text-[var(--business-primary)]"
+      >
+        <MapPin size={14} />
+        {business.contact.address}
       </p>
-      <h1 class="business-hero-title">{business.name}</h1>
-      <p class="business-hero-tagline">{business.tagline}</p>
-      <p class="business-hero-description">{business.description}</p>
+
+      <p
+        class="mb-3 inline-flex items-center gap-1.5 rounded-full bg-[var(--business-accent)]/15 px-3 py-1 text-xs font-semibold text-[var(--business-primary)]"
+      >
+        {business.category}
+      </p>
+
+      <h1 class="business-hero-title font-brand text-4xl leading-tight md:text-5xl lg:text-6xl">
+        {business.name}
+      </h1>
+
+      <p class="business-hero-tagline mt-4 text-xl font-medium md:text-2xl">
+        {business.tagline}
+      </p>
+
+      <p class="mt-4 text-base leading-relaxed text-neutral-600 dark:text-neutral-300 md:text-lg">
+        {business.description}
+      </p>
 
       <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
-        <a href="#booking" class="business-button">
-          Book now
+        <a href="#booking" class="business-button inline-flex items-center gap-2 rounded-xl px-6 py-3 text-sm font-medium">
+          Book now <ArrowRight size={16} />
         </a>
-        <a href="#prices" class="business-button-outline">
+        <a href="#prices" class="business-button-outline inline-flex items-center gap-2 rounded-xl px-6 py-3 text-sm font-medium">
           See prices from {formatPrice(lowestPrice)}
         </a>
       </div>

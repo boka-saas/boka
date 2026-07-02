@@ -1,5 +1,5 @@
 ---
-import { CalendarCheck } from "@lucide/astro";
+import { CalendarCheck, Clock } from "@lucide/astro";
 
 interface Props {
 	business: {
@@ -11,21 +11,37 @@ interface Props {
 const { business } = Astro.props;
 ---
 
-<section id="booking" class="business-section">
+<section id="booking" class="py-16 md:py-24">
   <div class="site-container">
-    <div class="mx-auto max-w-2xl text-center business-card">
-      <h2 class="business-section-title">Book an appointment</h2>
-      <p class="business-booking-text">
-        Ready to visit {business.name}? Choose a time that works for you and
-        confirm your booking in seconds.
+    <div class="business-booking-card mx-auto max-w-2xl rounded-3xl p-8 text-center md:p-12">
+      <div class="mx-auto mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-[var(--business-primary)] text-white shadow-lg">
+        <CalendarCheck size={28} />
+      </div>
+
+      <h2 class="font-brand text-3xl text-neutral-800 dark:text-neutral-100 md:text-4xl">
+        Book an appointment
+      </h2>
+
+      <p class="mx-auto mt-3 max-w-md text-neutral-600 dark:text-neutral-300">
+        Ready to visit {business.name}? Choose a time that works for you and confirm your booking in seconds.
       </p>
+
+      <div class="mt-6 flex flex-wrap items-center justify-center gap-2 text-xs text-neutral-500 dark:text-neutral-400">
+        <span class="inline-flex items-center gap-1 rounded-full border border-dashed border-neutral-300 px-2 py-1 dark:border-neutral-700">
+          <Clock size={12} /> Instant confirmation
+        </span>
+        <span class="inline-flex items-center gap-1 rounded-full border border-dashed border-neutral-300 px-2 py-1 dark:border-neutral-700">
+          Secure checkout
+        </span>
+      </div>
+
       <a
         href={business.bookingUrl}
         target="_blank"
         rel="noopener noreferrer"
-        class="business-button inline-flex items-center gap-2"
+        class="business-button mt-8 inline-flex items-center gap-2 rounded-xl px-8 py-3.5 text-base font-medium"
       >
-        <CalendarCheck class="h-5 w-5" />
+        <CalendarCheck size={18} />
         Book now
       </a>
     </div>

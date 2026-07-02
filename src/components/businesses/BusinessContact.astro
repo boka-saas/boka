@@ -25,37 +25,69 @@ const dayLabels: Record<string, string> = {
 };
 ---
 
-<section class="business-section">
+<section id="contact" class="py-16 md:py-24">
   <div class="site-container">
-    <div class="mx-auto max-w-2xl">
-      <h2 class="business-section-title">Contact & hours</h2>
+    <div class="mx-auto mb-12 max-w-2xl text-center">
+      <p class="mb-3 text-xs font-medium uppercase tracking-[0.14em] text-neutral-400 dark:text-neutral-500">
+        Get in touch
+      </p>
+      <h2 class="font-brand text-3xl text-neutral-800 dark:text-neutral-100 md:text-4xl">
+        Contact & hours
+      </h2>
+    </div>
 
-      <div class="business-card">
-        <div class="space-y-3">
-          <p class="business-contact-item">
-            <MapPin class="inline h-4 w-4 shrink-0" />
-            {business.contact.address}
-          </p>
-          <p class="business-contact-item">
-            <Phone class="inline h-4 w-4 shrink-0" />
-            <a href={`tel:${business.contact.phone.replace(/\s/g, "")}`}>
+    <div class="business-card mx-auto grid max-w-3xl gap-8 rounded-3xl p-6 md:grid-cols-2 md:p-10">
+      <div class="space-y-5">
+        <h3 class="text-sm font-semibold uppercase tracking-[0.14em] text-neutral-400 dark:text-neutral-500">
+          Contact
+        </h3>
+
+        <div class="flex items-start gap-3">
+          <div class="mt-0.5 flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-xl bg-[var(--business-primary)]/10 text-[var(--business-primary)]">
+            <MapPin size={16} />
+          </div>
+          <div>
+            <p class="font-medium text-neutral-800 dark:text-neutral-100">Address</p>
+            <p class="text-sm text-neutral-600 dark:text-neutral-300">{business.contact.address}</p>
+          </div>
+        </div>
+
+        <div class="flex items-start gap-3">
+          <div class="mt-0.5 flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-xl bg-[var(--business-primary)]/10 text-[var(--business-primary)]">
+            <Phone size={16} />
+          </div>
+          <div>
+            <p class="font-medium text-neutral-800 dark:text-neutral-100">Phone</p>
+            <a
+              href={`tel:${business.contact.phone.replace(/\s/g, "")}`}
+              class="business-contact-link text-sm text-neutral-600 transition-colors dark:text-neutral-300"
+            >
               {business.contact.phone}
             </a>
-          </p>
+          </div>
         </div>
+      </div>
 
-        <hr class="business-divider" />
+      <div class="space-y-5">
+        <h3 class="text-sm font-semibold uppercase tracking-[0.14em] text-neutral-400 dark:text-neutral-500">
+          Opening hours
+        </h3>
 
-        <div class="space-y-2">
-          {dayOrder.map((day) => (
-            <div class="flex items-center justify-between gap-4 text-sm">
-              <span class="business-hours-day">{dayLabels[day]}</span>
-              <span class="business-hours-time">
-                <Clock class="inline h-3.5 w-3.5" /> {business.contact.hours[day]}
-              </span>
-            </div>
-          ))}
-        </div>
+        <ul class="space-y-2">
+          {
+            dayOrder.map((day) => (
+              <li class="flex items-center justify-between gap-4 text-sm">
+                <span class="font-medium text-neutral-700 dark:text-neutral-200">
+                  {dayLabels[day]}
+                </span>
+                <span class="inline-flex items-center gap-1.5 text-neutral-600 dark:text-neutral-300">
+                  <Clock size={12} />
+                  {business.contact.hours[day]}
+                </span>
+              </li>
+            ))
+          }
+        </ul>
       </div>
     </div>
   </div>
