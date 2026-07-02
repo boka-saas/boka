@@ -1,0 +1,14 @@
+{
+	"$schema": "https://biomejs.dev/schemas/1.7.3/schema.json",
+	"files": {
+		"ignore": [
+			"dist",
+			".astro",
+			"node_modules",
+			"src/components/widgets/OptimizedImage.astro",
+			"src/components/widgets/ActionBar.astro",
+			"src/components/widgets/Toc.astro",
+			"src/pages/index.astro"
+		]
+	}
+}
