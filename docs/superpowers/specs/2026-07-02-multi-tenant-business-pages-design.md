@@ -168,19 +168,93 @@ Dark mode is supported by overriding the variables with a `.dark` parent class:
 }
 ```
 
+### Styling rules
+
+- Use Tailwind utilities plus the business CSS variables.
+- Prefer existing site components (`Button.astro`, `Badge.astro`) where they fit, but override their colors with business variables via a wrapping class.
+- Business pages should still respect the global dark-mode toggle.
+- Avoid one-off hex values; derive all colors from the injected theme object.
+
 ## Page Structure
 
 Each business page contains these sections, top to bottom:
 
 1. **BusinessHeader** — logo + business name + simple nav (Prices, Book).
 2. **BusinessHero** — name, tagline, description, and two primary CTAs.
-3. **BusinessPrices** — list of services with prices and durations.
-4. **BusinessBooking** — booking call-to-action linking to `bookingUrl`.
+3. **BusinessPrices** — list of services with prices and durations (anchor `id="prices"`).
+4. **BusinessBooking** — booking call-to-action linking to `bookingUrl` (anchor `id="booking"`).
 5. **BusinessContact** — address, phone, and opening hours.
 
 The Prices and Booking components are shared across all businesses and styled purely through the injected theme variables.
 
+`BusinessHeader` links to `#prices` and `#booking` so the in-page anchors scroll smoothly.
+
+## Dynamic Route
+
+`src/pages/[business]/index.astro`:
+
+```astro
+---
+import Layout from "@/layouts/Layout.astro";
+import BusinessLayout from "@/components/businesses/BusinessLayout.astro";
+import BusinessHeader from "@/components/businesses/BusinessHeader.astro";
+import BusinessHero from "@/components/businesses/BusinessHero.astro";
+import BusinessPrices from "@/components/businesses/BusinessPrices.astro";
+import BusinessBooking from "@/components/businesses/BusinessBooking.astro";
+import BusinessContact from "@/components/businesses/BusinessContact.astro";
+import { getAllBusinesses, getBusinessBySlug } from "@/lib/businesses.js";
+
+export async function getStaticPaths() {
+  const businesses = await getAllBusinesses();
+  return businesses.map((business) => ({
+    params: { business: business.slug },
+    props: { business },
+  }));
+}
+
+const { business: businessFromProps } = Astro.props;
+const { business: slugFromParams } = Astro.params;
+const business = businessFromProps ?? getBusinessBySlug(slugFromParams);
+
+if (!business) {
+  return new Response(null, { status: 404 });
+}
+---
+
+<Layout title={business.name} description={business.tagline}>
+  <BusinessLayout business={business}>
+    <BusinessHeader business={business} />
+    <BusinessHero business={business} />
+    <BusinessPrices business={business} />
+    <BusinessBooking business={business} />
+    <BusinessContact business={business} />
+  </BusinessLayout>
+</Layout>
+```
+
+`BusinessLayout` wraps the global `Layout.astro` (so site chrome, dark-mode script, analytics, header, and footer stay in place) and injects the business theme via a wrapper element.
+
 ## Component and File Plan
+
+### Component props
+
+All business components receive the same prop shape:
+
+```ts
+interface Props {
+  business: Business;
+}
+```
+
+Where `Business` is the validated object loaded by `src/lib/businesses.js`.
+
+### Implementation conventions
+
+- Use the existing `@/` path alias for imports (already configured in `astro.config.mjs`).
+- Keep business components in `src/components/businesses/`.
+- Keep business data in `src/data/businesses/`.
+- Keep business styles in `src/styles/business.css`.
+- Match the existing site's section spacing (`py-16 md:py-24`) and container classes (`site-container`) where appropriate.
 
 ### New files
 
@@ -210,6 +284,8 @@ src/styles/global.css      (optional utility helpers)
 - **Missing business:** `getBusinessBySlug` returns `null` for unknown slugs. The page returns `new Response(null, { status: 404 })` so Astro renders the existing `src/pages/404.astro` page.
 - **Invalid config:** `src/lib/businesses.js` validates required fields at import time. A missing required field throws an error during `pnpm build`, failing fast with a clear message.
 - **Missing theme token:** Components fall back to the global site token if a specific business theme key is absent.
+- **Missing logo image:** If the referenced logo is missing, render the business name as text fallback.
+- **Currency format:** Prices are integers in the JSON and rendered with the British Pound symbol (`£`) for the sample businesses.
 
 ## Testing and Verification
 
