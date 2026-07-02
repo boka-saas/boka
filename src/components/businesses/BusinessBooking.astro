@@ -1,0 +1,33 @@
+---
+import { CalendarCheck } from "@lucide/astro";
+
+interface Props {
+	business: {
+		name: string;
+		bookingUrl: string;
+	};
+}
+
+const { business } = Astro.props;
+---
+
+<section id="booking" class="business-section">
+  <div class="site-container">
+    <div class="mx-auto max-w-2xl text-center business-card">
+      <h2 class="business-section-title">Book an appointment</h2>
+      <p class="business-booking-text">
+        Ready to visit {business.name}? Choose a time that works for you and
+        confirm your booking in seconds.
+      </p>
+      <a
+        href={business.bookingUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="business-button inline-flex items-center gap-2"
+      >
+        <CalendarCheck class="h-5 w-5" />
+        Book now
+      </a>
+    </div>
+  </div>
+</section>

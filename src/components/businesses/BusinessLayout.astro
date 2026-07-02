@@ -1,0 +1,70 @@
+---
+import BusinessFooter from "@/components/businesses/BusinessFooter.astro";
+import BusinessHeader from "@/components/businesses/BusinessHeader.astro";
+import Meta from "@/layouts/Meta.astro";
+import "../../styles/global.css";
+import "../../styles/business.css";
+
+interface Props {
+	business: {
+		slug: string;
+		name: string;
+		tagline: string;
+		description: string;
+		logo: string;
+		theme: Record<string, string>;
+		contact: {
+			address: string;
+			phone: string;
+			hours: Record<string, string>;
+		};
+		services: Array<{ name: string; price: number; duration?: string }>;
+		bookingUrl: string;
+	};
+}
+
+const { business } = Astro.props;
+
+function themeToStyle(theme: Record<string, string>) {
+	return Object.entries(theme)
+		.map(([key, value]) => {
+			const cssKey = key.replace(/([A-Z])/g, "-$1").toLowerCase();
+			return `--business-${cssKey}: ${value};`;
+		})
+		.join(" ");
+}
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <Meta
+      title={business.name}
+      description={business.tagline}
+      url={`${Astro.site ?? ""}businesses/${business.slug}`}
+    />
+
+    <script is:inline>
+      if (typeof Storage !== 'undefined') {
+        if (
+          localStorage.getItem('dark_mode') &&
+          localStorage.getItem('dark_mode') == 'true'
+        ) {
+          document.documentElement.classList.add('dark');
+        }
+      }
+    </script>
+  </head>
+  <body class="antialiased max-w-full overflow-x-hidden">
+    <article
+      class={`business-wrapper business-${business.slug}`}
+      style={themeToStyle(business.theme)}
+    >
+      <BusinessHeader business={business} />
+      <main>
+        <slot />
+      </main>
+      <BusinessFooter business={business} />
+    </article>
+  </body>
+</html>

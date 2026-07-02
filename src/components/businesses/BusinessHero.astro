@@ -1,0 +1,42 @@
+---
+import { formatPrice } from "@/lib/businesses.js";
+import { MapPin } from "@lucide/astro";
+
+interface Props {
+	business: {
+		name: string;
+		tagline: string;
+		description: string;
+		bookingUrl: string;
+		contact: {
+			address: string;
+		};
+		services: Array<{ name: string; price: number }>;
+	};
+}
+
+const { business } = Astro.props;
+const lowestPrice = Math.min(...business.services.map((s) => s.price));
+---
+
+<section class="business-hero">
+  <div class="site-container">
+    <div class="mx-auto max-w-2xl text-center">
+      <p class="business-hero-eyebrow">
+        <MapPin class="inline h-4 w-4" /> {business.contact.address}
+      </p>
+      <h1 class="business-hero-title">{business.name}</h1>
+      <p class="business-hero-tagline">{business.tagline}</p>
+      <p class="business-hero-description">{business.description}</p>
+
+      <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
+        <a href="#booking" class="business-button">
+          Book now
+        </a>
+        <a href="#prices" class="business-button-outline">
+          See prices from {formatPrice(lowestPrice)}
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
