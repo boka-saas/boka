@@ -10,9 +10,9 @@ Add dynamic public business pages to the existing Astro marketing site so that e
 
 Example URLs:
 
-- `/alis-barber`
-- `/tinas-nails`
-- `/the-groom-room`
+- `/businesses/alis-barber`
+- `/businesses/tinas-nails`
+- `/businesses/the-groom-room`
 
 Each page shows the business name, tagline, prices, booking call-to-action, and contact details, styled with the business's own colors and logo.
 
@@ -25,6 +25,8 @@ The project is a static-first Astro site (Astro 6.4, Tailwind CSS v4, MDX). It c
 **JSON-driven static generation with CSS-variable theming.**
 
 Each business is defined by a JSON config file. A single dynamic Astro route generates one static page per business at build time. Shared components render the page, reading business data and theme CSS variables from the config. This keeps the site static, fast, and easy to deploy, while still allowing each business to look distinct.
+
+Each business page is designed to feel like a standalone storefront for that business. The global Boka marketing header, footer, and navigation are intentionally omitted from business pages and replaced by branded business-specific chrome (`BusinessHeader`, `BusinessFooter`). The underlying component structure remains shared, but the visible identity is driven entirely by the business JSON.
 
 Alternatives considered:
 
@@ -107,12 +109,12 @@ Example `src/data/businesses/alis-barber.json`:
 
 1. `src/lib/businesses.js` reads every `src/data/businesses/*.json` file.
 2. It validates required fields and returns an array of business objects plus a `getBusinessBySlug(slug)` lookup.
-3. `src/pages/[business]/index.astro` calls `getAllBusinesses()` inside `getStaticPaths()` to generate one route per slug.
-4. Astro builds static HTML pages at `/<slug>/index.html`.
+3. `src/pages/businesses/[business]/index.astro` calls `getAllBusinesses()` inside `getStaticPaths()` to generate one route per slug.
+4. Astro builds static HTML pages at `/businesses/<slug>/index.html`.
 
 ### Request-time flow
 
-1. Visitor requests `/alis-barber`.
+1. Visitor requests `/businesses/alis-barber`.
 2. Astro serves the pre-built page for that slug.
 3. The page receives `Astro.params.business` and calls `getBusinessBySlug('alis-barber')`.
 4. The business object is passed into `BusinessLayout` and shared components.
@@ -184,18 +186,18 @@ Each business page contains these sections, top to bottom:
 3. **BusinessPrices** — list of services with prices and durations (anchor `id="prices"`).
 4. **BusinessBooking** — booking call-to-action linking to `bookingUrl` (anchor `id="booking"`).
 5. **BusinessContact** — address, phone, and opening hours.
+6. **BusinessFooter** — business branding, contact summary, and optional small "Powered by Boka" attribution.
 
-The Prices and Booking components are shared across all businesses and styled purely through the injected theme variables.
+The Prices, Booking, Header, and Footer components are shared across all businesses and styled purely through the injected theme variables.
 
 `BusinessHeader` links to `#prices` and `#booking` so the in-page anchors scroll smoothly.
 
 ## Dynamic Route
 
-`src/pages/[business]/index.astro`:
+`src/pages/businesses/[business]/index.astro`:
 
 ```astro
 ---
-import Layout from "@/layouts/Layout.astro";
 import BusinessLayout from "@/components/businesses/BusinessLayout.astro";
 import BusinessHeader from "@/components/businesses/BusinessHeader.astro";
 import BusinessHero from "@/components/businesses/BusinessHero.astro";
@@ -221,18 +223,16 @@ if (!business) {
 }
 ---
 
-<Layout title={business.name} description={business.tagline}>
-  <BusinessLayout business={business}>
-    <BusinessHeader business={business} />
-    <BusinessHero business={business} />
-    <BusinessPrices business={business} />
-    <BusinessBooking business={business} />
-    <BusinessContact business={business} />
-  </BusinessLayout>
-</Layout>
+<BusinessLayout business={business}>
+  <BusinessHeader business={business} />
+  <BusinessHero business={business} />
+  <BusinessPrices business={business} />
+  <BusinessBooking business={business} />
+  <BusinessContact business={business} />
+</BusinessLayout>
 ```
 
-`BusinessLayout` wraps the global `Layout.astro` (so site chrome, dark-mode script, analytics, header, and footer stay in place) and injects the business theme via a wrapper element.
+`BusinessLayout.astro` is the root layout for business pages. It does **not** wrap the global marketing `Layout.astro`. Instead it provides its own page shell: meta tags, dark-mode script, favicon, global styles, a branded `BusinessHeader`, a branded `BusinessFooter`, and the theme-injected business content wrapper. This lets each business feel like its own standalone storefront while still being hosted from the same project.
 
 ## Component and File Plan
 
@@ -262,22 +262,24 @@ Where `Business` is the validated object loaded by `src/lib/businesses.js`.
 src/data/businesses/alis-barber.json
 src/data/businesses/tinas-nails.json
 src/lib/businesses.js
-src/pages/[business]/index.astro
+src/pages/businesses/[business]/index.astro
 src/components/businesses/BusinessLayout.astro
 src/components/businesses/BusinessHeader.astro
 src/components/businesses/BusinessHero.astro
 src/components/businesses/BusinessPrices.astro
 src/components/businesses/BusinessBooking.astro
 src/components/businesses/BusinessContact.astro
+src/components/businesses/BusinessFooter.astro
 src/styles/business.css
 ```
 
 ### Modified files
 
 ```text
-src/layouts/Layout.astro   (conditionally import business.css for business pages)
 src/styles/global.css      (optional utility helpers)
 ```
+
+The global `src/layouts/Layout.astro` is **not** modified and is **not** used by business pages. Business pages use `BusinessLayout.astro` as their root layout.
 
 ## Error Handling
 
@@ -292,9 +294,9 @@ src/styles/global.css      (optional utility helpers)
 - `pnpm build` passes.
 - `pnpm check` passes (Biome formatting/lint).
 - Manual route review:
-  - `/alis-barber` renders with Ali's Barber theme.
-  - `/tinas-nails` renders with Tina's Nails theme.
-  - `/nonexistent-business` returns 404.
+  - `/businesses/alis-barber` renders with Ali's Barber theme.
+  - `/businesses/tinas-nails` renders with Tina's Nails theme.
+  - `/businesses/nonexistent-business` returns 404.
 - Verify existing marketing routes are unaffected: `/`, `/pricing`, `/about`, `/contact`.
 - Verify light/dark mode toggle works on business pages.
 - Verify responsive layout at mobile, tablet, and desktop widths.
