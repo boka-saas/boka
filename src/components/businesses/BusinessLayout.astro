@@ -9,10 +9,14 @@ interface Props {
 	business: {
 		slug: string;
 		name: string;
+		category: string;
 		tagline: string;
 		description: string;
 		logo: string;
-		theme: Record<string, string>;
+		theme: {
+			primary: string;
+			accent: string;
+		};
 		contact: {
 			address: string;
 			phone: string;
@@ -25,14 +29,10 @@ interface Props {
 
 const { business } = Astro.props;
 
-function themeToStyle(theme: Record<string, string>) {
-	return Object.entries(theme)
-		.map(([key, value]) => {
-			const cssKey = key.replace(/([A-Z])/g, "-$1").toLowerCase();
-			return `--business-${cssKey}: ${value};`;
-		})
-		.join(" ");
-}
+const themeStyle = [
+	`--business-primary: ${business.theme.primary};`,
+	`--business-accent: ${business.theme.accent};`,
+].join(" ");
 ---
 
 <!doctype html>
@@ -44,6 +44,7 @@ function themeToStyle(theme: Record<string, string>) {
       url={`${Astro.site ?? ""}businesses/${business.slug}`}
     />
 
+    <!-- Dark-mode boot script: read persisted preference before first paint. -->
     <script is:inline>
       if (typeof Storage !== 'undefined') {
         if (
@@ -54,14 +55,29 @@ function themeToStyle(theme: Record<string, string>) {
         }
       }
     </script>
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   </head>
-  <body class="antialiased max-w-full overflow-x-hidden">
+  <body class="antialiased bg-bg-primary dark:bg-bg-primary-dark max-w-full overflow-x-hidden">
+    {/* Top background grid, tinted with the business primary color. */}
+    <svg
+      aria-hidden="true"
+      class="business-top-bg pointer-events-none absolute top-[-10%] inset-0 -z-10 size-full h-[45%] fill-current stroke-current [mask-image:linear-gradient(to_bottom,_#ffffffad,_transparent)]"
+    >
+      <defs>
+        <pattern id={`business-grid-${business.slug}`} width="12" height="12" patternUnits="userSpaceOnUse" x="-1" y="-1">
+          <path d="M.5 12V.5H12" fill="none" stroke-dasharray="0"></path>
+        </pattern>
+      </defs>
+      <rect width="100%" height="100%" stroke-width="0" fill={`url(#business-grid-${business.slug})`}></rect>
+    </svg>
+
     <article
-      class={`business-wrapper business-${business.slug}`}
-      style={themeToStyle(business.theme)}
+      class="business-page min-h-screen"
+      style={themeStyle}
     >
       <BusinessHeader business={business} />
-      <main>
+      <main class="pt-24 md:pt-28">
         <slot />
       </main>
       <BusinessFooter business={business} />

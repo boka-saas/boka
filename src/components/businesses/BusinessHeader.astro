@@ -1,5 +1,5 @@
 ---
-import { Moon, Sun } from "@lucide/astro";
+import { Moon, SunMedium } from "@lucide/astro";
 
 interface Props {
 	business: {
@@ -14,36 +14,61 @@ const { business } = Astro.props;
 
 <header class="business-header">
   <div class="site-container">
-    <div class="flex items-center justify-between h-16">
+    <div class="business-header-inner flex items-center justify-between h-14 rounded-2xl px-4 sm:px-5">
       <a
         href={`/businesses/${business.slug}`}
-        class="flex items-center gap-3 business-header-brand"
+        class="flex items-center gap-3 text-neutral-800 dark:text-neutral-100"
       >
         <img
           src={business.logo}
           alt={`${business.name} logo`}
-          class="h-10 w-10 rounded-xl object-cover"
-          onerror={`this.style.display='none'`}
+          class="h-9 w-9 rounded-xl object-cover"
+          onerror={`this.style.display='none'; this.nextElementSibling.style.display='flex'`}
         />
-        <span class="flex items-center text-lg font-semibold business-header-name">
+        <span class="hidden text-base font-semibold sm:inline">
           {business.name}
         </span>
       </a>
 
-      <div class="flex items-center gap-4">
-        <nav class="flex items-center gap-6 text-sm font-medium">
-          <a href="#prices" class="business-nav-link">Prices</a>
-          <a href="#booking" class="business-nav-link">Book</a>
+      <div class="flex items-center gap-2 sm:gap-4">
+        <nav class="hidden items-center gap-1 text-sm font-medium sm:flex">
+          <a
+            href="#prices"
+            class="rounded-lg px-3 py-2 text-neutral-600 transition-colors hover:bg-primary/5 hover:text-primary dark:text-neutral-300 dark:hover:text-primary-light"
+          >
+            Prices
+          </a>
+          <a
+            href="#booking"
+            class="rounded-lg px-3 py-2 text-neutral-600 transition-colors hover:bg-primary/5 hover:text-primary dark:text-neutral-300 dark:hover:text-primary-light"
+          >
+            Book
+          </a>
+          <a
+            href="#contact"
+            class="rounded-lg px-3 py-2 text-neutral-600 transition-colors hover:bg-primary/5 hover:text-primary dark:text-neutral-300 dark:hover:text-primary-light"
+          >
+            Contact
+          </a>
         </nav>
 
         <button
           type="button"
           id="businessDarkToggle"
           aria-label="Toggle dark mode"
-          class="flex items-center justify-center w-10 h-10 rounded-full border border-[var(--business-divider)] bg-[var(--business-bg)] text-[var(--business-text)] transition-colors hover:bg-[var(--business-card-bg)]"
+          class="relative flex h-9 items-center gap-1.5 rounded-full border-[0.5px] border-neutral-200 bg-gradient-to-b from-white to-[#edf1fa] px-2 dark:border-neutral-600 dark:from-neutral-800 dark:to-neutral-700 transition-all duration-200 hover:shadow-md hover:scale-105 active:scale-95"
         >
-          <Sun class="w-5 h-5 dark-hidden" />
-          <Moon class="w-5 h-5 hidden dark-visible" />
+          <div
+            class="flex h-6 w-6 flex-shrink-0 items-center justify-center overflow-hidden rounded-full bg-gradient-to-b from-[#85a6ff] to-[#2d6dc3] border-[0.5px] border-[#7fa1ff]"
+            style="box-shadow: 0px 2px 3px 0 rgba(55,52,209,0.21);"
+          >
+            <SunMedium class="dark-hidden h-4 w-4 text-white transition duration-200" />
+            <Moon class="dark-visible hidden h-4 w-4 text-white transition duration-200" />
+          </div>
+          <span class="hidden text-sm text-[#6f6c8f] dark:text-neutral-400 sm:inline">
+            <span class="dark-hidden">Light</span>
+            <span class="dark-visible hidden">Dark</span>
+          </span>
         </button>
       </div>
     </div>
@@ -57,11 +82,15 @@ const { business } = Astro.props;
 
     const sun = toggle.querySelector('.dark-hidden');
     const moon = toggle.querySelector('.dark-visible');
+    const labelLight = toggle.querySelector('span > .dark-hidden');
+    const labelDark = toggle.querySelector('span > .dark-visible');
 
     function updateIcons() {
       const isDark = document.documentElement.classList.contains('dark');
       if (sun) sun.classList.toggle('hidden', isDark);
       if (moon) moon.classList.toggle('hidden', !isDark);
+      if (labelLight) labelLight.classList.toggle('hidden', isDark);
+      if (labelDark) labelDark.classList.toggle('hidden', !isDark);
     }
 
     updateIcons();
