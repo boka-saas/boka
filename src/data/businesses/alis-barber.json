@@ -1,0 +1,35 @@
+{
+	"slug": "alis-barber",
+	"name": "Ali's Barber",
+	"tagline": "Precision cuts in East London",
+	"description": "Traditional barbering with modern style. Walk-ins welcome.",
+	"logo": "/assets/businesses/alis-barber/logo.svg",
+	"theme": {
+		"primary": "#8B5A2B",
+		"primaryStrong": "#A66E3A",
+		"accent": "#F4C430",
+		"bg": "#FDF8F3",
+		"bgDark": "#1A120B",
+		"text": "#3E2723",
+		"textDark": "#F5F0EB"
+	},
+	"contact": {
+		"address": "123 High Street, London E1 1AA",
+		"phone": "020 1234 5678",
+		"hours": {
+			"mon": "09:00–18:00",
+			"tue": "09:00–18:00",
+			"wed": "09:00–18:00",
+			"thu": "09:00–20:00",
+			"fri": "09:00–20:00",
+			"sat": "09:00–17:00",
+			"sun": "Closed"
+		}
+	},
+	"services": [
+		{ "name": "Haircut", "price": 25, "duration": "30 min" },
+		{ "name": "Beard Trim", "price": 15, "duration": "20 min" },
+		{ "name": "Haircut & Beard", "price": 35, "duration": "50 min" }
+	],
+	"bookingUrl": "https://booking.example.com/alis-barber"
+}
