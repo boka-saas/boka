@@ -10,17 +10,13 @@ const description =
 const configExample = `{
   "slug": "alis-barber",
   "name": "Ali's Barber",
+  "category": "Barbershop",
   "tagline": "Precision cuts in East London",
   "description": "Traditional barbering with modern style.",
   "logo": "/assets/businesses/alis-barber/logo.svg",
   "theme": {
     "primary": "#8B5A2B",
-    "primaryStrong": "#A66E3A",
-    "accent": "#F4C430",
-    "bg": "#FDF8F3",
-    "bgDark": "#1A120B",
-    "text": "#3E2723",
-    "textDark": "#F5F0EB"
+    "accent": "#F4C430"
   },
   "contact": { "address": "...", "phone": "...", "hours": {} },
   "services": [
@@ -56,50 +52,46 @@ if (!business) return new Response(null, { status: 404 });
 </BusinessLayout>`;
 
 const themeExample = `<article
-  class="business-wrapper business-alis-barber"
+  class="business-page min-h-screen"
   style="--business-primary: #8B5A2B;
-         --business-primary-strong: #A66E3A;
-         --business-accent: #F4C430;
-         --business-bg: #FDF8F3; ..."
+         --business-accent: #F4C430;"
 >
   ...
 </article>`;
 
-const darkModeExample = `html.dark .business-wrapper {
-  --business-bg: var(--business-bg-dark);
-  --business-text: var(--business-text-dark);
-  --business-divider: rgba(255, 255, 255, 0.1);
-  --business-card-bg: #0f1b2d;
-}`;
+const darkModeExample = `/* Dark mode is automatic because the page uses RicoFast's global tokens. */
+<body class="bg-bg-primary dark:bg-bg-primary-dark">
+  ...
+</body>`;
 
 const components = [
 	{
 		name: "BusinessLayout.astro",
-		desc: "Standalone root document layout. Own <html>, <head>, meta tags, favicon, dark-mode boot script, global + business styles, and theme-injecting wrapper.",
+		desc: "Standalone root document layout. Own <html>, <head>, meta tags, favicon, dark-mode boot script, global + business styles, top background grid tinted with the business primary, and theme-injecting wrapper.",
 	},
 	{
 		name: "BusinessHeader.astro",
-		desc: "Logo + business name, in-page nav links (#prices, #booking), and a self-contained dark-mode toggle.",
+		desc: "Floating pill-style glassmorphism header with logo + business name, in-page nav links, and a self-contained dark-mode toggle matching the marketing site.",
 	},
 	{
 		name: "BusinessHero.astro",
-		desc: "Address eyebrow, business name, tagline, description, and two CTAs.",
+		desc: "Address eyebrow, category badge, business name, tagline, description, and two CTAs.",
 	},
 	{
 		name: "BusinessPrices.astro",
-		desc: "Services list with prices and durations inside a dashed-border card.",
+		desc: "Responsive grid of service cards using RicoFast card styling, with prices and durations.",
 	},
 	{
 		name: "BusinessBooking.astro",
-		desc: "Focused booking CTA card linking to the external bookingUrl.",
+		desc: "Focused booking CTA card with a gradient background tinted by the business primary color.",
 	},
 	{
 		name: "BusinessContact.astro",
-		desc: "Address, phone, and opening hours table.",
+		desc: "Two-column card with address, phone, and opening hours.",
 	},
 	{
 		name: "BusinessFooter.astro",
-		desc: "Branded footer with contact details, booking button, and copyright.",
+		desc: "Branded footer matching the marketing footer style, with contact details, booking button, and copyright.",
 	},
 ];
 
@@ -113,8 +105,16 @@ const decisions = [
 		body: "Keeps the build static and simple. If the number of businesses grows, the loader can be replaced by a CMS or database source without changing the components.",
 	},
 	{
-		title: "CSS variables for theming",
-		body: "Tailwind classes are static; per-business colors come from data. CSS variables are the cleanest bridge between dynamic JSON values and shared component markup.",
+		title: "Global tokens + two injected variables",
+		body: "The original version injected a full custom palette per business, which made dark mode inconsistent with the homepage. Now only primary and accent are business-specific; backgrounds, text, cards, and dark mode all come from RicoFast's design system.",
+	},
+	{
+		title: "Floating pill header",
+		body: "Matches the marketing site's header shape and glassmorphism so the page feels like part of the same product.",
+	},
+	{
+		title: "Top background grid tint",
+		body: "The subtle grid pattern behind the hero is tinted with the business primary color, giving each storefront its own atmosphere without breaking the shared design language.",
 	},
 	{
 		title: "Duplicated dark-mode boot script",
@@ -130,8 +130,9 @@ const decisions = [
     <div class="mx-auto max-w-3xl">
       <p class="mb-8 text-lg leading-relaxed text-neutral-700 dark:text-neutral-300">
         Each service business gets its own branded storefront URL. The markup
-        is shared; only the JSON config and injected CSS variables change per
-        business.
+        is shared; only the JSON config and two injected CSS variables change per
+        business. Business pages reuse RicoFast's global design tokens so light
+        and dark mode match the homepage automatically.
       </p>
 
       <div
@@ -180,8 +181,10 @@ dist/businesses/&lt;slug&gt;/index.html   (static output)`} />
 
       <p class="mb-4 leading-relaxed text-neutral-700 dark:text-neutral-300">
         Business configs live at <code>src/data/businesses/&lt;slug&gt;.json</code>.
-        The <code>slug</code> must match the filename stem, and the
-        <code>theme</code> object is the color contract for the page.
+        The <code>slug</code> must match the filename stem. The
+        <code>theme</code> object only supplies a business-specific
+        <code>primary</code> brand color and <code>accent</code> highlight color;
+        everything else uses RicoFast's global tokens.
       </p>
 
       <div
@@ -244,9 +247,10 @@ dist/businesses/&lt;slug&gt;/index.html   (static output)`} />
       <SectionHeader title="Theming system" />
 
       <p class="mb-4 leading-relaxed text-neutral-700 dark:text-neutral-300">
-        The JSON theme object is converted into inline CSS custom properties on
-        the <code>.business-wrapper</code> element. Every component consumes
-        those variables instead of hard-coded colors.
+        The JSON theme object is converted into two inline CSS custom properties
+        on the <code>.business-page</code> element. Every component consumes
+        those variables for brand-colored accents, while backgrounds, text,
+        cards, and dark mode come from RicoFast's global tokens.
       </p>
 
       <div
@@ -256,7 +260,8 @@ dist/businesses/&lt;slug&gt;/index.html   (static output)`} />
       </div>
 
       <p class="mb-4 leading-relaxed text-neutral-700 dark:text-neutral-300">
-        Dark mode swaps the variables when <code>html.dark</code> is present:
+        Dark mode is automatic because the page uses Tailwind's
+        <code>dark:</code> variants with RicoFast's global tokens:
       </p>
 
       <div
@@ -303,6 +308,9 @@ dist/businesses/&lt;slug&gt;/index.html   (static output)`} />
         <li>
           Unknown <code>/businesses/&lt;slug&gt;</code> routes fall back to the
           existing 404 page.
+        </li>
+        <li>
+          Light and dark mode on business pages match the homepage palette.
         </li>
       </ul>
 

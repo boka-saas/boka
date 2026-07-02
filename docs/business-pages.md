@@ -15,7 +15,9 @@ Each service business gets its own branded storefront URL:
 - `/businesses/alis-barber`
 - `/businesses/tinas-nails`
 
-Each page shows the business name, tagline, description, logo, prices, booking call-to-action, contact details, and opening hours — styled with the business's own colors. The markup is shared; only the JSON config and injected CSS variables change per business.
+Each page shows the business name, tagline, description, logo, prices, booking call-to-action, contact details, and opening hours — styled with the business's own brand color. The markup is shared; only the JSON config and two injected CSS variables change per business.
+
+The business pages are designed to feel like a natural extension of the RicoFast marketing site. They reuse the global design tokens (`--color-bg-primary`, `--color-bg-secondary`, `--color-text-secondary`, etc.) so light and dark mode match the homepage automatically. The only per-business overrides are `primary` and `accent`.
 
 ## End-to-end data flow
 
@@ -48,17 +50,13 @@ Example: `src/data/businesses/alis-barber.json`
 {
   "slug": "alis-barber",
   "name": "Ali's Barber",
+  "category": "Barbershop",
   "tagline": "Precision cuts in East London",
-  "description": "Traditional barbering with modern style. Walk-ins welcome.",
+  "description": "Traditional barbering with modern style. Walk-ins welcome, but booking guarantees your chair.",
   "logo": "/assets/businesses/alis-barber/logo.svg",
   "theme": {
     "primary": "#8B5A2B",
-    "primaryStrong": "#A66E3A",
-    "accent": "#F4C430",
-    "bg": "#FDF8F3",
-    "bgDark": "#1A120B",
-    "text": "#3E2723",
-    "textDark": "#F5F0EB"
+    "accent": "#F4C430"
   },
   "contact": {
     "address": "123 High Street, London E1 1AA",
@@ -82,7 +80,7 @@ Example: `src/data/businesses/alis-barber.json`
 }
 ```
 
-The `slug` must match the filename stem. The `theme` object is the color contract for the page.
+The `slug` must match the filename stem. The `theme` object only supplies a business-specific `primary` brand color and `accent` highlight color; everything else uses RicoFast's global tokens.
 
 ### Loader and validation
 
@@ -97,7 +95,7 @@ const modules = import.meta.glob("/src/data/businesses/*.json", { eager: true })
 The loader validates:
 
 - All required top-level fields exist.
-- The `theme` object contains every required token.
+- The `theme` object contains `primary` and `accent`.
 - `services` is a non-empty array and each entry has a `name` and numeric `price`.
 - The `slug` matches the filename stem.
 
@@ -164,49 +162,36 @@ The root document layout for every business page. It renders:
 - The site favicon.
 - An inline dark-mode boot script that reads `localStorage.dark_mode` before paint.
 - Imports of `global.css` and `business.css`.
-- A theme wrapper `<article>` that injects the business theme as CSS custom properties.
+- A top background grid tinted with the business primary color.
+- A theme wrapper `<article>` that injects `--business-primary` and `--business-accent`.
 - `BusinessHeader`, `<main>`, and `BusinessFooter`.
 
 ```astro
-<article
-  class={`business-wrapper business-${business.slug}`}
-  style={themeToStyle(business.theme)}
->
+<article class="business-page min-h-screen" style="--business-primary: #8B5A2B; --business-accent: #F4C430;">
   <BusinessHeader business={business} />
-  <main>
+  <main class="pt-24 md:pt-28">
     <slot />
   </main>
   <BusinessFooter business={business} />
 </article>
 ```
 
-`themeToStyle` converts the JSON theme object into inline CSS variables:
-
-```css
---business-primary: #8B5A2B;
---business-primary-strong: #A66E3A;
---business-accent: #F4C430;
---business-bg: #FDF8F3;
---business-bg-dark: #1A120B;
---business-text: #3E2723;
---business-text-dark: #F5F0EB;
-```
-
-These variables are consumed by the components and by `business.css`.
-
 ### BusinessHeader.astro
 
+- Floating pill-style header matching the marketing site's glassmorphism header.
 - Logo + business name brand on the left.
-- In-page nav links to `#prices` and `#booking`.
+- In-page nav links to `#prices`, `#booking`, and `#contact`.
 - A self-contained dark-mode toggle button on the right.
 
 The dark-mode toggle does not reuse the marketing site's `src/assets/js/main.js`, because that script depends on marketing-header DOM IDs (`#darkToggle`, `#menu`, `#header`, etc.) that do not exist on business pages.
 
 ### BusinessHero.astro
 
-- Address eyebrow.
-- Business name as the page `<h1>`.
-- Tagline and description.
+- Address eyebrow using the business primary color.
+- Category badge using the business accent color.
+- Business name as the page `<h1>` in `font-brand`.
+- Tagline in the business primary color.
+- Description in neutral body text.
 - Two CTAs: "Book now" → `#booking`, and "See prices from £{lowestPrice}" → `#prices`.
 
 The lowest price is computed with `Math.min(...)` over the services array.
@@ -214,59 +199,45 @@ The lowest price is computed with `Math.min(...)` over the services array.
 ### BusinessPrices.astro
 
 - Section anchor `id="prices"`.
-- Lists each service in a card with dashed separators.
+- Service cards in a responsive grid using RicoFast card styling.
 - Shows the service name, optional duration, and price formatted with `formatPrice`.
 
 ### BusinessBooking.astro
 
 - Section anchor `id="booking"`.
-- A focused CTA card linking to the external `bookingUrl`.
-- Opens in a new tab with `rel="noopener noreferrer"`.
+- A focused CTA card with a gradient background tinted by the business primary color.
+- Links to the external `bookingUrl` in a new tab with `rel="noopener noreferrer"`.
 
 ### BusinessContact.astro
 
-- Address and clickable phone number.
-- Opening hours table for Monday–Sunday.
+- Section anchor `id="contact"`.
+- Two-column card: contact details on the left, opening hours on the right.
+- Clickable phone number.
 - Maps JSON keys (`mon`, `tue`, ...) to full day names for display.
 
 ### BusinessFooter.astro
 
-- Left side: business name, address, phone.
-- Right side: "Book now" button and copyright line.
+- Branded footer matching the marketing footer style.
+- Business name, category, address, phone.
+- "Book now" button and copyright line.
 - Styled with the inherited business theme variables.
 
 ## Theming system
 
-`src/styles/business.css` defines the component styles, but every color comes from CSS variables set on `.business-wrapper`.
+`src/styles/business.css` defines the business-specific styles, but only the `primary` and `accent` values come from the JSON config. Everything else uses RicoFast's global tokens.
 
 ```css
-.business-wrapper {
-  --business-bg: #fdfaf5;
-  --business-text: #3f4a5a;
-  --business-primary: #2d6dc3;
-  --business-divider: rgba(0, 0, 0, 0.08);
-  --business-card-bg: #ffffff;
-
-  background-color: var(--business-bg);
-  color: var(--business-text);
-  min-height: 100vh;
+.business-page {
+  --business-primary: var(--color-primary);
+  --business-primary-strong: color-mix(in srgb, var(--business-primary) 85%, black);
+  --business-primary-light: color-mix(in srgb, var(--business-primary) 12%, transparent);
+  --business-accent: var(--color-accent);
 }
 ```
 
-The values above are fallbacks. They are overridden by the inline `style` attribute from `themeToStyle`.
+These variables are overridden by the inline `style` attribute from `BusinessLayout.astro`.
 
-Dark mode:
-
-```css
-html.dark .business-wrapper {
-  --business-bg: var(--business-bg-dark);
-  --business-text: var(--business-text-dark);
-  --business-divider: rgba(255, 255, 255, 0.1);
-  --business-card-bg: #0f1b2d;
-}
-```
-
-Because the dark-mode script adds `.dark` to `<html>`, the wrapper re-themes automatically.
+Dark mode is automatic because the page uses `bg-bg-primary dark:bg-bg-primary-dark`, `text-neutral-600 dark:text-neutral-300`, and other Tailwind dark variants that map to RicoFast's global dark tokens.
 
 ## How to add a new business
 
@@ -282,11 +253,14 @@ Because the dark-mode script adds `.dark` to `<html>`, the wrapper re-themes aut
 - Marketing pages (`/`, `/pricing`, `/about`, `/contact`) have no business styles.
 - Sitemap includes `/businesses/alis-barber/` and `/businesses/tinas-nails/`.
 - The existing 404 page handles unknown `/businesses/<slug>` routes.
+- Light and dark mode on business pages match the homepage palette.
 
 ## Design decisions
 
 - **Standalone layout.** Business pages do not reuse the global `Layout.astro` because they need their own chrome and must not show the marketing navigation or footer.
 - **`import.meta.glob` for data.** Keeps the build static and simple. If the number of businesses grows, the loader can be replaced by a CMS or database source without changing the components.
-- **CSS variables for theming.** Tailwind classes are static; per-business colors come from data. CSS variables are the cleanest bridge between dynamic JSON values and shared component markup.
+- **Global tokens + two injected variables.** The original version injected a full custom palette per business, which made dark mode inconsistent with the homepage. Now only `primary` and `accent` are business-specific; backgrounds, text, cards, and dark mode all come from RicoFast's design system.
+- **Floating pill header.** Matches the marketing site's header shape and glassmorphism so the page feels like part of the same product.
+- **Top background grid tint.** The distinctive per-business touch: the subtle grid pattern behind the hero is tinted with the business primary color, giving each storefront its own atmosphere without breaking the shared design language.
 - **Duplicated dark-mode boot script.** Both `Layout.astro` and `BusinessLayout.astro` contain a small inline dark-mode script. They are not shared because the marketing header's `main.js` depends on marketing-specific DOM IDs. Duplication is cheaper than an abstraction for two distinct use cases.
 - **Minimal Biome config.** The project had no `biome.json`, so `pnpm check` was scanning generated directories and pre-existing files with lint errors. A minimal config was added to ignore those while keeping the new code checked.
