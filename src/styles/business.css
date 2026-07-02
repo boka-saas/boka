@@ -6,6 +6,11 @@
    The values below are fallbacks only.
    =================================================================== */
 
+:root {
+	--business-card-bg-light: #ffffff;
+	--business-card-bg-dark: #0f1b2d;
+}
+
 .business-wrapper {
 	--business-bg: #fdfaf5;
 	--business-bg-dark: #0b1220;
@@ -15,7 +20,7 @@
 	--business-primary-strong: #0066ff;
 	--business-accent: #fad13b;
 	--business-divider: rgba(0, 0, 0, 0.08);
-	--business-card-bg: #ffffff;
+	--business-card-bg: var(--business-card-bg-light);
 
 	background-color: var(--business-bg);
 	color: var(--business-text);
@@ -29,7 +34,7 @@ html.dark .business-wrapper {
 	--business-bg: var(--business-bg-dark);
 	--business-text: var(--business-text-dark);
 	--business-divider: rgba(255, 255, 255, 0.1);
-	--business-card-bg: #0f1b2d;
+	--business-card-bg: var(--business-card-bg-dark);
 }
 
 /* -------------------------------------------------------------------
