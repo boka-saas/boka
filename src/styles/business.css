@@ -1,26 +1,43 @@
 /* ===================================================================
    Business-page theming
    ===================================================================
-   Business pages use RicoFast's global tokens for backgrounds, text,
-   cards, and dark mode. Only the business-specific brand color and
-   accent are injected per-page via BusinessLayout.astro.
+   Each business page injects a full independent palette via
+   BusinessLayout.astro. The values below are fallbacks only.
    =================================================================== */
 
 .business-page {
-	--business-primary: var(--color-primary);
-	--business-primary-strong: color-mix(in srgb, var(--business-primary) 85%, black);
-	--business-primary-light: color-mix(in srgb, var(--business-primary) 12%, transparent);
-	--business-accent: var(--color-accent);
+	--business-bg: #fdfaf5;
+	--business-bg-dark: #0b1220;
+	--business-surface: #ffffff;
+	--business-surface-dark: #0f1b2d;
+	--business-text: #3f4a5a;
+	--business-text-dark: #c5cedb;
+	--business-primary: #2d6dc3;
+	--business-primary-strong: #0066ff;
+	--business-accent: #fad13b;
+
+	background-color: var(--business-bg);
+	color: var(--business-text);
+	min-height: 100vh;
+	transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Dark mode swaps the light tokens for their dark counterparts.
+   The .dark class is toggled on <html> by the dark-mode script. */
+html.dark .business-page {
+	--business-bg: var(--business-bg-dark);
+	--business-text: var(--business-text-dark);
+	--business-surface: var(--business-surface-dark);
 }
 
 /* Top background grid is tinted with the business primary color. */
 .business-top-bg {
 	color: var(--business-primary);
-	opacity: 0.22;
+	opacity: 0.18;
 }
 
 html.dark .business-top-bg {
-	opacity: 0.14;
+	opacity: 0.12;
 }
 
 /* -------------------------------------------------------------------
@@ -37,27 +54,69 @@ html.dark .business-top-bg {
 }
 
 .business-header-inner {
-	background-color: color-mix(in srgb, var(--color-bg-secondary) 92%, transparent);
-	border: 0.5px solid var(--color-neutral-200);
-	box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+	background-color: color-mix(in srgb, var(--business-surface) 92%, transparent);
+	border: 0.5px solid color-mix(in srgb, var(--business-primary) 20%, transparent);
+	box-shadow: 0 1px 2px 0 color-mix(in srgb, var(--business-primary) 8%, transparent);
 	backdrop-filter: blur(12px);
 }
 
 html.dark .business-header-inner {
-	background-color: color-mix(in srgb, var(--color-bg-secondary-dark) 88%, transparent);
-	border-color: var(--color-neutral-800);
+	background-color: color-mix(in srgb, var(--business-surface-dark) 88%, transparent);
+	border-color: color-mix(in srgb, var(--business-primary) 25%, transparent);
+}
+
+.business-nav-link {
+	color: var(--business-text);
+	transition: color 0.2s ease, background-color 0.2s ease;
+}
+
+.business-nav-link:hover {
+	color: var(--business-primary);
+	background-color: color-mix(in srgb, var(--business-primary) 8%, transparent);
+}
+
+html.dark .business-nav-link:hover {
+	color: var(--business-accent);
+	background-color: color-mix(in srgb, var(--business-accent) 10%, transparent);
 }
 
 /* -------------------------------------------------------------------
    Hero
    ------------------------------------------------------------------- */
 
-.business-hero-title {
-	color: var(--color-text-primary);
+.business-hero {
+	padding-top: 4rem;
+	padding-bottom: 4rem;
 }
 
-html.dark .business-hero-title {
-	color: var(--color-text-primary-dark);
+@media (min-width: 768px) {
+	.business-hero {
+		padding-top: 6rem;
+		padding-bottom: 6rem;
+	}
+}
+
+.business-hero-eyebrow {
+	background-color: color-mix(in srgb, var(--business-primary) 10%, transparent);
+	color: var(--business-primary);
+}
+
+html.dark .business-hero-eyebrow {
+	background-color: color-mix(in srgb, var(--business-accent) 15%, transparent);
+	color: var(--business-accent);
+}
+
+.business-hero-category {
+	background-color: color-mix(in srgb, var(--business-accent) 20%, transparent);
+	color: var(--business-primary);
+}
+
+html.dark .business-hero-category {
+	color: var(--business-accent);
+}
+
+.business-hero-title {
+	color: var(--business-text);
 }
 
 .business-hero-tagline {
@@ -68,13 +127,53 @@ html.dark .business-hero-tagline {
 	color: var(--business-accent);
 }
 
+.business-hero-description {
+	color: var(--business-text);
+	opacity: 0.85;
+}
+
+/* -------------------------------------------------------------------
+   Sections and cards
+   ------------------------------------------------------------------- */
+
+.business-section {
+	padding-top: 3rem;
+	padding-bottom: 3rem;
+}
+
+@media (min-width: 768px) {
+	.business-section {
+		padding-top: 4rem;
+		padding-bottom: 4rem;
+	}
+}
+
+.business-section-title {
+	color: var(--business-text);
+}
+
+.business-card {
+	background-color: var(--business-surface);
+	border: 1px dashed color-mix(in srgb, var(--business-primary) 20%, transparent);
+	transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+html.dark .business-card {
+	background-color: var(--business-surface-dark);
+	border-color: color-mix(in srgb, var(--business-primary) 30%, transparent);
+}
+
+.business-card:hover {
+	border-color: color-mix(in srgb, var(--business-primary) 40%, transparent);
+}
+
 /* -------------------------------------------------------------------
    Buttons
    ------------------------------------------------------------------- */
 
 .business-button {
 	background-color: var(--business-primary);
-	color: white;
+	color: var(--business-surface);
 	transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
 }
 
@@ -91,7 +190,7 @@ html.dark .business-hero-tagline {
 }
 
 .business-button-outline:hover {
-	background-color: var(--business-primary-light);
+	background-color: color-mix(in srgb, var(--business-primary) 8%, transparent);
 	transform: translateY(-2px);
 }
 
@@ -101,22 +200,25 @@ html.dark .business-button-outline {
 }
 
 html.dark .business-button-outline:hover {
-	background-color: color-mix(in srgb, var(--business-accent) 12%, transparent);
+	background-color: color-mix(in srgb, var(--business-accent) 10%, transparent);
 }
 
 /* -------------------------------------------------------------------
-   Cards and prices
+   Prices
    ------------------------------------------------------------------- */
 
-.business-card {
-	background-color: var(--color-bg-secondary);
-	border: 1px solid var(--color-neutral-200);
-	transition: background-color 0.3s ease, border-color 0.3s ease;
+.business-service-icon {
+	background-color: color-mix(in srgb, var(--business-primary) 10%, transparent);
+	color: var(--business-primary);
 }
 
-html.dark .business-card {
-	background-color: var(--color-bg-secondary-dark);
-	border-color: var(--color-neutral-800);
+.business-service-name {
+	color: var(--business-text);
+}
+
+.business-service-duration {
+	color: var(--business-text);
+	opacity: 0.7;
 }
 
 .business-service-price {
@@ -128,14 +230,14 @@ html.dark .business-service-price {
 }
 
 /* -------------------------------------------------------------------
-   Booking
+   Booking and contact
    ------------------------------------------------------------------- */
 
 .business-booking-card {
 	background: linear-gradient(
 		135deg,
-		color-mix(in srgb, var(--business-primary) 8%, var(--color-bg-secondary)),
-		var(--color-bg-secondary)
+		color-mix(in srgb, var(--business-primary) 8%, var(--business-surface)),
+		var(--business-surface)
 	);
 	border: 1px dashed var(--business-primary);
 }
@@ -143,15 +245,21 @@ html.dark .business-service-price {
 html.dark .business-booking-card {
 	background: linear-gradient(
 		135deg,
-		color-mix(in srgb, var(--business-primary) 12%, var(--color-bg-secondary-dark)),
-		var(--color-bg-secondary-dark)
+		color-mix(in srgb, var(--business-primary) 12%, var(--business-surface-dark)),
+		var(--business-surface-dark)
 	);
-	border-color: color-mix(in srgb, var(--business-primary) 50%, transparent);
+	border-color: color-mix(in srgb, var(--business-primary) 60%, transparent);
 }
 
-/* -------------------------------------------------------------------
-   Contact
-   ------------------------------------------------------------------- */
+.business-booking-text {
+	color: var(--business-text);
+	opacity: 0.85;
+}
+
+.business-contact-link {
+	color: var(--business-text);
+	transition: color 0.2s ease;
+}
 
 .business-contact-link:hover {
 	color: var(--business-primary);
@@ -159,6 +267,23 @@ html.dark .business-booking-card {
 
 html.dark .business-contact-link:hover {
 	color: var(--business-accent);
+}
+
+.business-hours-day {
+	color: var(--business-text);
+}
+
+.business-hours-time {
+	color: var(--business-text);
+	opacity: 0.8;
+}
+
+/* -------------------------------------------------------------------
+   Footer
+   ------------------------------------------------------------------- */
+
+.business-footer {
+	border-color: color-mix(in srgb, var(--business-primary) 15%, transparent);
 }
 
 /* -------------------------------------------------------------------
@@ -182,9 +307,12 @@ html.dark .dark-visible {
    ------------------------------------------------------------------- */
 
 @media (prefers-reduced-motion: reduce) {
+	.business-page,
 	.business-header,
+	.business-card,
 	.business-button,
-	.business-button-outline {
+	.business-button-outline,
+	.business-nav-link {
 		transition: none;
 	}
 
