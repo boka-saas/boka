@@ -1,7 +1,7 @@
 /* ===================================================================
    Business-page theming
    ===================================================================
-   Each business page injects a full independent palette via
+   Each business page injects an independent light-mode palette via
    BusinessLayout.astro. The values below are fallbacks only.
 
    Design rule: every color used on a business page must come from the
@@ -10,13 +10,9 @@
 
 .business-page {
 	--business-bg: #fdfaf5;
-	--business-bg-dark: #0b1220;
 	--business-surface: #ffffff;
-	--business-surface-dark: #0f1b2d;
 	--business-text: #3f4a5a;
-	--business-text-dark: #c5cedb;
 	--business-primary: #2d6dc3;
-	--business-primary-dark: #3884eb;
 	--business-primary-strong: #0066ff;
 	--business-accent: #fad13b;
 	--business-on-primary: #ffffff;
@@ -24,17 +20,6 @@
 	background-color: var(--business-bg);
 	color: var(--business-text);
 	min-height: 100vh;
-	transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-/* Dark mode swaps the light tokens for their dark counterparts.
-   The primary color is swapped to the theme's dark-mode primary so
-   every primary-accented element stays readable on dark surfaces. */
-html.dark .business-page {
-	--business-bg: var(--business-bg-dark);
-	--business-text: var(--business-text-dark);
-	--business-surface: var(--business-surface-dark);
-	--business-primary: var(--business-primary-dark);
 }
 
 /* Override RicoFast's global h1/h2/h3 colors so headings use the
@@ -45,20 +30,10 @@ html.dark .business-page {
 	color: var(--business-text);
 }
 
-html.dark .business-page h1,
-html.dark .business-page h2,
-html.dark .business-page h3 {
-	color: var(--business-text-dark);
-}
-
 /* Top background grid is tinted with the business primary color. */
 .business-top-bg {
 	color: var(--business-primary);
 	opacity: 0.18;
-}
-
-html.dark .business-top-bg {
-	opacity: 0.12;
 }
 
 /* -------------------------------------------------------------------
@@ -71,7 +46,6 @@ html.dark .business-top-bg {
 	left: 0;
 	right: 0;
 	z-index: 50;
-	transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .business-header-inner {
@@ -79,11 +53,6 @@ html.dark .business-top-bg {
 	border: 0.5px solid color-mix(in srgb, var(--business-primary) 22%, transparent);
 	box-shadow: 0 1px 2px 0 color-mix(in srgb, var(--business-primary) 10%, transparent);
 	backdrop-filter: blur(12px);
-}
-
-html.dark .business-header-inner {
-	background-color: color-mix(in srgb, var(--business-surface-dark) 88%, transparent);
-	border-color: color-mix(in srgb, var(--business-primary) 30%, transparent);
 }
 
 .business-nav-link {
@@ -98,10 +67,6 @@ html.dark .business-header-inner {
 
 .business-text-muted {
 	color: color-mix(in srgb, var(--business-text) 72%, var(--business-bg));
-}
-
-html.dark .business-text-muted {
-	color: color-mix(in srgb, var(--business-text-dark) 78%, var(--business-bg-dark));
 }
 
 /* -------------------------------------------------------------------
@@ -138,18 +103,9 @@ html.dark .business-text-muted {
 	color: var(--business-primary);
 }
 
-.business-hero-description {
-	color: var(--business-text);
-}
-
 .business-hero-description,
 .business-booking-text {
 	color: color-mix(in srgb, var(--business-text) 88%, var(--business-bg));
-}
-
-html.dark .business-hero-description,
-html.dark .business-booking-text {
-	color: color-mix(in srgb, var(--business-text-dark) 90%, var(--business-bg-dark));
 }
 
 /* -------------------------------------------------------------------
@@ -174,10 +130,6 @@ html.dark .business-booking-text {
 
 .business-section-subtitle {
 	color: color-mix(in srgb, var(--business-text) 72%, var(--business-bg));
-}
-
-html.dark .business-section-subtitle {
-	color: color-mix(in srgb, var(--business-text-dark) 78%, var(--business-bg-dark));
 }
 
 .business-card {
@@ -234,10 +186,6 @@ html.dark .business-section-subtitle {
 	color: color-mix(in srgb, var(--business-text) 70%, var(--business-bg));
 }
 
-html.dark .business-service-duration {
-	color: color-mix(in srgb, var(--business-text-dark) 75%, var(--business-bg-dark));
-}
-
 .business-service-price {
 	color: var(--business-primary);
 }
@@ -255,21 +203,8 @@ html.dark .business-service-duration {
 	border: 1px dashed var(--business-primary);
 }
 
-html.dark .business-booking-card {
-	background: linear-gradient(
-		135deg,
-		color-mix(in srgb, var(--business-primary) 14%, var(--business-surface-dark)),
-		var(--business-surface-dark)
-	);
-	border-color: color-mix(in srgb, var(--business-primary) 70%, transparent);
-}
-
 .business-booking-text {
 	color: color-mix(in srgb, var(--business-text) 88%, var(--business-bg));
-}
-
-html.dark .business-booking-text {
-	color: color-mix(in srgb, var(--business-text-dark) 90%, var(--business-bg-dark));
 }
 
 .business-contact-link {
@@ -287,10 +222,6 @@ html.dark .business-booking-text {
 
 .business-hours-time {
 	color: color-mix(in srgb, var(--business-text) 78%, var(--business-bg));
-}
-
-html.dark .business-hours-time {
-	color: color-mix(in srgb, var(--business-text-dark) 82%, var(--business-bg-dark));
 }
 
 /* -------------------------------------------------------------------
@@ -321,34 +252,6 @@ html.dark .business-hours-time {
 
 .business-page ::-webkit-scrollbar-thumb:hover {
 	background: var(--business-primary);
-}
-
-html.dark .business-page ::-webkit-scrollbar-track {
-	background: color-mix(in srgb, var(--business-primary) 15%, var(--business-surface-dark));
-}
-
-html.dark .business-page ::-webkit-scrollbar-thumb {
-	background: color-mix(in srgb, var(--business-primary) 60%, var(--business-surface-dark));
-}
-
-html.dark .business-page ::-webkit-scrollbar-thumb:hover {
-	background: var(--business-primary);
-}
-
-/* -------------------------------------------------------------------
-   Dark-mode icons in the header toggle
-   ------------------------------------------------------------------- */
-
-html.dark .dark-hidden {
-	display: none;
-}
-
-.dark-visible {
-	display: none;
-}
-
-html.dark .dark-visible {
-	display: block;
 }
 
 /* -------------------------------------------------------------------

@@ -17,13 +17,9 @@ interface Props {
 			name: string;
 			source: string;
 			bg: string;
-			bgDark: string;
 			surface: string;
-			surfaceDark: string;
 			text: string;
-			textDark: string;
 			primary: string;
-			primaryDark: string;
 			primaryStrong: string;
 			accent: string;
 			onPrimary: string;
@@ -42,13 +38,9 @@ const { business } = Astro.props;
 
 const themeStyle = [
 	`--business-bg: ${business.theme.bg};`,
-	`--business-bg-dark: ${business.theme.bgDark};`,
 	`--business-surface: ${business.theme.surface};`,
-	`--business-surface-dark: ${business.theme.surfaceDark};`,
 	`--business-text: ${business.theme.text};`,
-	`--business-text-dark: ${business.theme.textDark};`,
 	`--business-primary: ${business.theme.primary};`,
-	`--business-primary-dark: ${business.theme.primaryDark};`,
 	`--business-primary-strong: ${business.theme.primaryStrong};`,
 	`--business-accent: ${business.theme.accent};`,
 	`--business-on-primary: ${business.theme.onPrimary};`,
@@ -63,18 +55,6 @@ const themeStyle = [
       description={business.tagline}
       url={`${Astro.site ?? ""}businesses/${business.slug}`}
     />
-
-    <!-- Dark-mode boot script: read persisted preference before first paint. -->
-    <script is:inline>
-      if (typeof Storage !== 'undefined') {
-        if (
-          localStorage.getItem('dark_mode') &&
-          localStorage.getItem('dark_mode') == 'true'
-        ) {
-          document.documentElement.classList.add('dark');
-        }
-      }
-    </script>
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   </head>
@@ -96,8 +76,10 @@ const themeStyle = [
       class="business-page min-h-screen"
       style={themeStyle}
     >
-      <BusinessHeader business={business} />
-      <main class="pt-24 md:pt-28">
+      <div class="hidden md:block">
+        <BusinessHeader business={business} />
+      </div>
+      <main class="md:pt-28">
         <slot />
       </main>
       <BusinessFooter business={business} />
