@@ -1,28 +1,32 @@
 {
 	"heritage-barbershop": {
 		"name": "Heritage Barbershop",
-		"source": "https://coolors.co/261c15-5c3a21-8b5a2b-c49a6c-f2e8d5",
+		"source": "https://coolors.co/12100e-1e1812-8b5a2b-d4a574-c49a6c-f2e8d5",
 		"bg": "#F2E8D5",
-		"bgDark": "#1A120B",
+		"bgDark": "#12100E",
 		"surface": "#FAF3EA",
-		"surfaceDark": "#261C15",
+		"surfaceDark": "#1E1812",
 		"text": "#3E2723",
-		"textDark": "#EADDCF",
+		"textDark": "#F5EFE6",
 		"primary": "#8B5A2B",
+		"primaryDark": "#D4A574",
 		"primaryStrong": "#5C3A21",
-		"accent": "#C49A6C"
+		"accent": "#C49A6C",
+		"onPrimary": "#FFFFFF"
 	},
 	"blush-studio": {
 		"name": "Blush Studio",
-		"source": "https://coolors.co/2a0a15-4a0d24-c2185b-d81b60-f8bbd0",
+		"source": "https://coolors.co/1a0810-2a1020-c2185b-ff80ab-d81b60-f8bbd0-fff5f7",
 		"bg": "#FFF5F7",
-		"bgDark": "#2A0A15",
+		"bgDark": "#1A0810",
 		"surface": "#FFFFFF",
-		"surfaceDark": "#3E1020",
+		"surfaceDark": "#2A1020",
 		"text": "#4A0D24",
-		"textDark": "#FCE4EC",
+		"textDark": "#FFF0F5",
 		"primary": "#C2185B",
+		"primaryDark": "#FF80AB",
 		"primaryStrong": "#D81B60",
-		"accent": "#F8BBD0"
+		"accent": "#F8BBD0",
+		"onPrimary": "#FFFFFF"
 	}
 }

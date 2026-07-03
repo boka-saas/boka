@@ -38,8 +38,10 @@ const THEME_FIELDS = [
 	"text",
 	"textDark",
 	"primary",
+	"primaryDark",
 	"primaryStrong",
 	"accent",
+	"onPrimary",
 ];
 
 // Resolve a business theme key into a full palette from the theme library.
