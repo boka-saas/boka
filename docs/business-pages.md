@@ -279,7 +279,7 @@ The lowest price is computed with `Math.min(...)` over the services array.
 }
 ```
 
-The values above are fallbacks. They are overridden by the inline `style` attribute from `BusinessLayout.astro`. Headings are also overridden so RicoFast's global `h1,h2,h3` colors cannot leak Boka blue onto the page.
+The values above are fallbacks. They are overridden by the inline `style` attribute from `BusinessLayout.astro`. `primaryStrong` is used for button hover states so every CTA has an intentional, theme-defined pressed color. Headings are also overridden so RicoFast's global `h1,h2,h3` colors cannot leak Boka blue onto the page.
 
 ## How to add a new business
 
