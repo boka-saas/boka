@@ -6,10 +6,20 @@ interface Props {
 		slug: string;
 		name: string;
 		logo: string;
+		theme: {
+			primary: string;
+			accent: string;
+			surface: string;
+			surfaceDark: string;
+			text: string;
+			textDark: string;
+		};
 	};
 }
 
 const { business } = Astro.props;
+
+const toggleGradient = `background: linear-gradient(to bottom, color-mix(in srgb, ${business.theme.primary} 75%, white), ${business.theme.primary});`;
 ---
 
 <header class="business-header">
@@ -17,7 +27,8 @@ const { business } = Astro.props;
     <div class="business-header-inner flex items-center justify-between h-14 rounded-2xl px-4 sm:px-5">
       <a
         href={`/businesses/${business.slug}`}
-        class="flex items-center gap-3 text-neutral-800 dark:text-neutral-100"
+        class="flex items-center gap-3"
+        style={`color: var(--business-text);`}
       >
         <img
           src={business.logo}
@@ -32,22 +43,13 @@ const { business } = Astro.props;
 
       <div class="flex items-center gap-2 sm:gap-4">
         <nav class="hidden items-center gap-1 text-sm font-medium sm:flex">
-          <a
-            href="#prices"
-            class="rounded-lg px-3 py-2 text-neutral-600 transition-colors hover:bg-primary/5 hover:text-primary dark:text-neutral-300 dark:hover:text-primary-light"
-          >
+          <a href="#prices" class="business-nav-link rounded-lg px-3 py-2">
             Prices
           </a>
-          <a
-            href="#booking"
-            class="rounded-lg px-3 py-2 text-neutral-600 transition-colors hover:bg-primary/5 hover:text-primary dark:text-neutral-300 dark:hover:text-primary-light"
-          >
+          <a href="#booking" class="business-nav-link rounded-lg px-3 py-2">
             Book
           </a>
-          <a
-            href="#contact"
-            class="rounded-lg px-3 py-2 text-neutral-600 transition-colors hover:bg-primary/5 hover:text-primary dark:text-neutral-300 dark:hover:text-primary-light"
-          >
+          <a href="#contact" class="business-nav-link rounded-lg px-3 py-2">
             Contact
           </a>
         </nav>
@@ -56,16 +58,17 @@ const { business } = Astro.props;
           type="button"
           id="businessDarkToggle"
           aria-label="Toggle dark mode"
-          class="relative flex h-9 items-center gap-1.5 rounded-full border-[0.5px] border-neutral-200 bg-gradient-to-b from-white to-[#edf1fa] px-2 dark:border-neutral-600 dark:from-neutral-800 dark:to-neutral-700 transition-all duration-200 hover:shadow-md hover:scale-105 active:scale-95"
+          class="relative flex h-9 items-center gap-1.5 rounded-full border-[0.5px] px-2 transition-all duration-200 hover:shadow-md hover:scale-105 active:scale-95"
+          style={`border-color: color-mix(in srgb, var(--business-primary) 25%, transparent); background-color: var(--business-surface);`}
         >
           <div
-            class="flex h-6 w-6 flex-shrink-0 items-center justify-center overflow-hidden rounded-full bg-gradient-to-b from-[#85a6ff] to-[#2d6dc3] border-[0.5px] border-[#7fa1ff]"
-            style="box-shadow: 0px 2px 3px 0 rgba(55,52,209,0.21);"
+            class="flex h-6 w-6 flex-shrink-0 items-center justify-center overflow-hidden rounded-full border-[0.5px]"
+            style={`${toggleGradient} border-color: color-mix(in srgb, ${business.theme.primary} 60%, white); box-shadow: 0px 2px 3px 0 color-mix(in srgb, ${business.theme.primary} 30%, transparent);`}
           >
             <SunMedium class="dark-hidden h-4 w-4 text-white transition duration-200" />
             <Moon class="dark-visible hidden h-4 w-4 text-white transition duration-200" />
           </div>
-          <span class="hidden text-sm text-[#6f6c8f] dark:text-neutral-400 sm:inline">
+          <span class="hidden text-sm sm:inline" style={`color: var(--business-text);`}>
             <span class="dark-hidden">Light</span>
             <span class="dark-visible hidden">Dark</span>
           </span>

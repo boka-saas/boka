@@ -17,20 +17,20 @@ const { business } = Astro.props;
 const currentYear = new Date().getFullYear();
 ---
 
-<footer class="mt-8 border-t border-dashed border-primary/15 py-12 dark:border-primary-dark/15 md:py-16">
+<footer class="business-footer mt-8 border-t border-dashed py-12 md:py-16">
   <div class="site-container">
     <div class="flex flex-col items-start justify-between gap-8 md:flex-row md:items-center">
       <div class="max-w-sm">
-        <p class="text-lg font-semibold text-neutral-800 dark:text-neutral-100">
+        <p class="text-lg font-semibold">
           {business.name}
         </p>
-        <p class="mt-1 text-sm text-neutral-500 dark:text-neutral-400">
+        <p class="mt-1 text-sm opacity-70">
           {business.category}
         </p>
-        <p class="mt-3 text-sm text-neutral-500 dark:text-neutral-400">
+        <p class="mt-3 text-sm opacity-70">
           {business.contact.address}
         </p>
-        <p class="text-sm text-neutral-500 dark:text-neutral-400">
+        <p class="text-sm opacity-70">
           <a
             href={`tel:${business.contact.phone.replace(/\s/g, "")}`}
             class="business-contact-link transition-colors"
@@ -50,7 +50,7 @@ const currentYear = new Date().getFullYear();
           <CalendarCheck size={16} />
           Book now
         </a>
-        <p class="text-xs text-neutral-400 dark:text-neutral-500">
+        <p class="text-xs opacity-50">
           © {currentYear} {business.name}. All rights reserved.
         </p>
       </div>

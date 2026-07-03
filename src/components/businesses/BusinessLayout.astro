@@ -14,7 +14,16 @@ interface Props {
 		description: string;
 		logo: string;
 		theme: {
+			name: string;
+			source: string;
+			bg: string;
+			bgDark: string;
+			surface: string;
+			surfaceDark: string;
+			text: string;
+			textDark: string;
 			primary: string;
+			primaryStrong: string;
 			accent: string;
 		};
 		contact: {
@@ -30,7 +39,14 @@ interface Props {
 const { business } = Astro.props;
 
 const themeStyle = [
+	`--business-bg: ${business.theme.bg};`,
+	`--business-bg-dark: ${business.theme.bgDark};`,
+	`--business-surface: ${business.theme.surface};`,
+	`--business-surface-dark: ${business.theme.surfaceDark};`,
+	`--business-text: ${business.theme.text};`,
+	`--business-text-dark: ${business.theme.textDark};`,
 	`--business-primary: ${business.theme.primary};`,
+	`--business-primary-strong: ${business.theme.primaryStrong};`,
 	`--business-accent: ${business.theme.accent};`,
 ].join(" ");
 ---
@@ -58,7 +74,7 @@ const themeStyle = [
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   </head>
-  <body class="antialiased bg-bg-primary dark:bg-bg-primary-dark max-w-full overflow-x-hidden">
+  <body class="antialiased max-w-full overflow-x-hidden">
     {/* Top background grid, tinted with the business primary color. */}
     <svg
       aria-hidden="true"
