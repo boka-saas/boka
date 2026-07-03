@@ -8,6 +8,10 @@ const modules = import.meta.glob("/src/data/businesses/*.json", {
 	eager: true,
 });
 
+// Load the shared theme library. Businesses reference a theme by key instead of
+// duplicating a full palette in every config.
+import themeLibrary from "/src/data/business-themes.json";
+
 // Top-level fields required in every business config.
 const REQUIRED_FIELDS = [
 	"slug",
@@ -22,11 +26,45 @@ const REQUIRED_FIELDS = [
 	"bookingUrl",
 ];
 
-// Theme tokens that every business theme object must provide.
+// Theme tokens that every resolved theme object must provide.
 // These are converted to CSS custom properties in BusinessLayout.astro.
-// The rest of the page uses RicoFast's global tokens so dark mode matches
-// the marketing site automatically.
-const THEME_FIELDS = ["primary", "accent"];
+const THEME_FIELDS = [
+	"name",
+	"source",
+	"bg",
+	"bgDark",
+	"surface",
+	"surfaceDark",
+	"text",
+	"textDark",
+	"primary",
+	"primaryStrong",
+	"accent",
+];
+
+// Resolve a business theme key into a full palette from the theme library.
+function resolveTheme(themeKey, filename) {
+	if (typeof themeKey !== "string" || !themeKey) {
+		throw new Error(
+			`Business config ${filename} must reference a theme by key string`,
+		);
+	}
+
+	const theme = themeLibrary[themeKey];
+	if (!theme) {
+		throw new Error(
+			`Business config ${filename} references unknown theme: ${themeKey}`,
+		);
+	}
+
+	for (const field of THEME_FIELDS) {
+		if (!theme[field]) {
+			throw new Error(`Theme ${themeKey} is missing required token: ${field}`);
+		}
+	}
+
+	return theme;
+}
 
 // Validate a single business config. Fail fast with a clear message so
 // build-time errors point directly to the offending file and field.
@@ -35,18 +73,6 @@ function validateBusiness(data, filename) {
 		if (data[field] === undefined || data[field] === null) {
 			throw new Error(
 				`Business config ${filename} is missing required field: ${field}`,
-			);
-		}
-	}
-
-	if (typeof data.theme !== "object" || Array.isArray(data.theme)) {
-		throw new Error(`Business config ${filename} has invalid theme object`);
-	}
-
-	for (const field of THEME_FIELDS) {
-		if (!data.theme[field]) {
-			throw new Error(
-				`Business config ${filename} theme is missing token: ${field}`,
 			);
 		}
 	}
@@ -73,7 +99,7 @@ function validateBusiness(data, filename) {
 	}
 }
 
-// Load and validate every business config once at module initialization.
+// Load, validate, and resolve themes for every business config.
 function loadBusinesses() {
 	const businesses = [];
 
@@ -81,7 +107,9 @@ function loadBusinesses() {
 		// Vite JSON imports expose the object directly or under .default.
 		const data = module.default ?? module;
 		validateBusiness(data, filepath);
-		businesses.push(data);
+
+		const theme = resolveTheme(data.theme, filepath);
+		businesses.push({ ...data, theme });
 	}
 
 	return businesses;

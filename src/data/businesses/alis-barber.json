@@ -5,10 +5,7 @@
 	"tagline": "Precision cuts in East London",
 	"description": "Traditional barbering with modern style. Walk-ins welcome, but booking guarantees your chair.",
 	"logo": "/assets/businesses/alis-barber/logo.svg",
-	"theme": {
-		"primary": "#8B5A2B",
-		"accent": "#F4C430"
-	},
+	"theme": "heritage-barbershop",
 	"contact": {
 		"address": "123 High Street, London E1 1AA",
 		"phone": "020 1234 5678",

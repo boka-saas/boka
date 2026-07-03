@@ -5,10 +5,7 @@
 	"tagline": "Gel, acrylics, and calm in Shoreditch",
 	"description": "A boutique nail bar specialising in long-lasting gel and acrylic designs in a relaxed, hygienic space.",
 	"logo": "/assets/businesses/tinas-nails/logo.svg",
-	"theme": {
-		"primary": "#C2185B",
-		"accent": "#F8BBD0"
-	},
+	"theme": "blush-studio",
 	"contact": {
 		"address": "45 Rivington Street, London EC2A 3QB",
 		"phone": "020 8765 4321",
