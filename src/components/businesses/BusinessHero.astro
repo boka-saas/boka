@@ -23,16 +23,12 @@ const lowestPrice = Math.min(...business.services.map((s) => s.price));
 <section class="business-hero py-16 md:py-24">
   <div class="site-container">
     <div class="mx-auto max-w-2xl text-center">
-      <p
-        class="mb-4 inline-flex items-center gap-2 rounded-full border border-[var(--business-primary)]/15 bg-[var(--business-primary)]/5 px-3 py-1 text-xs font-medium text-[var(--business-primary)]"
-      >
+      <p class="business-hero-eyebrow mb-4 inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-medium">
         <MapPin size={14} />
         {business.contact.address}
       </p>
 
-      <p
-        class="mb-3 inline-flex items-center gap-1.5 rounded-full bg-[var(--business-accent)]/15 px-3 py-1 text-xs font-semibold text-[var(--business-primary)]"
-      >
+      <p class="business-hero-category mb-3 inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold">
         {business.category}
       </p>
 
@@ -44,7 +40,7 @@ const lowestPrice = Math.min(...business.services.map((s) => s.price));
         {business.tagline}
       </p>
 
-      <p class="mt-4 text-base leading-relaxed text-neutral-600 dark:text-neutral-300 md:text-lg">
+      <p class="business-hero-description mt-4 text-base leading-relaxed md:text-lg">
         {business.description}
       </p>
 

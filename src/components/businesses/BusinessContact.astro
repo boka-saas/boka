@@ -25,42 +25,42 @@ const dayLabels: Record<string, string> = {
 };
 ---
 
-<section id="contact" class="py-16 md:py-24">
+<section id="contact" class="business-section">
   <div class="site-container">
     <div class="mx-auto mb-12 max-w-2xl text-center">
-      <p class="mb-3 text-xs font-medium uppercase tracking-[0.14em] text-neutral-400 dark:text-neutral-500">
+      <p class="mb-3 text-xs font-medium uppercase tracking-[0.14em] opacity-60">
         Get in touch
       </p>
-      <h2 class="font-brand text-3xl text-neutral-800 dark:text-neutral-100 md:text-4xl">
+      <h2 class="business-section-title font-brand text-3xl md:text-4xl">
         Contact & hours
       </h2>
     </div>
 
     <div class="business-card mx-auto grid max-w-3xl gap-8 rounded-3xl p-6 md:grid-cols-2 md:p-10">
       <div class="space-y-5">
-        <h3 class="text-sm font-semibold uppercase tracking-[0.14em] text-neutral-400 dark:text-neutral-500">
+        <h3 class="text-sm font-semibold uppercase tracking-[0.14em] opacity-60">
           Contact
         </h3>
 
         <div class="flex items-start gap-3">
-          <div class="mt-0.5 flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-xl bg-[var(--business-primary)]/10 text-[var(--business-primary)]">
+          <div class="business-service-icon mt-0.5 flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-xl">
             <MapPin size={16} />
           </div>
           <div>
-            <p class="font-medium text-neutral-800 dark:text-neutral-100">Address</p>
-            <p class="text-sm text-neutral-600 dark:text-neutral-300">{business.contact.address}</p>
+            <p class="font-medium">Address</p>
+            <p class="business-contact-link text-sm">{business.contact.address}</p>
           </div>
         </div>
 
         <div class="flex items-start gap-3">
-          <div class="mt-0.5 flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-xl bg-[var(--business-primary)]/10 text-[var(--business-primary)]">
+          <div class="business-service-icon mt-0.5 flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-xl">
             <Phone size={16} />
           </div>
           <div>
-            <p class="font-medium text-neutral-800 dark:text-neutral-100">Phone</p>
+            <p class="font-medium">Phone</p>
             <a
               href={`tel:${business.contact.phone.replace(/\s/g, "")}`}
-              class="business-contact-link text-sm text-neutral-600 transition-colors dark:text-neutral-300"
+              class="business-contact-link text-sm"
             >
               {business.contact.phone}
             </a>
@@ -69,18 +69,18 @@ const dayLabels: Record<string, string> = {
       </div>
 
       <div class="space-y-5">
-        <h3 class="text-sm font-semibold uppercase tracking-[0.14em] text-neutral-400 dark:text-neutral-500">
+        <h3 class="text-sm font-semibold uppercase tracking-[0.14em] opacity-60">
           Opening hours
         </h3>
 
         <ul class="space-y-2">
           {
             dayOrder.map((day) => (
-              <li class="flex items-center justify-between gap-4 text-sm">
-                <span class="font-medium text-neutral-700 dark:text-neutral-200">
+              <li class="business-hours-row flex items-center justify-between gap-4 text-sm">
+                <span class="business-hours-day font-medium">
                   {dayLabels[day]}
                 </span>
-                <span class="inline-flex items-center gap-1.5 text-neutral-600 dark:text-neutral-300">
+                <span class="business-hours-time inline-flex items-center gap-1.5">
                   <Clock size={12} />
                   {business.contact.hours[day]}
                 </span>
