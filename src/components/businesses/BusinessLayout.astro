@@ -23,8 +23,10 @@ interface Props {
 			text: string;
 			textDark: string;
 			primary: string;
+			primaryDark: string;
 			primaryStrong: string;
 			accent: string;
+			onPrimary: string;
 		};
 		contact: {
 			address: string;
@@ -46,8 +48,10 @@ const themeStyle = [
 	`--business-text: ${business.theme.text};`,
 	`--business-text-dark: ${business.theme.textDark};`,
 	`--business-primary: ${business.theme.primary};`,
+	`--business-primary-dark: ${business.theme.primaryDark};`,
 	`--business-primary-strong: ${business.theme.primaryStrong};`,
 	`--business-accent: ${business.theme.accent};`,
+	`--business-on-primary: ${business.theme.onPrimary};`,
 ].join(" ");
 ---
 
