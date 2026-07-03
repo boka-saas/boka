@@ -7,6 +7,23 @@ const title = "Multi-Tenant Business Pages";
 const description =
 	"How the JSON-driven, theme-injected business storefront pages work.";
 
+const themeExample = `{
+  "heritage-barbershop": {
+    "name": "Heritage Barbershop",
+    "source": "https://coolors.co/261c15-5c3a21-8b5a2b-c49a6c-f2e8d5",
+    "bg": "#F2E8D5",
+    "bgDark": "#1A120B",
+    "surface": "#FAF3EA",
+    "surfaceDark": "#261C15",
+    "text": "#3E2723",
+    "textDark": "#EADDCF",
+    "primary": "#8B5A2B",
+    "primaryStrong": "#5C3A21",
+    "accent": "#C49A6C"
+  },
+  "blush-studio": { ... }
+}`;
+
 const configExample = `{
   "slug": "alis-barber",
   "name": "Ali's Barber",
@@ -14,10 +31,7 @@ const configExample = `{
   "tagline": "Precision cuts in East London",
   "description": "Traditional barbering with modern style.",
   "logo": "/assets/businesses/alis-barber/logo.svg",
-  "theme": {
-    "primary": "#8B5A2B",
-    "accent": "#F4C430"
-  },
+  "theme": "heritage-barbershop",
   "contact": { "address": "...", "phone": "...", "hours": {} },
   "services": [
     { "name": "Haircut", "price": 25, "duration": "30 min" }
@@ -28,6 +42,8 @@ const configExample = `{
 const loaderExample = `const modules = import.meta.glob("/src/data/businesses/*.json", {
   eager: true,
 });
+
+import themeLibrary from "/src/data/business-themes.json";
 
 export function getAllBusinesses() { ... }
 export function getBusinessBySlug(slug) { ... }
@@ -51,27 +67,35 @@ if (!business) return new Response(null, { status: 404 });
   <BusinessContact business={business} />
 </BusinessLayout>`;
 
-const themeExample = `<article
+const variablesExample = `<article
   class="business-page min-h-screen"
-  style="--business-primary: #8B5A2B;
-         --business-accent: #F4C430;"
+  style="--business-bg: #F2E8D5;
+         --business-bg-dark: #1A120B;
+         --business-surface: #FAF3EA;
+         --business-surface-dark: #261C15;
+         --business-text: #3E2723;
+         --business-text-dark: #EADDCF;
+         --business-primary: #8B5A2B;
+         --business-primary-strong: #5C3A21;
+         --business-accent: #C49A6C;"
 >
   ...
 </article>`;
 
-const darkModeExample = `/* Dark mode is automatic because the page uses RicoFast's global tokens. */
-<body class="bg-bg-primary dark:bg-bg-primary-dark">
-  ...
-</body>`;
+const darkModeExample = `html.dark .business-page {
+  --business-bg: var(--business-bg-dark);
+  --business-text: var(--business-text-dark);
+  --business-surface: var(--business-surface-dark);
+}`;
 
 const components = [
 	{
 		name: "BusinessLayout.astro",
-		desc: "Standalone root document layout. Own <html>, <head>, meta tags, favicon, dark-mode boot script, global + business styles, top background grid tinted with the business primary, and theme-injecting wrapper.",
+		desc: "Standalone root document layout. Own <html>, <head>, meta tags, favicon, dark-mode boot script, global + business styles, top background grid tinted with the business primary, and full-palette injecting wrapper.",
 	},
 	{
 		name: "BusinessHeader.astro",
-		desc: "Floating pill-style glassmorphism header with logo + business name, in-page nav links, and a self-contained dark-mode toggle matching the marketing site.",
+		desc: "Floating pill-style glassmorphism header with logo + business name, in-page nav links, and a self-contained dark-mode toggle styled with the business primary color.",
 	},
 	{
 		name: "BusinessHero.astro",
@@ -79,7 +103,7 @@ const components = [
 	},
 	{
 		name: "BusinessPrices.astro",
-		desc: "Responsive grid of service cards using RicoFast card styling, with prices and durations.",
+		desc: "Responsive grid of service cards using the business surface and primary colors.",
 	},
 	{
 		name: "BusinessBooking.astro",
@@ -91,7 +115,7 @@ const components = [
 	},
 	{
 		name: "BusinessFooter.astro",
-		desc: "Branded footer matching the marketing footer style, with contact details, booking button, and copyright.",
+		desc: "Branded footer using the business palette, with contact details, booking button, and copyright.",
 	},
 ];
 
@@ -105,16 +129,12 @@ const decisions = [
 		body: "Keeps the build static and simple. If the number of businesses grows, the loader can be replaced by a CMS or database source without changing the components.",
 	},
 	{
-		title: "Global tokens + two injected variables",
-		body: "The original version injected a full custom palette per business, which made dark mode inconsistent with the homepage. Now only primary and accent are business-specific; backgrounds, text, cards, and dark mode all come from RicoFast's design system.",
+		title: "Theme library",
+		body: "Business configs reference a named theme instead of duplicating a full palette. This makes it easy to apply the same theme to multiple businesses and to source palettes from external tools like Coolors.",
 	},
 	{
-		title: "Floating pill header",
-		body: "Matches the marketing site's header shape and glassmorphism so the page feels like part of the same product.",
-	},
-	{
-		title: "Top background grid tint",
-		body: "The subtle grid pattern behind the hero is tinted with the business primary color, giving each storefront its own atmosphere without breaking the shared design language.",
+		title: "Full independent palettes",
+		body: "Each theme supplies its own light canvas, dark canvas, surfaces, text, primary, primary-strong, and accent colors. This gives each business a distinct identity while keeping the shared layout and components.",
 	},
 	{
 		title: "Duplicated dark-mode boot script",
@@ -130,9 +150,9 @@ const decisions = [
     <div class="mx-auto max-w-3xl">
       <p class="mb-8 text-lg leading-relaxed text-neutral-700 dark:text-neutral-300">
         Each service business gets its own branded storefront URL. The markup
-        is shared; only the JSON config and two injected CSS variables change per
-        business. Business pages reuse RicoFast's global design tokens so light
-        and dark mode match the homepage automatically.
+        and layout are shared; only the JSON config and the selected theme change
+        per business. Themes are sourced from Coolors and give each storefront a
+        full independent palette, including its own light and dark modes.
       </p>
 
       <div
@@ -154,10 +174,13 @@ const decisions = [
       <div
         class="mb-10 overflow-x-auto rounded-2xl border border-dashed border-primary/20 bg-bg-secondary p-6 font-mono text-sm text-neutral-700 dark:border-neutral-700 dark:bg-bg-secondary-dark dark:text-neutral-300"
       >
-        <pre set:html={`src/data/businesses/&lt;slug&gt;.json
+        <pre set:html={`src/data/business-themes.json
         │
         ▼
-src/lib/businesses.js   (load + validate)
+src/data/businesses/&lt;slug&gt;.json   (references a theme key)
+        │
+        ▼
+src/lib/businesses.js   (load + validate + resolve theme)
         │
         ▼
 src/pages/businesses/[business]/index.astro   (getStaticPaths)
@@ -169,22 +192,35 @@ dist/businesses/&lt;slug&gt;/index.html   (static output)`} />
       <p class="mb-10 leading-relaxed text-neutral-700 dark:text-neutral-300">
         At build time Astro asks the dynamic route for its paths. The route
         calls <code>getAllBusinesses()</code>, which returns every validated JSON
-        config. Astro renders one static HTML file per slug. At request time on
-        a static host, <code>/businesses/&lt;slug&gt;</code> simply serves the
-        pre-built HTML.
+        config with its resolved full theme. Astro renders one static HTML file
+        per slug.
       </p>
 
       <SectionHeader title="Data layer" />
 
       <h3 class="mb-3 text-xl font-semibold text-neutral-800 dark:text-neutral-100"
+      >Theme library</h3>
+
+      <p class="mb-4 leading-relaxed text-neutral-700 dark:text-neutral-300">
+        All business themes live in
+        <code>src/data/business-themes.json</code>. Each theme is a named,
+        self-contained palette with light and dark variants, sourced from
+        <a href="https://coolors.co/" class="text-primary hover:underline">Coolors</a>.
+      </p>
+
+      <div
+        class="mb-8 overflow-x-auto rounded-2xl bg-neutral-900 p-5 text-sm text-neutral-100"
+      >
+        <pre set:html={themeExample} />
+      </div>
+
+      <h3 class="mb-3 text-xl font-semibold text-neutral-800 dark:text-neutral-100"
       >Config files</h3>
 
       <p class="mb-4 leading-relaxed text-neutral-700 dark:text-neutral-300">
-        Business configs live at <code>src/data/businesses/&lt;slug&gt;.json</code>.
-        The <code>slug</code> must match the filename stem. The
-        <code>theme</code> object only supplies a business-specific
-        <code>primary</code> brand color and <code>accent</code> highlight color;
-        everything else uses RicoFast's global tokens.
+        Business configs live at
+        <code>src/data/businesses/&lt;slug&gt;.json</code> and reference a theme
+        by key. The <code>slug</code> must match the filename stem.
       </p>
 
       <div
@@ -247,21 +283,20 @@ dist/businesses/&lt;slug&gt;/index.html   (static output)`} />
       <SectionHeader title="Theming system" />
 
       <p class="mb-4 leading-relaxed text-neutral-700 dark:text-neutral-300">
-        The JSON theme object is converted into two inline CSS custom properties
-        on the <code>.business-page</code> element. Every component consumes
-        those variables for brand-colored accents, while backgrounds, text,
-        cards, and dark mode come from RicoFast's global tokens.
+        The resolved theme is converted into inline CSS custom properties on the
+        <code>.business-page</code> element. Every component consumes those
+        variables for its colors.
       </p>
 
       <div
         class="mb-8 overflow-x-auto rounded-2xl bg-neutral-900 p-5 text-sm text-neutral-100"
       >
-        <pre set:html={themeExample} />
+        <pre set:html={variablesExample} />
       </div>
 
       <p class="mb-4 leading-relaxed text-neutral-700 dark:text-neutral-300">
-        Dark mode is automatic because the page uses Tailwind's
-        <code>dark:</code> variants with RicoFast's global tokens:
+        Dark mode swaps the light tokens for dark ones when
+        <code>html.dark</code> is present:
       </p>
 
       <div
@@ -274,11 +309,16 @@ dist/businesses/&lt;slug&gt;/index.html   (static output)`} />
 
       <ol class="mb-10 list-decimal space-y-2 pl-5 text-neutral-700 dark:text-neutral-300">
         <li>
+          Pick or create a theme in
+          <code>src/data/business-themes.json</code> (or source one from
+          <a href="https://coolors.co/" class="text-primary hover:underline">Coolors</a>).
+        </li>
+        <li>
           Create <code>public/assets/businesses/&lt;slug&gt;/logo.svg</code>.
         </li>
         <li>
           Create <code>src/data/businesses/&lt;slug&gt;.json</code> matching the
-          schema above.
+          schema above and reference the theme key.
         </li>
         <li>Run <code>pnpm build</code>.</li>
         <li>
@@ -310,7 +350,8 @@ dist/businesses/&lt;slug&gt;/index.html   (static output)`} />
           existing 404 page.
         </li>
         <li>
-          Light and dark mode on business pages match the homepage palette.
+          Light and dark mode on business pages use each business's own palette
+          (no Boka blue leakage).
         </li>
       </ul>
 
