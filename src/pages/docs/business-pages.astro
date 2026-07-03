@@ -12,13 +12,9 @@ const themeExample = `{
     "name": "Heritage Barbershop",
     "source": "https://coolors.co/12100e-1e1812-8b5a2b-d4a574-c49a6c-f2e8d5",
     "bg": "#F2E8D5",
-    "bgDark": "#12100E",
     "surface": "#FAF3EA",
-    "surfaceDark": "#1E1812",
     "text": "#3E2723",
-    "textDark": "#F5EFE6",
     "primary": "#8B5A2B",
-    "primaryDark": "#D4A574",
     "primaryStrong": "#5C3A21",
     "accent": "#C49A6C",
     "onPrimary": "#FFFFFF"
@@ -72,13 +68,9 @@ if (!business) return new Response(null, { status: 404 });
 const variablesExample = `<article
   class="business-page min-h-screen"
   style="--business-bg: #F2E8D5;
-         --business-bg-dark: #12100E;
          --business-surface: #FAF3EA;
-         --business-surface-dark: #1E1812;
          --business-text: #3E2723;
-         --business-text-dark: #F5EFE6;
          --business-primary: #8B5A2B;
-         --business-primary-dark: #D4A574;
          --business-primary-strong: #5C3A21;
          --business-accent: #C49A6C;
          --business-on-primary: #FFFFFF;"
@@ -86,21 +78,14 @@ const variablesExample = `<article
   ...
 </article>`;
 
-const darkModeExample = `html.dark .business-page {
-  --business-bg: var(--business-bg-dark);
-  --business-text: var(--business-text-dark);
-  --business-surface: var(--business-surface-dark);
-  --business-primary: var(--business-primary-dark);
-}`;
-
 const components = [
 	{
 		name: "BusinessLayout.astro",
-		desc: "Standalone root document layout. Own <html>, <head>, meta tags, favicon, dark-mode boot script, global + business styles, top background grid tinted with the business primary, and full-palette injecting wrapper.",
+		desc: "Standalone root document layout. Own <html>, <head>, meta tags, favicon, global + business styles, top background grid tinted with the business primary, and full-palette injecting wrapper.",
 	},
 	{
 		name: "BusinessHeader.astro",
-		desc: "Floating pill-style glassmorphism header with logo + business name, in-page nav links, and a self-contained dark-mode toggle styled with the business primary color.",
+		desc: "Floating pill-style glassmorphism header with logo + business name and in-page nav links. Hidden on mobile because the hero already exposes the main CTAs.",
 	},
 	{
 		name: "BusinessHero.astro",
@@ -138,12 +123,8 @@ const decisions = [
 		body: "Business configs reference a named theme instead of duplicating a full palette. This makes it easy to apply the same theme to multiple businesses and to source palettes from external tools like Coolors.",
 	},
 	{
-		title: "Full independent palettes",
-		body: "Each theme supplies its own light canvas, dark canvas, surfaces, text, primary, primary-strong, and accent colors. This gives each business a distinct identity while keeping the shared layout and components.",
-	},
-	{
-		title: "Duplicated dark-mode boot script",
-		body: "Both Layout.astro and BusinessLayout.astro contain a small inline dark-mode script. They are not shared because the marketing header's main.js depends on marketing-specific DOM IDs that do not exist on business pages.",
+		title: "Light-mode-only business pages",
+		body: "Business pages intentionally do not support dark mode. The hero already surfaces the main CTAs, so the header is hidden on mobile and no theme toggle is needed.",
 	},
 ];
 ---
@@ -157,7 +138,7 @@ const decisions = [
         Each service business gets its own branded storefront URL. The markup
         and layout are shared; only the JSON config and the selected theme change
         per business. Themes are sourced from Coolors and give each storefront a
-        full independent palette, including its own light and dark modes.
+        full independent light-mode palette.
       </p>
 
       <div
@@ -209,7 +190,7 @@ dist/businesses/&lt;slug&gt;/index.html   (static output)`} />
       <p class="mb-4 leading-relaxed text-neutral-700 dark:text-neutral-300">
         All business themes live in
         <code>src/data/business-themes.json</code>. Each theme is a named,
-        self-contained palette with light and dark variants, sourced from
+        self-contained light-mode palette sourced from
         <a href="https://coolors.co/" class="text-primary hover:underline">Coolors</a>.
       </p>
 
@@ -290,27 +271,14 @@ dist/businesses/&lt;slug&gt;/index.html   (static output)`} />
       <p class="mb-4 leading-relaxed text-neutral-700 dark:text-neutral-300">
         The resolved theme is converted into inline CSS custom properties on the
         <code>.business-page</code> element. Every component consumes those
-        variables for its colors. In dark mode <code>--business-primary</code> is
-        swapped to <code>--business-primary-dark</code> so every accent stays
-        readable on dark surfaces, and headings are overridden so RicoFast's
-        global <code>h1,h2,h3</code> colors cannot leak Boka blue.
-      </p>
-
-      <div
-        class="mb-8 overflow-x-auto rounded-2xl bg-neutral-900 p-5 text-sm text-neutral-100"
-      >
-        <pre set:html={variablesExample} />
-      </div>
-
-      <p class="mb-4 leading-relaxed text-neutral-700 dark:text-neutral-300">
-        Dark mode swaps the light tokens for dark ones when
-        <code>html.dark</code> is present:
+        variables for its colors. Headings are overridden so RicoFast's global
+        <code>h1,h2,h3</code> colors cannot leak Boka blue onto the page.
       </p>
 
       <div
         class="mb-10 overflow-x-auto rounded-2xl bg-neutral-900 p-5 text-sm text-neutral-100"
       >
-        <pre set:html={darkModeExample} />
+        <pre set:html={variablesExample} />
       </div>
 
       <SectionHeader title="How to add a new business" />
@@ -358,8 +326,7 @@ dist/businesses/&lt;slug&gt;/index.html   (static output)`} />
           existing 404 page.
         </li>
         <li>
-          Light and dark mode on business pages use each business's own palette
-          (no Boka blue leakage).
+          Business pages render in light mode only with no Boka blue leakage.
         </li>
       </ul>
 
