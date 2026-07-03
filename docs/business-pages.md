@@ -49,29 +49,33 @@ All business themes live in `src/data/business-themes.json`. Each theme is a nam
 {
   "heritage-barbershop": {
     "name": "Heritage Barbershop",
-    "source": "https://coolors.co/261c15-5c3a21-8b5a2b-c49a6c-f2e8d5",
+    "source": "https://coolors.co/12100e-1e1812-8b5a2b-d4a574-c49a6c-f2e8d5",
     "bg": "#F2E8D5",
-    "bgDark": "#1A120B",
+    "bgDark": "#12100E",
     "surface": "#FAF3EA",
-    "surfaceDark": "#261C15",
+    "surfaceDark": "#1E1812",
     "text": "#3E2723",
-    "textDark": "#EADDCF",
+    "textDark": "#F5EFE6",
     "primary": "#8B5A2B",
+    "primaryDark": "#D4A574",
     "primaryStrong": "#5C3A21",
-    "accent": "#C49A6C"
+    "accent": "#C49A6C",
+    "onPrimary": "#FFFFFF"
   },
   "blush-studio": {
     "name": "Blush Studio",
-    "source": "https://coolors.co/2a0a15-4a0d24-c2185b-d81b60-f8bbd0",
+    "source": "https://coolors.co/1a0810-2a1020-c2185b-ff80ab-d81b60-f8bbd0-fff5f7",
     "bg": "#FFF5F7",
-    "bgDark": "#2A0A15",
+    "bgDark": "#1A0810",
     "surface": "#FFFFFF",
-    "surfaceDark": "#3E1020",
+    "surfaceDark": "#2A1020",
     "text": "#4A0D24",
-    "textDark": "#FCE4EC",
+    "textDark": "#FFF0F5",
     "primary": "#C2185B",
+    "primaryDark": "#FF80AB",
     "primaryStrong": "#D81B60",
-    "accent": "#F8BBD0"
+    "accent": "#F8BBD0",
+    "onPrimary": "#FFFFFF"
   }
 }
 ```
@@ -206,14 +210,16 @@ The root document layout for every business page. It renders:
 <article
   class="business-page min-h-screen"
   style="--business-bg: #F2E8D5;
-         --business-bg-dark: #1A120B;
+         --business-bg-dark: #12100E;
          --business-surface: #FAF3EA;
-         --business-surface-dark: #261C15;
+         --business-surface-dark: #1E1812;
          --business-text: #3E2723;
-         --business-text-dark: #EADDCF;
+         --business-text-dark: #F5EFE6;
          --business-primary: #8B5A2B;
+         --business-primary-dark: #D4A574;
          --business-primary-strong: #5C3A21;
-         --business-accent: #C49A6C;"
+         --business-accent: #C49A6C;
+         --business-on-primary: #FFFFFF;"
 >
   <BusinessHeader business={business} />
   <main class="pt-24 md:pt-28">
@@ -282,8 +288,10 @@ The lowest price is computed with `Math.min(...)` over the services array.
   --business-text: #3f4a5a;
   --business-text-dark: #c5cedb;
   --business-primary: #2d6dc3;
+  --business-primary-dark: #3884eb;
   --business-primary-strong: #0066ff;
   --business-accent: #fad13b;
+  --business-on-primary: #ffffff;
 
   background-color: var(--business-bg);
   color: var(--business-text);
@@ -292,17 +300,18 @@ The lowest price is computed with `Math.min(...)` over the services array.
 
 The values above are fallbacks. They are overridden by the inline `style` attribute from `BusinessLayout.astro`.
 
-Dark mode swaps the light tokens for dark ones:
+Dark mode swaps the light tokens for dark ones, including the primary color so every accent stays readable on dark surfaces:
 
 ```css
 html.dark .business-page {
   --business-bg: var(--business-bg-dark);
   --business-text: var(--business-text-dark);
   --business-surface: var(--business-surface-dark);
+  --business-primary: var(--business-primary-dark);
 }
 ```
 
-Because the dark-mode script adds `.dark` to `<html>`, the wrapper re-themes automatically using the business's own dark palette.
+Because the dark-mode script adds `.dark` to `<html>`, the wrapper re-themes automatically using the business's own dark palette. Headings are also overridden so RicoFast's global `h1,h2,h3` colors cannot leak Boka blue onto the page.
 
 ## How to add a new business
 

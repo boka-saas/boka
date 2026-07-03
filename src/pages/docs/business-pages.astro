@@ -10,16 +10,18 @@ const description =
 const themeExample = `{
   "heritage-barbershop": {
     "name": "Heritage Barbershop",
-    "source": "https://coolors.co/261c15-5c3a21-8b5a2b-c49a6c-f2e8d5",
+    "source": "https://coolors.co/12100e-1e1812-8b5a2b-d4a574-c49a6c-f2e8d5",
     "bg": "#F2E8D5",
-    "bgDark": "#1A120B",
+    "bgDark": "#12100E",
     "surface": "#FAF3EA",
-    "surfaceDark": "#261C15",
+    "surfaceDark": "#1E1812",
     "text": "#3E2723",
-    "textDark": "#EADDCF",
+    "textDark": "#F5EFE6",
     "primary": "#8B5A2B",
+    "primaryDark": "#D4A574",
     "primaryStrong": "#5C3A21",
-    "accent": "#C49A6C"
+    "accent": "#C49A6C",
+    "onPrimary": "#FFFFFF"
   },
   "blush-studio": { ... }
 }`;
@@ -70,14 +72,16 @@ if (!business) return new Response(null, { status: 404 });
 const variablesExample = `<article
   class="business-page min-h-screen"
   style="--business-bg: #F2E8D5;
-         --business-bg-dark: #1A120B;
+         --business-bg-dark: #12100E;
          --business-surface: #FAF3EA;
-         --business-surface-dark: #261C15;
+         --business-surface-dark: #1E1812;
          --business-text: #3E2723;
-         --business-text-dark: #EADDCF;
+         --business-text-dark: #F5EFE6;
          --business-primary: #8B5A2B;
+         --business-primary-dark: #D4A574;
          --business-primary-strong: #5C3A21;
-         --business-accent: #C49A6C;"
+         --business-accent: #C49A6C;
+         --business-on-primary: #FFFFFF;"
 >
   ...
 </article>`;
@@ -86,6 +90,7 @@ const darkModeExample = `html.dark .business-page {
   --business-bg: var(--business-bg-dark);
   --business-text: var(--business-text-dark);
   --business-surface: var(--business-surface-dark);
+  --business-primary: var(--business-primary-dark);
 }`;
 
 const components = [
@@ -285,7 +290,10 @@ dist/businesses/&lt;slug&gt;/index.html   (static output)`} />
       <p class="mb-4 leading-relaxed text-neutral-700 dark:text-neutral-300">
         The resolved theme is converted into inline CSS custom properties on the
         <code>.business-page</code> element. Every component consumes those
-        variables for its colors.
+        variables for its colors. In dark mode <code>--business-primary</code> is
+        swapped to <code>--business-primary-dark</code> so every accent stays
+        readable on dark surfaces, and headings are overridden so RicoFast's
+        global <code>h1,h2,h3</code> colors cannot leak Boka blue.
       </p>
 
       <div
