@@ -2,27 +2,42 @@
 	"slug": "alis-barber",
 	"name": "Ali's Barber",
 	"category": "Barbershop",
-	"tagline": "Precision cuts in East London",
+	"tagline": "Precision cuts in Southport",
 	"description": "Traditional barbering with modern style. Walk-ins welcome, but booking guarantees your chair.",
 	"logo": "/assets/businesses/alis-barber/logo.svg",
 	"theme": "heritage-barbershop",
 	"contact": {
-		"address": "123 High Street, London E1 1AA",
-		"phone": "020 1234 5678",
+		"address": "63 Eastbank St, Southport PR8 1EJ",
+		"phone": "07380 730540",
 		"hours": {
 			"mon": "09:00–18:00",
 			"tue": "09:00–18:00",
 			"wed": "09:00–18:00",
-			"thu": "09:00–20:00",
-			"fri": "09:00–20:00",
-			"sat": "09:00–17:00",
-			"sun": "Closed"
+			"thu": "09:00–18:00",
+			"fri": "09:00–18:00",
+			"sat": "09:00–18:00",
+			"sun": "10:00–16:00"
 		}
 	},
+	"social": {
+		"instagram": "ali_barber1"
+	},
 	"services": [
-		{ "name": "Haircut", "price": 25, "duration": "30 min" },
-		{ "name": "Beard Trim", "price": 15, "duration": "20 min" },
-		{ "name": "Haircut & Beard", "price": 35, "duration": "50 min" }
+		{ "name": "Normal Haircut", "price": 15, "duration": "30 min" },
+		{ "name": "Skin Fade", "price": 20, "duration": "30 min" },
+		{ "name": "Normal Haircut & Beard", "price": 27, "duration": "45 min" },
+		{ "name": "Skin Fade & Beard", "price": 30, "duration": "45 min" },
+		{ "name": "Beard Trim & Shape Up", "price": 12, "duration": "15 min" },
+		{ "name": "Kids Skin Fade", "price": 15, "duration": "30 min" },
+		{ "name": "Kids Normal Cut", "price": 13, "duration": "30 min" },
+		{ "name": "Buzz Cut", "price": 12, "duration": "15 min" },
+		{ "name": "Head Shave & Beard Trim", "price": 24, "duration": "45 min" },
+		{ "name": "Hot Towel Shave", "price": 15, "duration": "30 min" },
+		{ "name": "Full Service", "price": 35, "duration": "60 min" },
+		{ "name": "Eyebrow Shaping", "price": 5, "duration": "10 min" },
+		{ "name": "Nose Waxing & Ears", "price": 5, "duration": "10 min" },
+		{ "name": "Beard Trim & Colour", "price": 25, "duration": "30 min" },
+		{ "name": "Mobile Call Out Service", "price": 40, "duration": "60 min" }
 	],
-	"bookingUrl": "https://booking.example.com/alis-barber"
+	"bookingUrl": "https://booksy.com/en-gb/174201_alis-barber_barber_749680_southport"
 }
