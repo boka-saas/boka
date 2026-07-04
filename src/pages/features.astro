@@ -1,4 +1,5 @@
 ---
+import { Image } from "astro:assets";
 import PageHeader from "@/components/elements/PageHeader.astro";
 import BrowserFrame from "@/components/ui/BrowserFrame.astro";
 import Button from "@/components/ui/Button.astro";
@@ -100,12 +101,12 @@ const featureModules = [
 		data-aos-once="true"
 	>
 		<BrowserFrame url="boka.app/dashboard">
-			<img
+			<Image
 				src="/assets/boka/boka-dashboard.png"
 				alt="Boka business dashboard"
 				loading="eager"
-				width="1280"
-				height="1044"
+				width={1280}
+				height={1044}
 				class="h-[360px] w-full object-cover object-top md:h-[560px]"
 			/>
 		</BrowserFrame>

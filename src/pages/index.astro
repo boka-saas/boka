@@ -1,4 +1,5 @@
 ---
+import { Image } from "astro:assets";
 import SectionHeader from "@/components/elements/SectionHeader.astro";
 import HeroSection from "@/components/home/HeroSection.astro";
 import FAQ from "@/components/sections/FAQ.astro";
@@ -370,12 +371,12 @@ const faqItems = [
           <div
             class="relative overflow-hidden bg-bg-secondary dark:bg-neutral-900"
           >
-            <img
+            <Image
               src="/assets/boka/boka-dashboard.png"
               alt="Boka dashboard preview showing booking and revenue insights"
               loading="lazy"
-              width="1280"
-              height="1044"
+              width={1280}
+              height={1044}
               class="dashboard-preview-fallback h-[360px] w-full object-cover object-top md:h-[520px]"
             />
             <iframe
@@ -493,12 +494,12 @@ const faqItems = [
 
       <div data-aos="fade-up-sm" data-aos-delay="150" data-aos-once="true">
         <BrowserFrame url="alisbarber.boka.app">
-          <img
+          <Image
             src="/assets/boka/barber-website.jpg"
             alt="Example barber booking website built with Boka"
             loading="lazy"
-            width="1024"
-            height="1024"
+            width={1024}
+            height={1024}
             class="h-[420px] w-full object-cover object-top md:h-[520px]"
           />
         </BrowserFrame>
