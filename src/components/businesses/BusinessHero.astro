@@ -13,6 +13,7 @@ interface Props {
 			address: string;
 		};
 		services: Array<{ name: string; price: number }>;
+		image?: string;
 	};
 }
 
@@ -23,6 +24,24 @@ const lowestPrice = Math.min(...business.services.map((s) => s.price));
 <section class="business-hero py-16 md:py-24">
   <div class="site-container">
     <div class="mx-auto max-w-2xl text-center">
+      {
+        business.image && (
+          <div class="mb-6 flex justify-center">
+            <div class="business-photo-ring h-24 w-24 overflow-hidden rounded-full p-1 md:h-32 md:w-32">
+              <img
+                src={business.image}
+                alt={`${business.name} shop photo`}
+                width={128}
+                height={128}
+                loading="eager"
+                decoding="async"
+                class="h-full w-full rounded-full object-cover"
+              />
+            </div>
+          </div>
+        )
+      }
+
       <p class="business-hero-eyebrow mb-4 inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-medium">
         <MapPin size={14} />
         {business.contact.address}
