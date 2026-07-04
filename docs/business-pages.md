@@ -88,6 +88,7 @@ Example: `src/data/businesses/alis-barber.json`
   "tagline": "Precision cuts in Southport",
   "description": "Traditional barbering with modern style. Walk-ins welcome, but booking guarantees your chair.",
   "logo": "/assets/businesses/alis-barber/logo.svg",
+  "image": "/assets/businesses/alis-barber/photo.jpg",
   "theme": "heritage-barbershop",
   "contact": {
     "address": "63 Eastbank St, Southport PR8 1EJ",
@@ -232,6 +233,7 @@ These variables are consumed by the components and by `business.css`.
 - Address eyebrow using the business primary color.
 - Category badge using the business accent color.
 - Business name as the page `<h1>` in `font-brand`.
+- Optional small circular shop photo above the title when `image` is provided.
 - Tagline in the business primary color.
 - Description in business text color.
 - Two CTAs: "Book now" → `#booking`, and "See prices from £{lowestPrice}" → `#prices`.
