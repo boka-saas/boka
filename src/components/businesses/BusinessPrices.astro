@@ -9,6 +9,8 @@ interface Props {
 }
 
 const { business } = Astro.props;
+
+const sortedServices = [...business.services].sort((a, b) => a.price - b.price);
 ---
 
 <section id="prices" class="business-section">
@@ -27,8 +29,8 @@ const { business } = Astro.props;
 
     <div class="mx-auto grid max-w-3xl gap-4 sm:grid-cols-2 lg:grid-cols-3">
       {
-        business.services.map((service) => (
-          <div class="business-card rounded-2xl p-5 transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
+        sortedServices.map((service) => (
+          <div class="business-card rounded-2xl p-5 hover:shadow-md">
             <div class="business-service-icon mb-4 flex h-10 w-10 items-center justify-center rounded-xl">
               <Scissors size={20} />
             </div>
