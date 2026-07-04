@@ -1,5 +1,6 @@
 ---
-import { CalendarCheck } from "@lucide/astro";
+import type { AstroComponent } from "@lucide/astro";
+import { CalendarCheck, Camera, Globe } from "@lucide/astro";
 
 interface Props {
 	business: {
@@ -9,12 +10,35 @@ interface Props {
 			address: string;
 			phone: string;
 		};
+		social?: {
+			instagram?: string;
+			facebook?: string;
+		};
 		bookingUrl: string;
 	};
 }
 
 const { business } = Astro.props;
 const currentYear = new Date().getFullYear();
+
+const socialLinks: Array<{ name: string; href: string; icon: AstroComponent }> =
+	[];
+
+if (business.social?.instagram) {
+	socialLinks.push({
+		name: "Instagram",
+		href: `https://instagram.com/${business.social.instagram}`,
+		icon: Camera,
+	});
+}
+
+if (business.social?.facebook) {
+	socialLinks.push({
+		name: "Facebook",
+		href: `https://facebook.com/${business.social.facebook}`,
+		icon: Globe,
+	});
+}
 ---
 
 <footer class="business-footer mt-8 border-t border-dashed py-12 md:py-16">
@@ -41,6 +65,24 @@ const currentYear = new Date().getFullYear();
       </div>
 
       <div class="flex flex-col items-start gap-3 md:items-end">
+        {
+          socialLinks.length > 0 && (
+            <div class="flex items-center gap-2">
+              {socialLinks.map((link) => (
+                <a
+                  href={link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`${business.name} on ${link.name}`}
+                  class="business-social-button inline-flex h-10 w-10 items-center justify-center rounded-full transition-all"
+                >
+                  <link.icon size={18} />
+                </a>
+              ))}
+            </div>
+          )
+        }
+
         <a
           href={business.bookingUrl}
           target="_blank"

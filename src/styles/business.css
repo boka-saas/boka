@@ -236,6 +236,18 @@
 	color: color-mix(in srgb, var(--business-text) 70%, var(--business-bg));
 }
 
+.business-social-button {
+	color: var(--business-primary);
+	background-color: color-mix(in srgb, var(--business-primary) 12%, transparent);
+	transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.business-social-button:hover {
+	color: var(--business-on-primary);
+	background-color: var(--business-primary);
+	transform: translateY(-2px);
+}
+
 /* -------------------------------------------------------------------
    Scrollbar — override RicoFast's blue scrollbar on business pages.
    ------------------------------------------------------------------- */
