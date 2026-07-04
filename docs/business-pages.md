@@ -85,33 +85,35 @@ Example: `src/data/businesses/alis-barber.json`
   "slug": "alis-barber",
   "name": "Ali's Barber",
   "category": "Barbershop",
-  "tagline": "Precision cuts in East London",
+  "tagline": "Precision cuts in Southport",
   "description": "Traditional barbering with modern style. Walk-ins welcome, but booking guarantees your chair.",
   "logo": "/assets/businesses/alis-barber/logo.svg",
   "theme": "heritage-barbershop",
   "contact": {
-    "address": "123 High Street, London E1 1AA",
-    "phone": "020 1234 5678",
+    "address": "63 Eastbank St, Southport PR8 1EJ",
+    "phone": "07380 730540",
     "hours": {
       "mon": "09:00–18:00",
       "tue": "09:00–18:00",
       "wed": "09:00–18:00",
-      "thu": "09:00–20:00",
-      "fri": "09:00–20:00",
-      "sat": "09:00–17:00",
-      "sun": "Closed"
+      "thu": "09:00–18:00",
+      "fri": "09:00–18:00",
+      "sat": "09:00–18:00",
+      "sun": "10:00–16:00"
     }
   },
+  "social": {
+    "instagram": "ali_barber1"
+  },
   "services": [
-    { "name": "Haircut", "price": 25, "duration": "30 min" },
-    { "name": "Beard Trim", "price": 15, "duration": "20 min" },
-    { "name": "Haircut & Beard", "price": 35, "duration": "50 min" }
+    { "name": "Normal Haircut", "price": 15, "duration": "30 min" },
+    { "name": "Skin Fade", "price": 20, "duration": "30 min" }
   ],
-  "bookingUrl": "https://booking.example.com/alis-barber"
+  "bookingUrl": "https://booksy.com/en-gb/174201_alis-barber_barber_749680_southport"
 }
 ```
 
-The `slug` must match the filename stem. The `theme` field is a key into `src/data/business-themes.json`.
+The `slug` must match the filename stem. The `theme` field is a key into `src/data/business-themes.json`. The optional `social` object renders Instagram and Facebook buttons in the footer when present.
 
 ### Loader and validation
 
@@ -258,6 +260,7 @@ The lowest price is computed with `Math.min(...)` over the services array.
 
 - Branded footer using the business palette.
 - Business name, category, address, phone.
+- Social media buttons for any `social.instagram` or `social.facebook` handles.
 - "Book now" button and copyright line.
 
 ## Theming system

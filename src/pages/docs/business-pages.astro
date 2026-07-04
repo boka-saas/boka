@@ -26,15 +26,16 @@ const configExample = `{
   "slug": "alis-barber",
   "name": "Ali's Barber",
   "category": "Barbershop",
-  "tagline": "Precision cuts in East London",
+  "tagline": "Precision cuts in Southport",
   "description": "Traditional barbering with modern style.",
   "logo": "/assets/businesses/alis-barber/logo.svg",
   "theme": "heritage-barbershop",
   "contact": { "address": "...", "phone": "...", "hours": {} },
+  "social": { "instagram": "ali_barber1" },
   "services": [
-    { "name": "Haircut", "price": 25, "duration": "30 min" }
+    { "name": "Normal Haircut", "price": 15, "duration": "30 min" }
   ],
-  "bookingUrl": "https://booking.example.com/alis-barber"
+  "bookingUrl": "https://booksy.com/en-gb/174201_alis-barber_barber_749680_southport"
 }`;
 
 const loaderExample = `const modules = import.meta.glob("/src/data/businesses/*.json", {
@@ -105,7 +106,7 @@ const components = [
 	},
 	{
 		name: "BusinessFooter.astro",
-		desc: "Branded footer using the business palette, with contact details, booking button, and copyright.",
+		desc: "Branded footer using the business palette, with contact details, social media buttons, booking button, and copyright.",
 	},
 ];
 
