@@ -39,3 +39,6 @@ Thumbs.db
 
 # Superpowers brainstorming artifacts
 .superpowers/
+
+# Claude Code worktrees
+.worktrees/
