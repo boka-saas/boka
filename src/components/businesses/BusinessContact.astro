@@ -1,5 +1,5 @@
 ---
-import { Clock, MapPin, Phone } from "@lucide/astro";
+import { Camera, Clock, MapPin, Phone } from "@lucide/astro";
 
 interface Props {
 	business: {
@@ -8,10 +8,17 @@ interface Props {
 			phone: string;
 			hours: Record<string, string>;
 		};
+		social?: {
+			instagram?: string;
+		};
 	};
 }
 
 const { business } = Astro.props;
+
+const mapsUrl = `https://maps.google.com/?q=${encodeURIComponent(
+	business.contact.address,
+)}`;
 
 const dayOrder = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"];
 const dayLabels: Record<string, string> = {
@@ -48,7 +55,14 @@ const dayLabels: Record<string, string> = {
           </div>
           <div>
             <p class="font-medium">Address</p>
-            <p class="business-contact-link text-sm">{business.contact.address}</p>
+            <a
+              href={mapsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="business-contact-link text-sm"
+            >
+              {business.contact.address}
+            </a>
           </div>
         </div>
 
@@ -66,6 +80,27 @@ const dayLabels: Record<string, string> = {
             </a>
           </div>
         </div>
+
+        {
+          business.social?.instagram && (
+            <div class="flex items-start gap-3">
+              <div class="business-service-icon mt-0.5 flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-xl">
+                <Camera size={16} />
+              </div>
+              <div>
+                <p class="font-medium">Instagram</p>
+                <a
+                  href={`https://instagram.com/${business.social.instagram}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="business-contact-link text-sm"
+                >
+                  @{business.social.instagram}
+                </a>
+              </div>
+            </div>
+          )
+        }
       </div>
 
       <div class="space-y-5">

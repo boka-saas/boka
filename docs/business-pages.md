@@ -253,14 +253,13 @@ The lowest price is computed with `Math.min(...)` over the services array.
 ### BusinessContact.astro
 
 - Section anchor `id="contact"`.
-- Two-column card: address and phone on the left, opening hours on the right.
+- Two-column card: address, phone, and optional Instagram on the left, opening hours on the right.
 - Maps JSON keys (`mon`, `tue`, ...) to full day names for display.
 
 ### BusinessFooter.astro
 
 - Branded footer using the business palette.
 - Business name, category, address, phone.
-- Social media buttons for any `social.instagram` or `social.facebook` handles.
 - "Book now" button and copyright line.
 
 ## Theming system

@@ -4,6 +4,7 @@
 // __dirname do not exist. The glob embeds the JSON content into the bundle.
 // https://vite.dev/guide/features.html#glob-import
 // https://docs.astro.build/en/guides/imports/#vite-features
+
 const modules = import.meta.glob("/src/data/businesses/*.json", {
 	eager: true,
 });

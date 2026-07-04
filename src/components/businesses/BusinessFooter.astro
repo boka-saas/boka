@@ -1,6 +1,5 @@
 ---
-import type { AstroComponent } from "@lucide/astro";
-import { CalendarCheck, Camera, Globe } from "@lucide/astro";
+import { CalendarCheck } from "@lucide/astro";
 
 interface Props {
 	business: {
@@ -10,41 +9,21 @@ interface Props {
 			address: string;
 			phone: string;
 		};
-		social?: {
-			instagram?: string;
-			facebook?: string;
-		};
 		bookingUrl: string;
 	};
 }
 
 const { business } = Astro.props;
 const currentYear = new Date().getFullYear();
-
-const socialLinks: Array<{ name: string; href: string; icon: AstroComponent }> =
-	[];
-
-if (business.social?.instagram) {
-	socialLinks.push({
-		name: "Instagram",
-		href: `https://instagram.com/${business.social.instagram}`,
-		icon: Camera,
-	});
-}
-
-if (business.social?.facebook) {
-	socialLinks.push({
-		name: "Facebook",
-		href: `https://facebook.com/${business.social.facebook}`,
-		icon: Globe,
-	});
-}
+const mapsUrl = `https://maps.google.com/?q=${encodeURIComponent(
+	business.contact.address,
+)}`;
 ---
 
 <footer class="business-footer mt-8 border-t border-dashed py-12 md:py-16">
   <div class="site-container">
-    <div class="flex flex-col items-start justify-between gap-8 md:flex-row md:items-center">
-      <div class="max-w-sm">
+    <div class="flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
+      <div class="mx-auto max-w-sm text-center md:mx-0 md:text-left">
         <p class="text-lg font-semibold">
           {business.name}
         </p>
@@ -52,7 +31,14 @@ if (business.social?.facebook) {
           {business.category}
         </p>
         <p class="business-footer-text mt-3 text-sm">
-          {business.contact.address}
+          <a
+            href={mapsUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="business-contact-link transition-colors"
+          >
+            {business.contact.address}
+          </a>
         </p>
         <p class="business-footer-text text-sm">
           <a
@@ -64,35 +50,17 @@ if (business.social?.facebook) {
         </p>
       </div>
 
-      <div class="flex flex-col items-start gap-3 md:items-end">
-        {
-          socialLinks.length > 0 && (
-            <div class="flex items-center gap-2">
-              {socialLinks.map((link) => (
-                <a
-                  href={link.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={`${business.name} on ${link.name}`}
-                  class="business-social-button inline-flex h-10 w-10 items-center justify-center rounded-full transition-all"
-                >
-                  <link.icon size={18} />
-                </a>
-              ))}
-            </div>
-          )
-        }
-
+      <div class="flex flex-col items-center gap-4 md:items-end">
         <a
           href={business.bookingUrl}
           target="_blank"
           rel="noopener noreferrer"
-          class="business-button inline-flex items-center gap-2 rounded-xl px-6 py-3 text-sm font-medium"
+          class="business-button inline-flex w-full items-center justify-center gap-2 rounded-xl px-6 py-3 text-sm font-medium md:w-auto"
         >
           <CalendarCheck size={16} />
           Book now
         </a>
-        <p class="business-footer-text text-xs">
+        <p class="business-footer-text text-center text-xs md:text-right">
           © {currentYear} {business.name}. All rights reserved.
         </p>
       </div>
