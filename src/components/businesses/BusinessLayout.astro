@@ -23,13 +23,15 @@ interface Props {
 	};
 }
 
-const { business } = Astro.props;
+const { business } = Astro.props; 
 
+// Convert camelCase theme keys to CSS variable format
+// eg. { primaryStrong: "#A66E3A" } becomes --business-primary-strong: #A66E3A;                                                                                                                             
 function themeToStyle(theme: Record<string, string>) {
 	return Object.entries(theme)
 		.map(([key, value]) => {
-			const cssKey = key.replace(/([A-Z])/g, "-$1").toLowerCase();
-			return `--business-${cssKey}: ${value};`;
+			const cssKey = key.replace(/([A-Z])/g, "-$1").toLowerCase(); // Convert camelCase to kebab-case. "primaryStrong"  becomes "primary-strong"
+			return `--business-${cssKey}: ${value};`; // Prefix with --business- for scoping
 		})
 		.join(" ");
 }
