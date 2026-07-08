@@ -1,0 +1,87 @@
+---
+import { Moon, Sun } from "@lucide/astro";
+
+interface Props {
+	business: {
+		slug: string;
+		name: string;
+		logo: string;
+	};
+}
+
+const { business } = Astro.props;
+---
+
+<header class="business-header">
+  <div class="site-container">
+    <div class="flex items-center justify-between h-16">
+      <a
+        href={`/businesses/${business.slug}`}
+        class="flex items-center gap-3 business-header-brand"
+      >
+        <img
+          src={business.logo}
+          alt={`${business.name} logo`}
+          class="h-10 w-10 rounded-xl object-cover"
+          onerror={`this.style.display='none'`}
+        />
+        <span class="flex items-center text-lg font-semibold business-header-name">
+          {business.name}
+        </span>
+      </a>
+
+      <div class="flex items-center gap-4">
+        <nav class="flex items-center gap-6 text-sm font-medium">
+          <a href="#prices" class="business-nav-link">Prices</a>
+          <a href="#booking" class="business-nav-link">Book</a>
+        </nav>
+
+        <button
+          type="button"
+          id="businessDarkToggle"
+          aria-label="Toggle dark mode"
+          class="flex items-center justify-center w-10 h-10 rounded-full border border-[var(--business-divider)] bg-[var(--business-bg)] text-[var(--business-text)] transition-colors hover:bg-[var(--business-card-bg)]"
+        >
+          <Sun class="w-5 h-5 dark-hidden" />
+          <Moon class="w-5 h-5 hidden dark-visible" />
+        </button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<script is:inline>
+  (function () {
+    const toggle = document.getElementById('businessDarkToggle');
+    if (!toggle) return;
+
+    const sun = toggle.querySelector('.dark-hidden');
+    const moon = toggle.querySelector('.dark-visible');
+
+    function updateIcons() {
+      const isDark = document.documentElement.classList.contains('dark');
+      if (sun) sun.classList.toggle('hidden', isDark);
+      if (moon) moon.classList.toggle('hidden', !isDark);
+    }
+
+    updateIcons();
+
+    toggle.addEventListener('click', () => {
+      const isDark = document.documentElement.classList.contains('dark');
+      if (isDark) {
+        document.documentElement.classList.remove('dark');
+        localStorage.removeItem('dark_mode');
+      } else {
+        document.documentElement.classList.add('dark');
+        localStorage.setItem('dark_mode', 'true');
+      }
+      updateIcons();
+    });
+
+    const observer = new MutationObserver(updateIcons);
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['class'],
+    });
+  })();
+</script>

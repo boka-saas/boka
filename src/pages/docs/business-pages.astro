@@ -1,0 +1,336 @@
+---
+import PageHeader from "@/components/elements/PageHeader.astro";
+import SectionHeader from "@/components/elements/SectionHeader.astro";
+import Layout from "@/layouts/Layout.astro";
+
+const title = "Multi-Tenant Business Pages";
+const description =
+	"How the JSON-driven, theme-injected business storefront pages work.";
+
+const configExample = `{
+  "slug": "alis-barber",
+  "name": "Ali's Barber",
+  "tagline": "Precision cuts in East London",
+  "description": "Traditional barbering with modern style.",
+  "logo": "/assets/businesses/alis-barber/logo.svg",
+  "theme": {
+    "primary": "#8B5A2B",
+    "primaryStrong": "#A66E3A",
+    "accent": "#F4C430",
+    "bg": "#FDF8F3",
+    "bgDark": "#1A120B",
+    "text": "#3E2723",
+    "textDark": "#F5F0EB"
+  },
+  "contact": { "address": "...", "phone": "...", "hours": {} },
+  "services": [
+    { "name": "Haircut", "price": 25, "duration": "30 min" }
+  ],
+  "bookingUrl": "https://booking.example.com/alis-barber"
+}`;
+
+const loaderExample = `const modules = import.meta.glob("/src/data/businesses/*.json", {
+  eager: true,
+});
+
+export function getAllBusinesses() { ... }
+export function getBusinessBySlug(slug) { ... }
+export function formatPrice(price) { return \`£\${price}\`; }`;
+
+const routeExample = `export async function getStaticPaths() {
+  const businesses = getAllBusinesses();
+  return businesses.map((business) => ({
+    params: { business: business.slug },
+    props: { business },
+  }));
+}
+
+const business = Astro.props.business ?? getBusinessBySlug(Astro.params.business);
+if (!business) return new Response(null, { status: 404 });
+
+<BusinessLayout business={business}>
+  <BusinessHero business={business} />
+  <BusinessPrices business={business} />
+  <BusinessBooking business={business} />
+  <BusinessContact business={business} />
+</BusinessLayout>`;
+
+const themeExample = `<article
+  class="business-wrapper business-alis-barber"
+  style="--business-primary: #8B5A2B;
+         --business-primary-strong: #A66E3A;
+         --business-accent: #F4C430;
+         --business-bg: #FDF8F3; ..."
+>
+  ...
+</article>`;
+
+const darkModeExample = `html.dark .business-wrapper {
+  --business-bg: var(--business-bg-dark);
+  --business-text: var(--business-text-dark);
+  --business-divider: rgba(255, 255, 255, 0.1);
+  --business-card-bg: #0f1b2d;
+}`;
+
+const components = [
+	{
+		name: "BusinessLayout.astro",
+		desc: "Standalone root document layout. Own <html>, <head>, meta tags, favicon, dark-mode boot script, global + business styles, and theme-injecting wrapper.",
+	},
+	{
+		name: "BusinessHeader.astro",
+		desc: "Logo + business name, in-page nav links (#prices, #booking), and a self-contained dark-mode toggle.",
+	},
+	{
+		name: "BusinessHero.astro",
+		desc: "Address eyebrow, business name, tagline, description, and two CTAs.",
+	},
+	{
+		name: "BusinessPrices.astro",
+		desc: "Services list with prices and durations inside a dashed-border card.",
+	},
+	{
+		name: "BusinessBooking.astro",
+		desc: "Focused booking CTA card linking to the external bookingUrl.",
+	},
+	{
+		name: "BusinessContact.astro",
+		desc: "Address, phone, and opening hours table.",
+	},
+	{
+		name: "BusinessFooter.astro",
+		desc: "Branded footer with contact details, booking button, and copyright.",
+	},
+];
+
+const decisions = [
+	{
+		title: "Standalone layout",
+		body: "Business pages do not reuse the global Layout.astro because they need their own chrome and must not show the marketing navigation or footer.",
+	},
+	{
+		title: "import.meta.glob for data",
+		body: "Keeps the build static and simple. If the number of businesses grows, the loader can be replaced by a CMS or database source without changing the components.",
+	},
+	{
+		title: "CSS variables for theming",
+		body: "Tailwind classes are static; per-business colors come from data. CSS variables are the cleanest bridge between dynamic JSON values and shared component markup.",
+	},
+	{
+		title: "Duplicated dark-mode boot script",
+		body: "Both Layout.astro and BusinessLayout.astro contain a small inline dark-mode script. They are not shared because the marketing header's main.js depends on marketing-specific DOM IDs that do not exist on business pages.",
+	},
+];
+---
+
+<Layout title={title} description={description}>
+  <section class="site-container my-12">
+    <PageHeader title={title} description={description} />
+
+    <div class="mx-auto max-w-3xl">
+      <p class="mb-8 text-lg leading-relaxed text-neutral-700 dark:text-neutral-300">
+        Each service business gets its own branded storefront URL. The markup
+        is shared; only the JSON config and injected CSS variables change per
+        business.
+      </p>
+
+      <div
+        class="mb-10 rounded-2xl border border-dashed border-primary/20 bg-bg-secondary p-6 dark:border-neutral-700 dark:bg-bg-secondary-dark"
+      >
+        <p class="mb-2 text-sm font-medium text-neutral-500 dark:text-neutral-400">
+          Example URLs
+        </p>
+        <div class="flex flex-wrap gap-3">
+          <code class="rounded-lg bg-bg-primary px-3 py-1.5 text-sm text-primary dark:bg-bg-primary-dark dark:text-primary-light"
+          >/businesses/alis-barber</code>
+          <code class="rounded-lg bg-bg-primary px-3 py-1.5 text-sm text-primary dark:bg-bg-primary-dark dark:text-primary-light"
+          >/businesses/tinas-nails</code>
+        </div>
+      </div>
+
+      <SectionHeader title="End-to-end data flow" />
+
+      <div
+        class="mb-10 overflow-x-auto rounded-2xl border border-dashed border-primary/20 bg-bg-secondary p-6 font-mono text-sm text-neutral-700 dark:border-neutral-700 dark:bg-bg-secondary-dark dark:text-neutral-300"
+      >
+        <pre set:html={`src/data/businesses/&lt;slug&gt;.json
+        │
+        ▼
+src/lib/businesses.js   (load + validate)
+        │
+        ▼
+src/pages/businesses/[business]/index.astro   (getStaticPaths)
+        │
+        ▼
+dist/businesses/&lt;slug&gt;/index.html   (static output)`} />
+      </div>
+
+      <p class="mb-10 leading-relaxed text-neutral-700 dark:text-neutral-300">
+        At build time Astro asks the dynamic route for its paths. The route
+        calls <code>getAllBusinesses()</code>, which returns every validated JSON
+        config. Astro renders one static HTML file per slug. At request time on
+        a static host, <code>/businesses/&lt;slug&gt;</code> simply serves the
+        pre-built HTML.
+      </p>
+
+      <SectionHeader title="Data layer" />
+
+      <h3 class="mb-3 text-xl font-semibold text-neutral-800 dark:text-neutral-100"
+      >Config files</h3>
+
+      <p class="mb-4 leading-relaxed text-neutral-700 dark:text-neutral-300">
+        Business configs live at <code>src/data/businesses/&lt;slug&gt;.json</code>.
+        The <code>slug</code> must match the filename stem, and the
+        <code>theme</code> object is the color contract for the page.
+      </p>
+
+      <div
+        class="mb-8 overflow-x-auto rounded-2xl bg-neutral-900 p-5 text-sm text-neutral-100"
+      >
+        <pre set:html={configExample} />
+      </div>
+
+      <h3 class="mb-3 text-xl font-semibold text-neutral-800 dark:text-neutral-100"
+      >Loader and validation</h3>
+
+      <p class="mb-4 leading-relaxed text-neutral-700 dark:text-neutral-300">
+        <code>src/lib/businesses.js</code> loads every config with Vite's
+        <code>import.meta.glob</code>. This is used instead of
+        <code>node:fs</code> because Astro's static generation runs the code
+        from <code>dist/.prerender/</code>, where filesystem paths relative to
+        <code>__dirname</code> break. The glob embeds the JSON content into the
+        JS bundle at build time.
+      </p>
+
+      <div
+        class="mb-8 overflow-x-auto rounded-2xl bg-neutral-900 p-5 text-sm text-neutral-100"
+      >
+        <pre set:html={loaderExample} />
+      </div>
+
+      <SectionHeader title="Dynamic route" />
+
+      <p class="mb-4 leading-relaxed text-neutral-700 dark:text-neutral-300">
+        The route at <code>src/pages/businesses/[business]/index.astro</code>
+        calls <code>getAllBusinesses()</code> inside
+        <code>getStaticPaths()</code> and returns 404 for unknown slugs.
+        Business pages do not wrap the global marketing
+        <code>Layout.astro</code> — they are standalone storefronts.
+      </p>
+
+      <div
+        class="mb-10 overflow-x-auto rounded-2xl bg-neutral-900 p-5 text-sm text-neutral-100"
+      >
+        <pre set:html={routeExample} />
+      </div>
+
+      <SectionHeader title="Component architecture" />
+
+      <div class="mb-8 space-y-4">
+        {
+          components.map((item) => (
+            <div class="rounded-xl border border-dashed border-neutral-200 p-5 dark:border-neutral-700">
+              <h4 class="mb-1 font-semibold text-neutral-800 dark:text-neutral-100">
+                {item.name}
+              </h4>
+              <p class="text-sm leading-relaxed text-neutral-600 dark:text-neutral-400">
+                {item.desc}
+              </p>
+            </div>
+          ))
+        }
+      </div>
+
+      <SectionHeader title="Theming system" />
+
+      <p class="mb-4 leading-relaxed text-neutral-700 dark:text-neutral-300">
+        The JSON theme object is converted into inline CSS custom properties on
+        the <code>.business-wrapper</code> element. Every component consumes
+        those variables instead of hard-coded colors.
+      </p>
+
+      <div
+        class="mb-8 overflow-x-auto rounded-2xl bg-neutral-900 p-5 text-sm text-neutral-100"
+      >
+        <pre set:html={themeExample} />
+      </div>
+
+      <p class="mb-4 leading-relaxed text-neutral-700 dark:text-neutral-300">
+        Dark mode swaps the variables when <code>html.dark</code> is present:
+      </p>
+
+      <div
+        class="mb-10 overflow-x-auto rounded-2xl bg-neutral-900 p-5 text-sm text-neutral-100"
+      >
+        <pre set:html={darkModeExample} />
+      </div>
+
+      <SectionHeader title="How to add a new business" />
+
+      <ol class="mb-10 list-decimal space-y-2 pl-5 text-neutral-700 dark:text-neutral-300">
+        <li>
+          Create <code>public/assets/businesses/&lt;slug&gt;/logo.svg</code>.
+        </li>
+        <li>
+          Create <code>src/data/businesses/&lt;slug&gt;.json</code> matching the
+          schema above.
+        </li>
+        <li>Run <code>pnpm build</code>.</li>
+        <li>
+          The new page is available at
+          <code>/businesses/&lt;slug&gt;</code>.
+        </li>
+      </ol>
+
+      <SectionHeader title="Verification" />
+
+      <ul class="mb-10 list-disc space-y-2 pl-5 text-neutral-700 dark:text-neutral-300">
+        <li>
+          <code>pnpm build</code> passes and generates
+          <code>/businesses/alis-barber/index.html</code> and
+          <code>/businesses/tinas-nails/index.html</code>.
+        </li>
+        <li>
+          <code>pnpm check</code> passes.
+        </li>
+        <li>
+          Marketing pages (<code>/</code>, <code>/pricing</code>,
+          <code>/about</code>, <code>/contact</code>) are unaffected.
+        </li>
+        <li>
+          Sitemap includes the new <code>/businesses/</code> routes.
+        </li>
+        <li>
+          Unknown <code>/businesses/&lt;slug&gt;</code> routes fall back to the
+          existing 404 page.
+        </li>
+      </ul>
+
+      <SectionHeader title="Design decisions" />
+
+      <div class="space-y-4">
+        {
+          decisions.map((item) => (
+            <div class="rounded-xl border border-dashed border-neutral-200 p-5 dark:border-neutral-700">
+              <h4 class="mb-1 font-semibold text-neutral-800 dark:text-neutral-100">
+                {item.title}
+              </h4>
+              <p class="text-sm leading-relaxed text-neutral-600 dark:text-neutral-400">
+                {item.body}
+              </p>
+            </div>
+          ))
+        }
+      </div>
+
+      <div class="mt-12 text-center">
+        <a
+          href="/businesses/alis-barber"
+          class="inline-flex items-center gap-2 rounded-xl bg-btn-primary px-6 py-3 font-medium text-white transition hover:bg-btn-primary-hover"
+        >
+          View Ali's Barber page →
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>

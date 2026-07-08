@@ -1,0 +1,38 @@
+---
+import { formatPrice } from "@/lib/businesses.js";
+import { Clock } from "@lucide/astro";
+
+interface Props {
+	business: {
+		services: Array<{ name: string; price: number; duration?: string }>;
+	};
+}
+
+const { business } = Astro.props;
+---
+
+<section id="prices" class="business-section">
+  <div class="site-container">
+    <div class="mx-auto max-w-2xl">
+      <h2 class="business-section-title">Prices</h2>
+
+      <div class="business-card">
+        <ul class="divide-y divide-[var(--business-divider)]">
+          {business.services.map((service) => (
+            <li class="flex items-center justify-between gap-4 py-4">
+              <div>
+                <p class="business-service-name">{service.name}</p>
+                {service.duration && (
+                  <p class="business-service-duration">
+                    <Clock class="inline h-3.5 w-3.5" /> {service.duration}
+                  </p>
+                )}
+              </div>
+              <span class="business-service-price">{formatPrice(service.price)}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>

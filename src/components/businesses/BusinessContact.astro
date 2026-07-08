@@ -1,0 +1,62 @@
+---
+import { Clock, MapPin, Phone } from "@lucide/astro";
+
+interface Props {
+	business: {
+		contact: {
+			address: string;
+			phone: string;
+			hours: Record<string, string>;
+		};
+	};
+}
+
+const { business } = Astro.props;
+
+const dayOrder = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"];
+const dayLabels: Record<string, string> = {
+	mon: "Monday",
+	tue: "Tuesday",
+	wed: "Wednesday",
+	thu: "Thursday",
+	fri: "Friday",
+	sat: "Saturday",
+	sun: "Sunday",
+};
+---
+
+<section class="business-section">
+  <div class="site-container">
+    <div class="mx-auto max-w-2xl">
+      <h2 class="business-section-title">Contact & hours</h2>
+
+      <div class="business-card">
+        <div class="space-y-3">
+          <p class="business-contact-item">
+            <MapPin class="inline h-4 w-4 shrink-0" />
+            {business.contact.address}
+          </p>
+          <p class="business-contact-item">
+            <Phone class="inline h-4 w-4 shrink-0" />
+            <a href={`tel:${business.contact.phone.replace(/\s/g, "")}`}>
+              {business.contact.phone}
+            </a>
+          </p>
+        </div>
+
+        <hr class="business-divider" />
+
+        <div class="space-y-2">
+          {dayOrder.map((day) => (
+            <div class="flex items-center justify-between gap-4 text-sm">
+              <span class="business-hours-day">{dayLabels[day]}</span>
+              <span class="business-hours-time">
+                <Clock class="inline h-3.5 w-3.5" /> {business.contact.hours[day]}
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
