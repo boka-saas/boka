@@ -1,0 +1,279 @@
+/* ===================================================================
+   Business-page theming
+   ===================================================================
+   Each business page injects an independent light-mode palette via
+   BusinessLayout.astro. The values below are fallbacks only.
+
+   Design rule: every color used on a business page must come from the
+   injected palette. No RicoFast blue should leak through.
+   =================================================================== */
+
+.business-page {
+	--business-bg: #fdfaf5;
+	--business-surface: #ffffff;
+	--business-text: #3f4a5a;
+	--business-primary: #2d6dc3;
+	--business-primary-strong: #0066ff;
+	--business-accent: #fad13b;
+	--business-on-primary: #ffffff;
+
+	background-color: var(--business-bg);
+	color: var(--business-text);
+	min-height: 100vh;
+}
+
+/* Override RicoFast's global h1/h2/h3 colors so headings use the
+   business palette instead of leaking Boka blue. */
+.business-page h1,
+.business-page h2,
+.business-page h3 {
+	color: var(--business-text);
+}
+
+/* Top background grid is tinted with the business primary color. */
+.business-top-bg {
+	color: var(--business-primary);
+	opacity: 0.18;
+}
+
+/* -------------------------------------------------------------------
+   Header
+   ------------------------------------------------------------------- */
+
+.business-header {
+	position: fixed;
+	top: 0.75rem;
+	left: 0;
+	right: 0;
+	z-index: 50;
+}
+
+.business-header-inner {
+	background-color: color-mix(in srgb, var(--business-surface) 92%, transparent);
+	border: 0.5px solid color-mix(in srgb, var(--business-primary) 22%, transparent);
+	box-shadow: 0 1px 2px 0 color-mix(in srgb, var(--business-primary) 10%, transparent);
+	backdrop-filter: blur(12px);
+}
+
+.business-nav-link {
+	color: var(--business-text);
+	transition: color 0.2s ease, background-color 0.2s ease;
+}
+
+.business-nav-link:hover {
+	color: var(--business-primary);
+	background-color: color-mix(in srgb, var(--business-primary) 10%, transparent);
+}
+
+.business-text-muted {
+	color: color-mix(in srgb, var(--business-text) 72%, var(--business-bg));
+}
+
+/* -------------------------------------------------------------------
+   Hero
+   ------------------------------------------------------------------- */
+
+.business-hero {
+	padding-top: 4rem;
+	padding-bottom: 4rem;
+}
+
+@media (min-width: 768px) {
+	.business-hero {
+		padding-top: 6rem;
+		padding-bottom: 6rem;
+	}
+}
+
+.business-hero-eyebrow {
+	background-color: color-mix(in srgb, var(--business-primary) 12%, transparent);
+	color: var(--business-primary);
+}
+
+.business-hero-category {
+	background-color: color-mix(in srgb, var(--business-accent) 22%, transparent);
+	color: var(--business-primary);
+}
+
+.business-hero-title {
+	color: var(--business-text);
+}
+
+.business-hero-tagline {
+	color: var(--business-primary);
+}
+
+.business-photo-ring {
+	background-color: color-mix(in srgb, var(--business-primary) 18%, transparent);
+	box-shadow: 0 0 0 1px color-mix(in srgb, var(--business-primary) 25%, transparent);
+}
+
+.business-hero-description,
+.business-booking-text {
+	color: color-mix(in srgb, var(--business-text) 88%, var(--business-bg));
+}
+
+/* -------------------------------------------------------------------
+   Sections and cards
+   ------------------------------------------------------------------- */
+
+.business-section {
+	padding-top: 3rem;
+	padding-bottom: 3rem;
+}
+
+@media (min-width: 768px) {
+	.business-section {
+		padding-top: 4rem;
+		padding-bottom: 4rem;
+	}
+}
+
+.business-section-title {
+	color: var(--business-text);
+}
+
+.business-section-subtitle {
+	color: color-mix(in srgb, var(--business-text) 72%, var(--business-bg));
+}
+
+.business-card {
+	background-color: var(--business-surface);
+	border: 1px dashed color-mix(in srgb, var(--business-primary) 25%, transparent);
+	transition: border-color 0.5s ease, box-shadow 0.5s ease;
+}
+
+.business-card:hover {
+	border-color: color-mix(in srgb, var(--business-primary) 50%, transparent);
+}
+
+/* -------------------------------------------------------------------
+   Buttons
+   ------------------------------------------------------------------- */
+
+.business-button {
+	background-color: var(--business-primary);
+	color: var(--business-on-primary);
+	transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.business-button:hover {
+	background-color: var(--business-primary-strong);
+	transform: translateY(-2px);
+	box-shadow: 0 6px 12px -2px color-mix(in srgb, var(--business-primary) 30%, transparent);
+}
+
+.business-button-outline {
+	border: 1px solid var(--business-primary);
+	color: var(--business-primary);
+	transition: background-color 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
+}
+
+.business-button-outline:hover {
+	background-color: color-mix(in srgb, var(--business-primary) 10%, transparent);
+	transform: translateY(-2px);
+}
+
+/* -------------------------------------------------------------------
+   Prices
+   ------------------------------------------------------------------- */
+
+.business-service-icon {
+	background-color: color-mix(in srgb, var(--business-primary) 12%, transparent);
+	color: var(--business-primary);
+}
+
+.business-service-name {
+	color: var(--business-text);
+}
+
+.business-service-duration {
+	color: color-mix(in srgb, var(--business-text) 70%, var(--business-bg));
+}
+
+.business-service-price {
+	color: var(--business-primary);
+}
+
+/* -------------------------------------------------------------------
+   Booking and contact
+   ------------------------------------------------------------------- */
+
+.business-booking-card {
+	background: linear-gradient(
+		135deg,
+		color-mix(in srgb, var(--business-primary) 10%, var(--business-surface)),
+		var(--business-surface)
+	);
+	border: 1px dashed var(--business-primary);
+}
+
+.business-booking-text {
+	color: color-mix(in srgb, var(--business-text) 88%, var(--business-bg));
+}
+
+.business-contact-link {
+	color: var(--business-text);
+	transition: color 0.2s ease;
+}
+
+.business-contact-link:hover {
+	color: var(--business-primary);
+}
+
+.business-hours-day {
+	color: var(--business-text);
+}
+
+.business-hours-time {
+	color: color-mix(in srgb, var(--business-text) 78%, var(--business-bg));
+}
+
+/* -------------------------------------------------------------------
+   Footer
+   ------------------------------------------------------------------- */
+
+.business-footer {
+	border-color: color-mix(in srgb, var(--business-primary) 18%, transparent);
+}
+
+.business-footer-text {
+	color: color-mix(in srgb, var(--business-text) 70%, var(--business-bg));
+}
+
+/* -------------------------------------------------------------------
+   Scrollbar — override RicoFast's blue scrollbar on business pages.
+   ------------------------------------------------------------------- */
+
+.business-page ::-webkit-scrollbar-track {
+	background: color-mix(in srgb, var(--business-primary) 15%, var(--business-surface));
+}
+
+.business-page ::-webkit-scrollbar-thumb {
+	background: color-mix(in srgb, var(--business-primary) 60%, var(--business-surface));
+	border-radius: 6px;
+}
+
+.business-page ::-webkit-scrollbar-thumb:hover {
+	background: var(--business-primary);
+}
+
+/* -------------------------------------------------------------------
+   Accessibility
+   ------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+	.business-page,
+	.business-header,
+	.business-card,
+	.business-button,
+	.business-button-outline,
+	.business-nav-link {
+		transition: none;
+	}
+
+	.business-button:hover,
+	.business-button-outline:hover {
+		transform: none;
+	}
+}

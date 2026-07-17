@@ -1,0 +1,29 @@
+{
+	"slug": "tinas-nails",
+	"name": "Tina's Nails",
+	"category": "Nail bar",
+	"tagline": "Gel, acrylics, and calm in Shoreditch",
+	"description": "A boutique nail bar specialising in long-lasting gel and acrylic designs in a relaxed, hygienic space.",
+	"logo": "/assets/businesses/tinas-nails/logo.svg",
+	"theme": "blush-studio",
+	"contact": {
+		"address": "45 Rivington Street, London EC2A 3QB",
+		"phone": "020 8765 4321",
+		"hours": {
+			"mon": "10:00–19:00",
+			"tue": "10:00–19:00",
+			"wed": "10:00–19:00",
+			"thu": "10:00–20:00",
+			"fri": "10:00–20:00",
+			"sat": "09:00–18:00",
+			"sun": "11:00–16:00"
+		}
+	},
+	"services": [
+		{ "name": "Gel Manicure", "price": 35, "duration": "45 min" },
+		{ "name": "Acrylic Full Set", "price": 55, "duration": "75 min" },
+		{ "name": "Gel Pedicure", "price": 40, "duration": "50 min" },
+		{ "name": "Nail Art", "price": 15, "duration": "20 min" }
+	],
+	"bookingUrl": "https://booking.example.com/tinas-nails"
+}

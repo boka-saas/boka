@@ -1,0 +1,69 @@
+---
+import { CalendarCheck } from "@lucide/astro";
+
+interface Props {
+	business: {
+		name: string;
+		category: string;
+		contact: {
+			address: string;
+			phone: string;
+		};
+		bookingUrl: string;
+	};
+}
+
+const { business } = Astro.props;
+const currentYear = new Date().getFullYear();
+const mapsUrl = `https://maps.google.com/?q=${encodeURIComponent(
+	business.contact.address,
+)}`;
+---
+
+<footer class="business-footer mt-8 border-t border-dashed py-12 md:py-16">
+  <div class="site-container">
+    <div class="flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
+      <div class="mx-auto max-w-sm text-center md:mx-0 md:text-left">
+        <p class="text-lg font-semibold">
+          {business.name}
+        </p>
+        <p class="business-footer-text mt-1 text-sm">
+          {business.category}
+        </p>
+        <p class="business-footer-text mt-3 text-sm">
+          <a
+            href={mapsUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="business-contact-link transition-colors"
+          >
+            {business.contact.address}
+          </a>
+        </p>
+        <p class="business-footer-text text-sm">
+          <a
+            href={`tel:${business.contact.phone.replace(/\s/g, "")}`}
+            class="business-contact-link transition-colors"
+          >
+            {business.contact.phone}
+          </a>
+        </p>
+      </div>
+
+      <div class="flex flex-col items-center gap-4 md:items-end">
+        <a
+          href={business.bookingUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="business-button inline-flex w-full items-center justify-center gap-2 rounded-xl px-6 py-3 text-sm font-medium md:w-auto"
+        >
+          <CalendarCheck size={16} />
+          Book now
+        </a>
+        <p class="business-footer-text text-center text-xs md:text-right">
+          © {currentYear} {business.name}. All rights reserved.
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>

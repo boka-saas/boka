@@ -1,0 +1,49 @@
+---
+import { CalendarCheck, Clock } from "@lucide/astro";
+
+interface Props {
+	business: {
+		name: string;
+		bookingUrl: string;
+	};
+}
+
+const { business } = Astro.props;
+---
+
+<section id="booking" class="business-section">
+  <div class="site-container">
+    <div class="business-booking-card mx-auto max-w-2xl rounded-3xl p-8 text-center md:p-12">
+      <div class="business-service-icon mx-auto mb-6 flex h-14 w-14 items-center justify-center rounded-2xl shadow-lg">
+        <CalendarCheck size={28} />
+      </div>
+
+      <h2 class="business-section-title font-brand text-3xl md:text-4xl">
+        Book an appointment
+      </h2>
+
+      <p class="business-booking-text mx-auto mt-3 max-w-md">
+        Ready to visit {business.name}? Choose a time that works for you and confirm your booking in seconds.
+      </p>
+
+      <div class="mt-6 flex flex-wrap items-center justify-center gap-2 text-xs">
+        <span class="business-text-muted inline-flex items-center gap-1 rounded-full border border-dashed border-current px-2 py-1">
+          <Clock size={12} /> Instant confirmation
+        </span>
+        <span class="business-text-muted inline-flex items-center gap-1 rounded-full border border-dashed border-current px-2 py-1">
+          Secure checkout
+        </span>
+      </div>
+
+      <a
+        href={business.bookingUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="business-button mt-8 inline-flex items-center gap-2 rounded-xl px-8 py-3.5 text-base font-medium"
+      >
+        <CalendarCheck size={18} />
+        Book now
+      </a>
+    </div>
+  </div>
+</section>

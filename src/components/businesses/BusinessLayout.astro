@@ -1,0 +1,86 @@
+---
+import BusinessFooter from "@/components/businesses/BusinessFooter.astro";
+import BusinessHeader from "@/components/businesses/BusinessHeader.astro";
+import Meta from "@/layouts/Meta.astro";
+import "../../styles/global.css";
+import "../../styles/business.css";
+
+interface Props {
+	business: {
+		slug: string;
+		name: string;
+		category: string;
+		tagline: string;
+		description: string;
+		logo: string;
+		theme: {
+			bg: string;
+			surface: string;
+			text: string;
+			primary: string;
+			primaryStrong: string;
+			accent: string;
+			onPrimary: string;
+		};
+		contact: {
+			address: string;
+			phone: string;
+			hours: Record<string, string>;
+		};
+		services: Array<{ name: string; price: number; duration?: string }>;
+		bookingUrl: string;
+	};
+}
+
+const { business } = Astro.props;
+
+const themeStyle = [
+	`--business-bg: ${business.theme.bg};`,
+	`--business-surface: ${business.theme.surface};`,
+	`--business-text: ${business.theme.text};`,
+	`--business-primary: ${business.theme.primary};`,
+	`--business-primary-strong: ${business.theme.primaryStrong};`,
+	`--business-accent: ${business.theme.accent};`,
+	`--business-on-primary: ${business.theme.onPrimary};`,
+].join(" ");
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <Meta
+      title={business.name}
+      description={business.tagline}
+      url={`${Astro.site ?? ""}businesses/${business.slug}`}
+    />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  </head>
+  <body class="antialiased max-w-full overflow-x-hidden">
+    {/* Top background grid, tinted with the business primary color. */}
+    <svg
+      aria-hidden="true"
+      class="business-top-bg pointer-events-none absolute top-[-10%] inset-0 -z-10 size-full h-[45%] fill-current stroke-current [mask-image:linear-gradient(to_bottom,_#ffffffad,_transparent)]"
+    >
+      <defs>
+        <pattern id={`business-grid-${business.slug}`} width="12" height="12" patternUnits="userSpaceOnUse" x="-1" y="-1">
+          <path d="M.5 12V.5H12" fill="none" stroke-dasharray="0"></path>
+        </pattern>
+      </defs>
+      <rect width="100%" height="100%" stroke-width="0" fill={`url(#business-grid-${business.slug})`}></rect>
+    </svg>
+
+    <article
+      class="business-page min-h-screen"
+      style={themeStyle}
+    >
+      <div class="hidden md:block">
+        <BusinessHeader business={business} />
+      </div>
+      <main class="md:pt-28">
+        <slot />
+      </main>
+      <BusinessFooter business={business} />
+    </article>
+  </body>
+</html>

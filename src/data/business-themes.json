@@ -1,0 +1,24 @@
+{
+	"heritage-barbershop": {
+		"name": "Heritage Barbershop",
+		"source": "https://coolors.co/12100e-1e1812-8b5a2b-d4a574-c49a6c-f2e8d5",
+		"bg": "#F2E8D5",
+		"surface": "#FAF3EA",
+		"text": "#3E2723",
+		"primary": "#8B5A2B",
+		"primaryStrong": "#5C3A21",
+		"accent": "#C49A6C",
+		"onPrimary": "#FFFFFF"
+	},
+	"blush-studio": {
+		"name": "Blush Studio",
+		"source": "https://coolors.co/1a0810-2a1020-c2185b-ff80ab-d81b60-f8bbd0-fff5f7",
+		"bg": "#FFF5F7",
+		"surface": "#FFFFFF",
+		"text": "#4A0D24",
+		"primary": "#C2185B",
+		"primaryStrong": "#D81B60",
+		"accent": "#F8BBD0",
+		"onPrimary": "#FFFFFF"
+	}
+}

@@ -1,0 +1,50 @@
+---
+interface Props {
+	business: {
+		slug: string;
+		name: string;
+		logo: string;
+		theme: {
+			primary: string;
+			surface: string;
+			text: string;
+		};
+	};
+}
+
+const { business } = Astro.props;
+---
+
+<header class="business-header">
+  <div class="site-container">
+    <div class="business-header-inner flex items-center justify-between h-14 rounded-2xl px-5">
+      <a
+        href={`/businesses/${business.slug}`}
+        class="flex items-center gap-3"
+        style={`color: var(--business-text);`}
+      >
+        <img
+          src={business.logo}
+          alt={`${business.name} logo`}
+          class="h-9 w-9 rounded-xl object-cover"
+          onerror={`this.style.display='none'; this.nextElementSibling.style.display='flex'`}
+        />
+        <span class="text-base font-semibold">
+          {business.name}
+        </span>
+      </a>
+
+      <nav class="flex items-center gap-1 text-sm font-medium">
+        <a href="#prices" class="business-nav-link rounded-lg px-3 py-2">
+          Prices
+        </a>
+        <a href="#booking" class="business-nav-link rounded-lg px-3 py-2">
+          Book
+        </a>
+        <a href="#contact" class="business-nav-link rounded-lg px-3 py-2">
+          Contact
+        </a>
+      </nav>
+    </div>
+  </div>
+</header>

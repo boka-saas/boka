@@ -1,0 +1,129 @@
+---
+import { Camera, Clock, MapPin, Phone } from "@lucide/astro";
+
+interface Props {
+	business: {
+		contact: {
+			address: string;
+			phone: string;
+			hours: Record<string, string>;
+		};
+		social?: {
+			instagram?: string;
+		};
+	};
+}
+
+const { business } = Astro.props;
+
+const mapsUrl = `https://maps.google.com/?q=${encodeURIComponent(
+	business.contact.address,
+)}`;
+
+const dayOrder = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"];
+const dayLabels: Record<string, string> = {
+	mon: "Monday",
+	tue: "Tuesday",
+	wed: "Wednesday",
+	thu: "Thursday",
+	fri: "Friday",
+	sat: "Saturday",
+	sun: "Sunday",
+};
+---
+
+<section id="contact" class="business-section">
+  <div class="site-container">
+    <div class="mx-auto mb-12 max-w-2xl text-center">
+      <p class="business-section-subtitle mb-3 text-xs font-medium uppercase tracking-[0.14em]">
+        Get in touch
+      </p>
+      <h2 class="business-section-title font-brand text-3xl md:text-4xl">
+        Contact & hours
+      </h2>
+    </div>
+
+    <div class="business-card mx-auto grid max-w-3xl gap-8 rounded-3xl p-6 md:grid-cols-2 md:p-10">
+      <div class="space-y-5">
+        <h3 class="business-section-subtitle text-sm font-semibold uppercase tracking-[0.14em]">
+          Contact
+        </h3>
+
+        <div class="flex items-start gap-3">
+          <div class="business-service-icon mt-0.5 flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-xl">
+            <MapPin size={16} />
+          </div>
+          <div>
+            <p class="font-medium">Address</p>
+            <a
+              href={mapsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="business-contact-link text-sm"
+            >
+              {business.contact.address}
+            </a>
+          </div>
+        </div>
+
+        <div class="flex items-start gap-3">
+          <div class="business-service-icon mt-0.5 flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-xl">
+            <Phone size={16} />
+          </div>
+          <div>
+            <p class="font-medium">Phone</p>
+            <a
+              href={`tel:${business.contact.phone.replace(/\s/g, "")}`}
+              class="business-contact-link text-sm"
+            >
+              {business.contact.phone}
+            </a>
+          </div>
+        </div>
+
+        {
+          business.social?.instagram && (
+            <div class="flex items-start gap-3">
+              <div class="business-service-icon mt-0.5 flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-xl">
+                <Camera size={16} />
+              </div>
+              <div>
+                <p class="font-medium">Instagram</p>
+                <a
+                  href={`https://instagram.com/${business.social.instagram}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="business-contact-link text-sm"
+                >
+                  @{business.social.instagram}
+                </a>
+              </div>
+            </div>
+          )
+        }
+      </div>
+
+      <div class="space-y-5">
+        <h3 class="business-section-subtitle text-sm font-semibold uppercase tracking-[0.14em]">
+          Opening hours
+        </h3>
+
+        <ul class="space-y-2">
+          {
+            dayOrder.map((day) => (
+              <li class="business-hours-row flex items-center justify-between gap-4 text-sm">
+                <span class="business-hours-day font-medium">
+                  {dayLabels[day]}
+                </span>
+                <span class="business-hours-time inline-flex items-center gap-1.5">
+                  <Clock size={12} />
+                  {business.contact.hours[day]}
+                </span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>

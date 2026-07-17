@@ -1,4 +1,5 @@
 ---
+import { Image } from "astro:assets";
 import AnimatedText from "@/components/ui/AnimatedText.astro";
 import Badge from "@/components/ui/Badge.astro";
 import Button from "@/components/ui/Button.astro";
@@ -81,12 +82,12 @@ import { ArrowRight, CalendarCheck } from "@lucide/astro";
           <div
             class="relative overflow-hidden bg-bg-secondary dark:bg-neutral-900"
           >
-            <img
+            <Image
               src="/assets/boka/boka-dashboard-mobile.png"
               alt="Boka dashboard preview showing booking and revenue insights"
               loading="eager"
-              width="1000"
-              height="1514"
+              width={1000}
+              height={1514}
               class="h-auto w-full"
             />
             <div

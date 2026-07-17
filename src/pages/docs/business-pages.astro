@@ -1,0 +1,364 @@
+---
+import PageHeader from "@/components/elements/PageHeader.astro";
+import SectionHeader from "@/components/elements/SectionHeader.astro";
+import Layout from "@/layouts/Layout.astro";
+
+const title = "Multi-Tenant Business Pages";
+const description =
+	"How the JSON-driven, theme-injected business storefront pages work.";
+
+const themeExample = `{
+  "heritage-barbershop": {
+    "name": "Heritage Barbershop",
+    "source": "https://coolors.co/12100e-1e1812-8b5a2b-d4a574-c49a6c-f2e8d5",
+    "bg": "#F2E8D5",
+    "surface": "#FAF3EA",
+    "text": "#3E2723",
+    "primary": "#8B5A2B",
+    "primaryStrong": "#5C3A21",
+    "accent": "#C49A6C",
+    "onPrimary": "#FFFFFF"
+  },
+  "blush-studio": { ... }
+}`;
+
+const configExample = `{
+  "slug": "alis-barber",
+  "name": "Ali's Barber",
+  "category": "Barbershop",
+  "tagline": "Precision cuts in Southport",
+  "description": "Traditional barbering with modern style.",
+  "logo": "/assets/businesses/alis-barber/logo.svg",
+  "image": "/assets/businesses/alis-barber/photo.jpg",
+  "theme": "heritage-barbershop",
+  "contact": { "address": "...", "phone": "...", "hours": {} },
+  "social": { "instagram": "ali_barber1" },
+  "services": [
+    { "name": "Normal Haircut", "price": 15, "duration": "30 min" }
+  ],
+  "bookingUrl": "https://booksy.com/en-gb/174201_alis-barber_barber_749680_southport"
+}`;
+
+const loaderExample = `const modules = import.meta.glob("/src/data/businesses/*.json", {
+  eager: true,
+});
+
+import themeLibrary from "/src/data/business-themes.json";
+
+export function getAllBusinesses() { ... }
+export function getBusinessBySlug(slug) { ... }
+export function formatPrice(price) { return \`£\${price}\`; }`;
+
+const routeExample = `export async function getStaticPaths() {
+  const businesses = getAllBusinesses();
+  return businesses.map((business) => ({
+    params: { business: business.slug },
+    props: { business },
+  }));
+}
+
+const business = Astro.props.business ?? getBusinessBySlug(Astro.params.business);
+if (!business) return new Response(null, { status: 404 });
+
+<BusinessLayout business={business}>
+  <BusinessHero business={business} />
+  <BusinessPrices business={business} />
+  <BusinessBooking business={business} />
+  <BusinessContact business={business} />
+</BusinessLayout>`;
+
+const variablesExample = `<article
+  class="business-page min-h-screen"
+  style="--business-bg: #F2E8D5;
+         --business-surface: #FAF3EA;
+         --business-text: #3E2723;
+         --business-primary: #8B5A2B;
+         --business-primary-strong: #5C3A21;
+         --business-accent: #C49A6C;
+         --business-on-primary: #FFFFFF;"
+>
+  ...
+</article>`;
+
+const components = [
+	{
+		name: "BusinessLayout.astro",
+		desc: "Standalone root document layout. Own <html>, <head>, meta tags, favicon, global + business styles, top background grid tinted with the business primary, and full-palette injecting wrapper.",
+	},
+	{
+		name: "BusinessHeader.astro",
+		desc: "Floating pill-style glassmorphism header with logo + business name and in-page nav links. Hidden on mobile because the hero already exposes the main CTAs.",
+	},
+	{
+		name: "BusinessHero.astro",
+		desc: "Address eyebrow, category badge, optional shop photo, business name, tagline, description, and two CTAs.",
+	},
+	{
+		name: "BusinessPrices.astro",
+		desc: "Responsive grid of service cards using the business surface and primary colors.",
+	},
+	{
+		name: "BusinessBooking.astro",
+		desc: "Focused booking CTA card with a gradient background tinted by the business primary color.",
+	},
+	{
+		name: "BusinessContact.astro",
+		desc: "Two-column card with address, phone, optional Instagram, and opening hours.",
+	},
+	{
+		name: "BusinessFooter.astro",
+		desc: "Branded footer using the business palette, with contact details, booking button, and copyright.",
+	},
+];
+
+const decisions = [
+	{
+		title: "Standalone layout",
+		body: "Business pages do not reuse the global Layout.astro because they need their own chrome and must not show the marketing navigation or footer.",
+	},
+	{
+		title: "import.meta.glob for data",
+		body: "Keeps the build static and simple. If the number of businesses grows, the loader can be replaced by a CMS or database source without changing the components.",
+	},
+	{
+		title: "Theme library",
+		body: "Business configs reference a named theme instead of duplicating a full palette. This makes it easy to apply the same theme to multiple businesses and to source palettes from external tools like Coolors.",
+	},
+	{
+		title: "Light-mode-only business pages",
+		body: "Business pages intentionally do not support dark mode. The hero already surfaces the main CTAs, so the header is hidden on mobile and no theme toggle is needed.",
+	},
+];
+---
+
+<Layout title={title} description={description}>
+  <section class="site-container my-12">
+    <PageHeader title={title} description={description} />
+
+    <div class="mx-auto max-w-3xl">
+      <p class="mb-8 text-lg leading-relaxed text-neutral-700 dark:text-neutral-300">
+        Each service business gets its own branded storefront URL. The markup
+        and layout are shared; only the JSON config and the selected theme change
+        per business. Themes are sourced from Coolors and give each storefront a
+        full independent light-mode palette.
+      </p>
+
+      <div
+        class="mb-10 rounded-2xl border border-dashed border-primary/20 bg-bg-secondary p-6 dark:border-neutral-700 dark:bg-bg-secondary-dark"
+      >
+        <p class="mb-2 text-sm font-medium text-neutral-500 dark:text-neutral-400">
+          Example URLs
+        </p>
+        <div class="flex flex-wrap gap-3">
+          <code class="rounded-lg bg-bg-primary px-3 py-1.5 text-sm text-primary dark:bg-bg-primary-dark dark:text-primary-light"
+          >/businesses/alis-barber</code>
+          <code class="rounded-lg bg-bg-primary px-3 py-1.5 text-sm text-primary dark:bg-bg-primary-dark dark:text-primary-light"
+          >/businesses/tinas-nails</code>
+        </div>
+      </div>
+
+      <SectionHeader title="End-to-end data flow" />
+
+      <div
+        class="mb-10 overflow-x-auto rounded-2xl border border-dashed border-primary/20 bg-bg-secondary p-6 font-mono text-sm text-neutral-700 dark:border-neutral-700 dark:bg-bg-secondary-dark dark:text-neutral-300"
+      >
+        <pre set:html={`src/data/business-themes.json
+        │
+        ▼
+src/data/businesses/&lt;slug&gt;.json   (references a theme key)
+        │
+        ▼
+src/lib/businesses.js   (load + validate + resolve theme)
+        │
+        ▼
+src/pages/businesses/[business]/index.astro   (getStaticPaths)
+        │
+        ▼
+dist/businesses/&lt;slug&gt;/index.html   (static output)`} />
+      </div>
+
+      <p class="mb-10 leading-relaxed text-neutral-700 dark:text-neutral-300">
+        At build time Astro asks the dynamic route for its paths. The route
+        calls <code>getAllBusinesses()</code>, which returns every validated JSON
+        config with its resolved full theme. Astro renders one static HTML file
+        per slug.
+      </p>
+
+      <SectionHeader title="Data layer" />
+
+      <h3 class="mb-3 text-xl font-semibold text-neutral-800 dark:text-neutral-100"
+      >Theme library</h3>
+
+      <p class="mb-4 leading-relaxed text-neutral-700 dark:text-neutral-300">
+        All business themes live in
+        <code>src/data/business-themes.json</code>. Each theme is a named,
+        self-contained light-mode palette sourced from
+        <a href="https://coolors.co/" class="text-primary hover:underline">Coolors</a>.
+      </p>
+
+      <div
+        class="mb-8 overflow-x-auto rounded-2xl bg-neutral-900 p-5 text-sm text-neutral-100"
+      >
+        <pre set:html={themeExample} />
+      </div>
+
+      <h3 class="mb-3 text-xl font-semibold text-neutral-800 dark:text-neutral-100"
+      >Config files</h3>
+
+      <p class="mb-4 leading-relaxed text-neutral-700 dark:text-neutral-300">
+        Business configs live at
+        <code>src/data/businesses/&lt;slug&gt;.json</code> and reference a theme
+        by key. The <code>slug</code> must match the filename stem.
+      </p>
+
+      <div
+        class="mb-8 overflow-x-auto rounded-2xl bg-neutral-900 p-5 text-sm text-neutral-100"
+      >
+        <pre set:html={configExample} />
+      </div>
+
+      <h3 class="mb-3 text-xl font-semibold text-neutral-800 dark:text-neutral-100"
+      >Loader and validation</h3>
+
+      <p class="mb-4 leading-relaxed text-neutral-700 dark:text-neutral-300">
+        <code>src/lib/businesses.js</code> loads every config with Vite's
+        <code>import.meta.glob</code>. This is used instead of
+        <code>node:fs</code> because Astro's static generation runs the code
+        from <code>dist/.prerender/</code>, where filesystem paths relative to
+        <code>__dirname</code> break. The glob embeds the JSON content into the
+        JS bundle at build time.
+      </p>
+
+      <div
+        class="mb-8 overflow-x-auto rounded-2xl bg-neutral-900 p-5 text-sm text-neutral-100"
+      >
+        <pre set:html={loaderExample} />
+      </div>
+
+      <SectionHeader title="Dynamic route" />
+
+      <p class="mb-4 leading-relaxed text-neutral-700 dark:text-neutral-300">
+        The route at <code>src/pages/businesses/[business]/index.astro</code>
+        calls <code>getAllBusinesses()</code> inside
+        <code>getStaticPaths()</code> and returns 404 for unknown slugs.
+        Business pages do not wrap the global marketing
+        <code>Layout.astro</code> — they are standalone storefronts.
+      </p>
+
+      <div
+        class="mb-10 overflow-x-auto rounded-2xl bg-neutral-900 p-5 text-sm text-neutral-100"
+      >
+        <pre set:html={routeExample} />
+      </div>
+
+      <SectionHeader title="Component architecture" />
+
+      <div class="mb-8 space-y-4">
+        {
+          components.map((item) => (
+            <div class="rounded-xl border border-dashed border-neutral-200 p-5 dark:border-neutral-700">
+              <h4 class="mb-1 font-semibold text-neutral-800 dark:text-neutral-100">
+                {item.name}
+              </h4>
+              <p class="text-sm leading-relaxed text-neutral-600 dark:text-neutral-400">
+                {item.desc}
+              </p>
+            </div>
+          ))
+        }
+      </div>
+
+      <SectionHeader title="Theming system" />
+
+      <p class="mb-4 leading-relaxed text-neutral-700 dark:text-neutral-300">
+        The resolved theme is converted into inline CSS custom properties on the
+        <code>.business-page</code> element. Every component consumes those
+        variables for its colors. <code>primaryStrong</code> is used for button
+        hover states so every CTA has an intentional, theme-defined pressed
+        color. Headings are overridden so RicoFast's global
+        <code>h1,h2,h3</code> colors cannot leak Boka blue onto the page.
+      </p>
+
+      <div
+        class="mb-10 overflow-x-auto rounded-2xl bg-neutral-900 p-5 text-sm text-neutral-100"
+      >
+        <pre set:html={variablesExample} />
+      </div>
+
+      <SectionHeader title="How to add a new business" />
+
+      <ol class="mb-10 list-decimal space-y-2 pl-5 text-neutral-700 dark:text-neutral-300">
+        <li>
+          Pick or create a theme in
+          <code>src/data/business-themes.json</code> (or source one from
+          <a href="https://coolors.co/" class="text-primary hover:underline">Coolors</a>).
+        </li>
+        <li>
+          Create <code>public/assets/businesses/&lt;slug&gt;/logo.svg</code>.
+        </li>
+        <li>
+          Create <code>src/data/businesses/&lt;slug&gt;.json</code> matching the
+          schema above and reference the theme key.
+        </li>
+        <li>Run <code>pnpm build</code>.</li>
+        <li>
+          The new page is available at
+          <code>/businesses/&lt;slug&gt;</code>.
+        </li>
+      </ol>
+
+      <SectionHeader title="Verification" />
+
+      <ul class="mb-10 list-disc space-y-2 pl-5 text-neutral-700 dark:text-neutral-300">
+        <li>
+          <code>pnpm build</code> passes and generates
+          <code>/businesses/alis-barber/index.html</code> and
+          <code>/businesses/tinas-nails/index.html</code>.
+        </li>
+        <li>
+          <code>pnpm check</code> passes.
+        </li>
+        <li>
+          Marketing pages (<code>/</code>, <code>/pricing</code>,
+          <code>/about</code>, <code>/contact</code>) are unaffected.
+        </li>
+        <li>
+          Sitemap includes the new <code>/businesses/</code> routes.
+        </li>
+        <li>
+          Unknown <code>/businesses/&lt;slug&gt;</code> routes fall back to the
+          existing 404 page.
+        </li>
+        <li>
+          Business pages render in light mode only with no Boka blue leakage.
+        </li>
+      </ul>
+
+      <SectionHeader title="Design decisions" />
+
+      <div class="space-y-4">
+        {
+          decisions.map((item) => (
+            <div class="rounded-xl border border-dashed border-neutral-200 p-5 dark:border-neutral-700">
+              <h4 class="mb-1 font-semibold text-neutral-800 dark:text-neutral-100">
+                {item.title}
+              </h4>
+              <p class="text-sm leading-relaxed text-neutral-600 dark:text-neutral-400">
+                {item.body}
+              </p>
+            </div>
+          ))
+        }
+      </div>
+
+      <div class="mt-12 text-center">
+        <a
+          href="/businesses/alis-barber"
+          class="inline-flex items-center gap-2 rounded-xl bg-btn-primary px-6 py-3 font-medium text-white transition hover:bg-btn-primary-hover"
+        >
+          View Ali's Barber page →
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>
